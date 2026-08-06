@@ -15,6 +15,35 @@ Ao final desta aula você deverá ser capaz de:
 
 ---
 
+## 🗺️ Mapa Mental da Aula
+
+```mermaid
+mindmap
+  root((Introdução a Banco de Dados))
+    Dado Informação Conhecimento
+      Dado é fato bruto sem contexto
+      Informação é dado interpretado em contexto
+      Conhecimento vem da experiência acumulada
+    Sistemas de Arquivos vs SGBD
+      Problemas - redundância inconsistência isolamento
+      SGBD resolve com modelo unificado e SQL
+    O que é um SGBD
+      MySQL MariaDB PostgreSQL
+      Oracle SQL Server SQLite
+    Arquitetura ANSI SPARC - 3 níveis
+      Nível Externo - visões por usuário
+      Nível Conceitual - esquema lógico completo
+      Nível Interno - armazenamento físico
+      Independência de dados
+    Componentes do SGBD
+      Processador de consultas
+      Gerenciador de armazenamento
+      Gerenciador de transações
+      Gerenciador de buffer
+```
+
+---
+
 ## 1. Dado, Informação e Conhecimento
 
 Antes de estudar bancos de dados, precisamos entender o que, de fato, estamos gerenciando.
@@ -101,9 +130,92 @@ Os principais componentes internos de um SGBD são o **processador de consultas*
 
 ---
 
+## 🃏 Flashcards de Revisão
+
+??? question "Qual a diferença entre dado e informação?"
+    Dado é um fato bruto, sem contexto — como o número `1200` isolado. Informação é o dado interpretado dentro de um contexto que permite tomar decisões — como saber que `1200` é o salário de um funcionário específico.
+
+??? question "Cite três problemas de um sistema de arquivos convencional que um SGBD resolve."
+    Redundância de dados, inconsistência e dificuldade de acesso são três exemplos — além de isolamento de dados, falta de controle de acesso e problemas de concorrência.
+
+??? question "O que é um SGBD, em uma frase?"
+    É um software que serve de intermediário entre o usuário/aplicação e os dados fisicamente armazenados, oferecendo uma interface padronizada com segurança, integridade e eficiência.
+
+??? question "Quais são os três níveis da arquitetura ANSI/SPARC e o que cada um faz?"
+    Nível Externo (visões personalizadas por usuário), Nível Conceitual (esquema lógico completo do banco) e Nível Interno (armazenamento físico em disco). A separação entre eles garante a independência de dados.
+
+??? question "O que garante a 'independência de dados' na arquitetura em três níveis?"
+    A separação entre os níveis externo, conceitual e interno — ela protege a aplicação de mudanças no armazenamento físico, já que cada nível só se comunica com o nível adjacente.
+
+??? question "Cite os quatro componentes internos principais de um SGBD."
+    Processador de consultas (interpreta e otimiza SQL), gerenciador de armazenamento (acesso físico aos dados), gerenciador de transações (atomicidade e concorrência) e gerenciador de buffer (dados em memória para desempenho).
+
+---
+
+## ✅ Quiz de Fixação
+
+<quiz>
+Qual das alternativas melhor define "informação"?
+- [ ] Um fato bruto sem interpretação
+- [x] Um dado interpretado dentro de um contexto, útil para tomar decisões
+- [ ] Um padrão acumulado ao longo de vários anos de experiência
+- [ ] Um tipo de dado armazenado exclusivamente em bancos relacionais
+
+Isso mesmo — informação é o dado contextualizado. Conhecimento vai um passo além, quando acumulamos e relacionamos informações ao longo do tempo.
+</quiz>
+
+<quiz>
+No modelo ANSI/SPARC de três níveis, qual nível é responsável por esconder os detalhes de armazenamento físico (índices, blocos em disco) do restante do sistema?
+- [ ] Nível Externo
+- [ ] Nível Conceitual
+- [x] Nível Interno
+- [ ] Nível de Aplicação
+
+O nível interno cuida do armazenamento físico. É a separação entre os três níveis que garante a independência de dados.
+</quiz>
+
+<quiz>
+Quais destes são problemas típicos de um sistema de arquivos que um SGBD resolve? (selecione todas as corretas)
+- [x] Redundância de dados
+- [x] Dificuldade de controle de acesso concorrente
+- [ ] Padronização excessiva da linguagem de consulta
+- [x] Isolamento de dados entre aplicações diferentes
+
+Sistemas de arquivos sofrem justamente com redundância, isolamento de dados e falta de controle de concorrência — problemas que o SGBD resolve com um modelo unificado e uma linguagem de consulta padronizada (SQL).
+</quiz>
+
+<quiz>
+Qual componente interno de um SGBD é responsável por interpretar e otimizar os comandos SQL recebidos?
+- [ ] Gerenciador de buffer
+- [x] Processador de consultas
+- [ ] Gerenciador de transações
+- [ ] Gerenciador de armazenamento
+
+O processador de consultas interpreta e otimiza os comandos SQL antes de executá-los.
+</quiz>
+
+<quiz>
+Qual destes NÃO é um exemplo de SGBD amplamente utilizado no mercado?
+- [ ] PostgreSQL
+- [ ] Oracle
+- [x] Microsoft Excel
+- [ ] SQL Server
+
+Excel é uma planilha eletrônica — um exemplo clássico de sistema de arquivos, não um SGBD, já que não oferece controle de concorrência, integridade referencial nem uma linguagem de consulta padronizada como o SQL.
+</quiz>
+
+---
+
 ## 📝 Resumo
 
 Nesta aula aprendemos que dados são fatos brutos que se transformam em informação quando contextualizados. Vimos que sistemas de arquivos apresentam problemas sérios de redundância, inconsistência e dificuldade de acesso que os SGBDs resolvem de forma elegante. Entendemos também que a arquitetura em três níveis (externo, conceitual e interno) é o alicerce que garante independência entre a aplicação e o armazenamento físico.
+
+---
+
+## 🏆 Conquista da Aula
+
+!!! success "Selo desbloqueado: 🧭 Explorador(a) de Dados"
+    Você deu o primeiro passo na Trilha do(a) Arquiteto(a) de Dados: aprendeu a diferenciar dado de informação e entendeu por que os SGBDs substituíram os antigos sistemas de arquivos. A próxima parada é desenhar o mapa do território — o Modelo Entidade-Relacionamento.
 
 ---
 

@@ -5,6 +5,15 @@ site estático via **MkDocs Material + GitHub Pages**. O professor (Ronan) é a 
 autoridade sobre conteúdo pedagógico — este arquivo governa como o Claude Code deve se
 comportar ao lidar com o repositório, não substitui o julgamento dele.
 
+> ⚠️ **Regra inegociável: nunca corte ou resuma conteúdo original para economizar
+> espaço/tempo/tokens.** Se o texto de uma aula já existe, ele é preservado por
+> completo ao remodelar — só se adicionam seções novas ao redor (mapa mental,
+> flashcards, quiz, conquista). Edições no texto original só são permitidas quando o
+> professor autorizar explicitamente, e mesmo assim devem ser cautelosas (corrigir,
+> não encurtar). Se em algum momento não for possível fazer algo com qualidade
+> completa, **diga isso explicitamente ao professor** em vez de entregar uma versão
+> resumida, incompleta ou malfeita.
+
 ## Stack e comandos
 
 - **MkDocs Material** (`mkdocs.yml` na raiz, `docs_dir: docs`)
@@ -90,12 +99,30 @@ conteúdo — ex. aulas que são só enunciado de prova não precisam de mapa me
    ```
 6. ✅ **Quiz de fixação** (3–5 perguntas, `mkdocs-quiz`) — pelo menos uma de múltipla resposta
 7. 📝 Resumo
-8. 🏆 **Conquista da aula** — selo temático em `!!! success "Selo desbloqueado: ..."`.
-   Isso é reforço motivacional impresso na página, não um sistema de pontos real: o
-   site é estático e não tem login nem banco de dados, então não há XP persistido
-   entre sessões. Se o professor quiser gamificação com estado real (streak, ranking
-   entre alunos), isso exige um backend — fora do escopo deste site; sinalize a ele em
-   vez de simular.
+8. 🏆 **Conquista da aula** — selo temático em `!!! success "Selo desbloqueado: ..."`,
+   seguindo o **tema de gamificação do semestre** definido abaixo. Isso é reforço
+   motivacional impresso na página, não um sistema de pontos real: o site é estático e
+   não tem login nem banco de dados, então não há XP persistido entre sessões. Se o
+   professor quiser gamificação com estado real (streak, ranking entre alunos), isso
+   exige um backend — fora do escopo deste site; sinalize a ele em vez de simular.
+
+   **Tema de gamificação do semestre — "Trilha do(a) Arquiteto(a) de Dados":** a
+   jornada do aluno é enquadrada como uma progressão de carreira em BD, do primeiro
+   contato até o domínio prático. Cada bloco tem um arco, e cada aula um selo dentro
+   dele — mantenha o tom técnico/profissional, nunca infantil.
+   - **Bloco 1 (Aulas 1–9) — "Trilha do(a) Modelador(a) de Dados"**: ex. Aula 1 → `🧭
+     Explorador(a) de Dados`, Aula 2 → `🗺️ Cartógrafo(a) de Entidades`, Aula 3 → `🔗
+     Mestre dos Relacionamentos`, Aula 4 → `🏛️ Arquiteto(a) Relacional`, Aula 5 → `🧹
+     Guardião(ã) da Normalização`, Aula 6 (T1) → `📐 Modelador(a) Certificado(a)`,
+     Aula 7 → `🛠️ Construtor(a) DDL`, Aula 8 → `🔒 Guardião(ã) da Integridade`,
+     Aula 9 (P1) → `🎖️ Veterano(a) do Bloco 1`.
+   - **Bloco 2 (Aulas 10–20) — "Trilha do(a) Consultor(a) SQL"**: nomes seguem o mesmo
+     espírito (ex. `🔍 Investigador(a) de Dados` para consultas, `🧩 Mestre dos Joins`
+     para as aulas de junção), culminando na Aula 20 com o selo final `🏆
+     Arquiteto(a) de Dados — IBD951`.
+   - Ao remodelar uma aula fora dessa lista de exemplos, escolha um nome de selo
+     consistente com o tema (progressão de carreira/habilidade em BD) em vez de
+     inventar temas novos a cada aula.
 9. 🔗 Navegação (aula anterior / próxima) — **só linke a próxima aula se o arquivo dela
    já existir em `docs/aulas/`.** Como as aulas chegam progressivamente, a mais recente
    deve mostrar `🔒 Aula NN+1 — em breve.` no lugar do link. Ao adicionar essa próxima
