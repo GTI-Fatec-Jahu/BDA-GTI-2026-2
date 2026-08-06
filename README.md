@@ -19,26 +19,7 @@ Este repositório é a **fonte** do material de aulas, atividades e avaliações
 
 ## 🎮 Como este repositório é mantido
 
-As aulas são adicionadas **progressivamente**, uma por semana, em `docs/aulas/`. O fluxo de trabalho completo — validação de conteúdo, remodelagem gamificada e checagem de publicação — está documentado em [`CLAUDE.md`](CLAUDE.md) e no comando [`/nova-aula`](.claude/commands/nova-aula.md), para quem usa o Claude Code.
-
-## 📂 Estrutura do Repositório
-
-```
-.
-├── mkdocs.yml                        ← Configuração do site (MkDocs Material)
-├── CLAUDE.md                         ← Pipeline de processamento de aulas novas
-├── templates/
-│   └── AULA_TEMPLATE.md              ← Gabarito estrutural de toda aula remodelada (fora do site)
-├── docs/
-│   ├── index.md                      ← Página inicial (ementa, critérios, sumário)
-│   ├── aulas/
-│   │   └── Aula_01_Introducao_BD.md
-│   ├── atividades/
-│   │   └── Avaliacao_Proficiencia.md
-│   └── imgs/                         ← Imagens de apoio das aulas
-├── .claude/commands/nova-aula.md     ← Comando /nova-aula
-└── .github/workflows/deploy-docs.yml ← Publica o site no GitHub Pages a cada push em main
-```
+As aulas são adicionadas **progressivamente**, uma por semana, em `docs/aulas/`.
 
 ## 🛠️ Rodando o site localmente
 

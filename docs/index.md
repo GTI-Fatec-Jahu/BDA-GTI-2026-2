@@ -8,9 +8,6 @@
 
 </div>
 
-!!! tip "Este é o site publicado da disciplina"
-    Esta página é gerada a partir do [repositório no GitHub](https://github.com/GTI-Fatec-Jahu/BDA-GTI-2026-2). Prefira este link para estudar: aqui os diagramas, mapas mentais, flashcards e quizzes funcionam por completo — algo que o GitHub não renderiza ao abrir um arquivo `.md` isoladamente.
-
 !!! info "Conteúdo em construção progressiva"
     As aulas deste semestre são publicadas semanalmente. A tabela abaixo mostra o planejamento completo — os itens marcados com 🔒 ainda não foram liberados.
 
