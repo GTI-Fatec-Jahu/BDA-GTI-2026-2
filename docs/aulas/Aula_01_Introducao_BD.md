@@ -109,7 +109,7 @@ Nesta aula aprendemos que dados são fatos brutos que se transformam em informa�
 
 ## 🔗 Próxima Aula
 
-➡️ [Aula 02 — Modelagem Conceitual: Entidades e Atributos](Aula_02_Modelagem_Entidades.md)
+🔒 Aula 02 — em breve.
 
 ---
 
