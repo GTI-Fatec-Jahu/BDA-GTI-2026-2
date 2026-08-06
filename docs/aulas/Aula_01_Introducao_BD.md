@@ -1,7 +1,7 @@
 # Aula 01 — Introdução a Banco de Dados
 
-**Disciplina:** Banco de Dados e Aplicações
-**Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  
+**Disciplina:** Banco de Dados e Aplicações <br>
+**Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
 **Fatec Jahu — 2º Semestre/2026**
 
 ---
