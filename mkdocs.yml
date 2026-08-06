@@ -73,6 +73,7 @@ nav:
   - Bloco 1 — Modelagem e DDL:
       - aulas/Aula_01_Introducao_BD.md
   - Atividades e Avaliações:
+      - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md
 
 extra:

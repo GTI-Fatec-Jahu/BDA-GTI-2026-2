@@ -95,9 +95,7 @@ A nota final é calculada pela fórmula:
 
 ## 📝 Atividades e Avaliações
 
-| Atividade | Descrição | Link |
-|---|---|---|
-| **Avaliação de Proficiência** | Modelagem, DDL, DML e consultas — projeto completo em SQL | [Ver enunciado](atividades/Avaliacao_Proficiencia.md) |
+Confira a lista completa, sempre atualizada, na página [Atividades e Avaliações](atividades/index.md).
 
 ---
 

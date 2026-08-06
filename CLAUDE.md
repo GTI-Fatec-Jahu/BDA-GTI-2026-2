@@ -140,3 +140,7 @@ Antes de considerar a aula pronta:
 - **Caminhos de imagem são relativos** (`../imgs/arquivo.png` a partir de
   `docs/aulas/*.md`). Ao mover ou renomear arquivos, esses caminhos quebram
   silenciosamente — sempre rode `mkdocs build` depois.
+- **`docs/atividades/index.md` é a tabela-índice de atividades** (nome, descrição,
+  link) — mesma lógica do Sumário de Aulas em `docs/index.md`. Toda atividade nova em
+  `docs/atividades/` precisa de uma linha nessa tabela e de uma entrada no `nav`, senão
+  fica órfã (existe como página mas não aparece linkada em lugar nenhum).
