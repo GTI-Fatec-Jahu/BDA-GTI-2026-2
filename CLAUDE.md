@@ -90,9 +90,10 @@ conteúdo — ex. aulas que são só enunciado de prova não precisam de mapa me
 
 1. Cabeçalho padrão (disciplina/professor/semestre)
 2. 🎯 Objetivos da aula
-3. 🗺️ **Mapa mental** — `flowchart TD` com subgraphs por tópico (NÃO o diagrama
-   `mindmap` do Mermaid — ver "Armadilhas já conhecidas" abaixo), resumindo os
-   conceitos antes do detalhe. Gabarito em `templates/AULA_TEMPLATE.md`.
+3. 🗺️ **Mapa mental** — `flowchart LR` com subgraphs por tópico (NÃO o diagrama
+   `mindmap` do Mermaid, e NÃO `flowchart TD` — ver "Armadilhas já conhecidas"
+   abaixo), resumindo os conceitos antes do detalhe. Gabarito em
+   `templates/AULA_TEMPLATE.md`.
 4. Conteúdo — mantém a didática problema→conceito→exemplo já usada no 1º semestre
 5. 🃏 **Flashcards de revisão** (3–6 por aula) — sintaxe:
    ```
@@ -177,6 +178,20 @@ Antes de considerar a aula pronta:
   conexão cruzando por cima dos rótulos, ilegível (visto ao vivo na Aula 01). O layout
   desse tipo de diagrama é orgânico/de força, sem controle de colisão entre aresta e
   texto, e a versão do Mermaid empacotada pelo Material não inclui o layout `tidy-tree`
-  nem plugins de layout tipo ELK que resolveriam isso. Use `flowchart TD` com
+  nem plugins de layout tipo ELK que resolveriam isso. Use `flowchart LR` com
   `subgraph` por tópico — mesmo efeito de visão geral, sem sobreposição. Padrão em
   `templates/AULA_TEMPLATE.md`.
+- **No mapa mental, use `flowchart LR` (esquerda→direita), nunca `TD`/`TB`.** Com 4-6
+  subgraphs irmãos, `TD` os espalha lado a lado — o diagrama fica mais largo que a
+  coluna de conteúdo do site, o Material encolhe o SVG inteiro para caber e o texto
+  vira ilegível (visto ao vivo na Aula 01). Em `LR` os mesmos subgraphs empilham na
+  vertical (a página rola, isso não é problema); a largura fica controlada porque só
+  cresce com a profundidade da árvore, não com o número de ramos. Já é o padrão nos
+  arquivos deste projeto — ao criar um mapa mental do zero, comece direto com `LR`.
+  Se o mapa tiver muitos ramos (mais de ~6) mesmo assim, considere dividir em dois
+  diagramas menores em vez de forçar tudo em um só.
+- **Sempre valide um mapa mental novo visualmente antes de dar por pronto**, não só
+  com `mkdocs build` (que não pega problemas de layout/tamanho, só link/imagem
+  quebrada). Se houver Playwright disponível no ambiente, renderize o bloco Mermaid
+  isolado (`mermaid.min.js` local + HTML mínimo) dentro de um container com a largura
+  aproximada da coluna de conteúdo (~760px) e tire um screenshot antes de aplicar.

@@ -29,16 +29,20 @@ Ao final desta aula você deverá ser capaz de:
 Visão geral dos conceitos antes de entrar no detalhe — ajuda a criar a "moldura" onde o
 conteúdo que vem a seguir vai se encaixando.
 
-> ⚠️ **Use `flowchart TD` com subgraphs, não o diagrama `mindmap` do Mermaid.** O tipo
-> `mindmap` usa um layout orgânico/de força sem controle de colisão entre linhas e
-> texto — na prática as linhas de conexão cruzam por cima dos rótulos e ficam
-> ilegíveis, e não há como corrigir isso de forma confiável na versão do Mermaid
-> empacotada pelo Material for MkDocs (sem plugin de layout externo tipo ELK). Um
-> `flowchart` com subgraphs por tópico dá o mesmo efeito de "visão geral antes do
-> detalhe" com roteamento de linhas garantido sem sobreposição — veja o padrão abaixo.
+> ⚠️ **Use `flowchart LR` com subgraphs, não o diagrama `mindmap` do Mermaid nem
+> `flowchart TD`.**
+> - `mindmap` usa um layout orgânico/de força sem controle de colisão entre linhas e
+>   texto — as linhas de conexão cruzam por cima dos rótulos e ficam ilegíveis, sem
+>   correção confiável na versão do Mermaid empacotada pelo Material.
+> - `flowchart TD` com vários subgraphs irmãos espalha tudo lado a lado
+>   horizontalmente — o diagrama fica mais largo que a coluna de conteúdo do site e o
+>   Material encolhe o SVG inteiro para caber, virando ilegível de tão pequeno.
+> - `flowchart LR` empilha os mesmos subgraphs na vertical em vez de espalhar na
+>   horizontal — largura controlada (cresce só com a profundidade da árvore), altura
+>   livre (a página rola, sem problema). Veja o padrão abaixo.
 
 ```mermaid
-flowchart TD
+flowchart LR
     ROOT(("Tema Central<br/>da Aula"))
 
     ROOT --> T1

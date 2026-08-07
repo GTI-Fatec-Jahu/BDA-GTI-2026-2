@@ -18,7 +18,7 @@ Ao final desta aula você deverá ser capaz de:
 ## 🗺️ Mapa Mental da Aula
 
 ```mermaid
-flowchart TD
+flowchart LR
     ROOT(("Introdução a<br/>Banco de Dados"))
 
     ROOT --> T1
