@@ -18,28 +18,48 @@ Ao final desta aula você deverá ser capaz de:
 ## 🗺️ Mapa Mental da Aula
 
 ```mermaid
-mindmap
-  root((Introdução a Banco de Dados))
-    Dado Informação Conhecimento
-      Dado é fato bruto sem contexto
-      Informação é dado interpretado em contexto
-      Conhecimento vem da experiência acumulada
-    Sistemas de Arquivos vs SGBD
-      Problemas - redundância inconsistência isolamento
-      SGBD resolve com modelo unificado e SQL
-    O que é um SGBD
-      MySQL MariaDB PostgreSQL
-      Oracle SQL Server SQLite
-    Arquitetura ANSI SPARC - 3 níveis
-      Nível Externo - visões por usuário
-      Nível Conceitual - esquema lógico completo
-      Nível Interno - armazenamento físico
-      Independência de dados
-    Componentes do SGBD
-      Processador de consultas
-      Gerenciador de armazenamento
-      Gerenciador de transações
-      Gerenciador de buffer
+flowchart TD
+    ROOT(("Introdução a<br/>Banco de Dados"))
+
+    ROOT --> T1
+    subgraph T1["🔢 Dado, Informação e Conhecimento"]
+        direction TB
+        T1A["Dado = fato bruto,<br/>sem contexto"]
+        T1B["Informação = dado<br/>interpretado em contexto"]
+        T1C["Conhecimento = informação<br/>+ experiência acumulada"]
+    end
+
+    ROOT --> T2
+    subgraph T2["📂 Sistemas de Arquivos vs. SGBD"]
+        direction TB
+        T2A["Problemas: redundância,<br/>inconsistência, isolamento"]
+        T2B["SGBD resolve com modelo<br/>unificado + SQL"]
+    end
+
+    ROOT --> T3
+    subgraph T3["💽 O que é um SGBD"]
+        direction TB
+        T3A["MySQL, MariaDB,<br/>PostgreSQL"]
+        T3B["Oracle, SQL Server,<br/>SQLite"]
+    end
+
+    ROOT --> T4
+    subgraph T4["🏛️ Arquitetura ANSI/SPARC"]
+        direction TB
+        T4A["Nível Externo — visões"]
+        T4B["Nível Conceitual —<br/>esquema lógico"]
+        T4C["Nível Interno —<br/>armazenamento físico"]
+        T4D["Independência de dados"]
+    end
+
+    ROOT --> T5
+    subgraph T5["⚙️ Componentes do SGBD"]
+        direction TB
+        T5A["Processador de consultas"]
+        T5B["Gerenciador de<br/>armazenamento"]
+        T5C["Gerenciador de transações"]
+        T5D["Gerenciador de buffer"]
+    end
 ```
 
 ---

@@ -29,15 +29,32 @@ Ao final desta aula você deverá ser capaz de:
 Visão geral dos conceitos antes de entrar no detalhe — ajuda a criar a "moldura" onde o
 conteúdo que vem a seguir vai se encaixando.
 
+> ⚠️ **Use `flowchart TD` com subgraphs, não o diagrama `mindmap` do Mermaid.** O tipo
+> `mindmap` usa um layout orgânico/de força sem controle de colisão entre linhas e
+> texto — na prática as linhas de conexão cruzam por cima dos rótulos e ficam
+> ilegíveis, e não há como corrigir isso de forma confiável na versão do Mermaid
+> empacotada pelo Material for MkDocs (sem plugin de layout externo tipo ELK). Um
+> `flowchart` com subgraphs por tópico dá o mesmo efeito de "visão geral antes do
+> detalhe" com roteamento de linhas garantido sem sobreposição — veja o padrão abaixo.
+
 ```mermaid
-mindmap
-  root(("Tema Central da Aula"))
-    Conceito A
-      Detalhe A1
-      Detalhe A2
-    Conceito B
-      Detalhe B1
-    Conceito C
+flowchart TD
+    ROOT(("Tema Central<br/>da Aula"))
+
+    ROOT --> T1
+    subgraph T1["🅰️ Conceito A"]
+        direction TB
+        T1A["Detalhe A1"]
+        T1B["Detalhe A2"]
+    end
+
+    ROOT --> T2
+    subgraph T2["🅱️ Conceito B"]
+        direction TB
+        T2A["Detalhe B1"]
+    end
+
+    ROOT --> T3["🆎 Conceito C"]
 ```
 
 ---

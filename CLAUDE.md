@@ -90,7 +90,9 @@ conteúdo — ex. aulas que são só enunciado de prova não precisam de mapa me
 
 1. Cabeçalho padrão (disciplina/professor/semestre)
 2. 🎯 Objetivos da aula
-3. 🗺️ **Mapa mental** (Mermaid `mindmap`) resumindo os conceitos antes do detalhe
+3. 🗺️ **Mapa mental** — `flowchart TD` com subgraphs por tópico (NÃO o diagrama
+   `mindmap` do Mermaid — ver "Armadilhas já conhecidas" abaixo), resumindo os
+   conceitos antes do detalhe. Gabarito em `templates/AULA_TEMPLATE.md`.
 4. Conteúdo — mantém a didática problema→conceito→exemplo já usada no 1º semestre
 5. 🃏 **Flashcards de revisão** (3–6 por aula) — sintaxe:
    ```
@@ -171,3 +173,10 @@ Antes de considerar a aula pronta:
   link) — mesma lógica do Sumário de Aulas em `docs/index.md`. Toda atividade nova em
   `docs/atividades/` precisa de uma linha nessa tabela e de uma entrada no `nav`, senão
   fica órfã (existe como página mas não aparece linkada em lugar nenhum).
+- **Nunca use `mindmap` do Mermaid para o "Mapa Mental da Aula".** Já causou linhas de
+  conexão cruzando por cima dos rótulos, ilegível (visto ao vivo na Aula 01). O layout
+  desse tipo de diagrama é orgânico/de força, sem controle de colisão entre aresta e
+  texto, e a versão do Mermaid empacotada pelo Material não inclui o layout `tidy-tree`
+  nem plugins de layout tipo ELK que resolveriam isso. Use `flowchart TD` com
+  `subgraph` por tópico — mesmo efeito de visão geral, sem sobreposição. Padrão em
+  `templates/AULA_TEMPLATE.md`.
