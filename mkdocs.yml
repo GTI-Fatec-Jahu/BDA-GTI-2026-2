@@ -72,6 +72,8 @@ nav:
   - Início: index.md
   - Bloco 1 — Modelagem e DDL:
       - aulas/Aula_01_Introducao_BD.md
+      - aulas/Aula_02_Modelagem_Entidades.md
+      - aulas/Aula_02_Gabarito.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md

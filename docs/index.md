@@ -64,7 +64,7 @@ A nota final é calculada pela fórmula:
 | # | Aula | Conteúdo Principal | Status |
 |---|---|---|---|
 | 01 | [Introdução a Banco de Dados](aulas/Aula_01_Introducao_BD.md) | Sistemas de Arquivos vs. SGBD; Dados, Informação e Conhecimento; Arquitetura de SGBD | ✅ Disponível |
-| 02 | Modelagem Conceitual: Entidades | Modelo Entidade-Relacionamento (MER), Entidades e Atributos | 🔒 Em breve |
+| 02 | [Modelagem Conceitual: Entidades](aulas/Aula_02_Modelagem_Entidades.md) | Modelo Entidade-Relacionamento (MER), Entidades e Atributos | ✅ Disponível |
 | 03 | Relacionamentos e Cardinalidade | Tipos de relacionamentos e regras de cardinalidade | 🔒 Em breve |
 | 04 | Modelo Lógico Relacional | Tabelas, Chaves Primárias (PK) e Estrangeiras (FK) | 🔒 Em breve |
 | 05 | Normalização de Dados | Formas Normais (1FN, 2FN e 3FN) | 🔒 Em breve |
