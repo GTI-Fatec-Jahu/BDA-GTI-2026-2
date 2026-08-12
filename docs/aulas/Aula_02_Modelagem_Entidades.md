@@ -119,6 +119,8 @@ erDiagram
 
 No diagrama acima, `FUNCIONARIO` é uma entidade forte e `DEPENDENTE` é uma entidade fraca, pois não faria sentido registrar um dependente sem um funcionário associado.
 
+> 🧭 **Sobre os rótulos `int`, `string`, `date` no diagrama:** você deve ter notado que cada atributo, além do nome, tem uma palavra ao lado (`int`, `string`, `date`...). Esses são **tipos de dados genéricos** — só indicam, de forma informal, se o atributo guarda um número, um texto ou uma data, para deixar o diagrama mais completo e legível. Neste momento **não precisamos escolher o tipo de dado exato** que o banco vai usar (isso é assunto da Aula 4 — Modelo Lógico, quando decidiremos entre `INT`, `VARCHAR(100)`, `DECIMAL(10,2)` etc., já na sintaxe que o SQL entende). Por enquanto, o que importa é identificar **o que é um atributo** — a formalização de "como escrever isso no banco de dados" vem depois.
+
 ---
 
 ## 3. Atributos
