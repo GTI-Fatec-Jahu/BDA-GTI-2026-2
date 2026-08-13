@@ -32,19 +32,19 @@ erDiagram
         string especie
         string raca
         date data_nascimento
-        int id_tutor FK
+        int tutor_id FK
     }
     VACINA {
         int id_vacina PK
         string nome_vacina
         date data_aplicacao
         date validade
-        int id_animal FK
+        int animal_id FK
     }
     TELEFONE_TUTOR {
         int id_telefone PK
         string numero
-        int id_tutor FK
+        int tutor_id FK
     }
 
     TUTOR ||--o{ ANIMAL : "possui"
@@ -78,11 +78,11 @@ erDiagram
         date data_retirada
         date data_devolucao_prevista
         decimal valor_total
-        int id_cliente FK
+        int cliente_id FK
     }
     ITEM_LOCACAO {
-        int id_locacao FK
-        int id_equipamento FK
+        int locacao_id FK
+        int equipamento_id FK
     }
 
     CLIENTE ||--o{ LOCACAO : "realiza"
@@ -109,7 +109,7 @@ erDiagram
     MORADOR {
         int id_morador PK
         string nome
-        int id_unidade FK
+        int unidade_id FK
     }
 
     UNIDADE ||--o{ MORADOR : "abriga"

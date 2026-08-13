@@ -74,6 +74,8 @@ nav:
       - aulas/Aula_01_Introducao_BD.md
       - aulas/Aula_02_Modelagem_Entidades.md
       - aulas/Aula_02_Gabarito.md
+      - aulas/Aula_03_Relacionamentos_Cardinalidade.md
+      - aulas/Aula_03_Gabarito.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md

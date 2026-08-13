@@ -549,14 +549,16 @@ erDiagram
         decimal valor_unitario
     }
     ITEM_CUPOM {
-        int id_cupom FK
-        int id_produto FK
+        int cupom_id FK
+        int produto_id FK
         int quantidade
         decimal valor_total_item
     }
     CUPOM_FISCAL ||--o{ ITEM_CUPOM : "contém"
     PRODUTO ||--o{ ITEM_CUPOM : "aparece em"
 ```
+
+> 📐 Os nomes `cupom_id` e `produto_id` já seguem a convenção oficial de nomenclatura de chaves estrangeiras da disciplina — formalizada com o nome de "Regra 6" na Aula 03.
 
 Note que resistimos à tentação de transformar `OPERADOR` automaticamente em entidade só porque ele tem um rótulo próprio no documento — é exatamente o Erro Comum 6.1 que vimos acima. A decisão de promovê-lo a entidade fica reservada para quando o negócio realmente precisar (por exemplo, um relatório de vendas por operador).
 
@@ -729,7 +731,7 @@ erDiagram
 
 ## 🔗 Navegação
 
-⬅️ [Aula 01 — Introdução a BD](Aula_01_Introducao_BD.md) · ➡️ 🔒 Aula 03 — em breve.
+⬅️ [Aula 01 — Introdução a BD](Aula_01_Introducao_BD.md) · ➡️ [Aula 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md)
 
 ---
 
