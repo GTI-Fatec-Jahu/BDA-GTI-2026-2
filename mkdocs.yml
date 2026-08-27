@@ -68,14 +68,16 @@ plugins:
 # Toda aula nova adicionada em docs/aulas/ precisa ganhar uma entrada aqui,
 # na seção correta, ou ela existirá como arquivo mas não aparecerá no site.
 # O pipeline descrito em CLAUDE.md cobre esse passo automaticamente.
+#
+# Gabaritos (Aula_NN_Gabarito.md) ficam DE PROPÓSITO fora do nav: o mkdocs ainda
+# publica a página normalmente, só não aparece no menu lateral. O acesso é só pelo
+# link "🔑 Resolução no Gabarito..." de dentro de cada Checkpoint/exercício da aula.
 nav:
   - Início: index.md
   - Bloco 1 — Modelagem e DDL:
       - aulas/Aula_01_Introducao_BD.md
       - aulas/Aula_02_Modelagem_Entidades.md
-      - aulas/Aula_02_Gabarito.md
       - aulas/Aula_03_Relacionamentos_Cardinalidade.md
-      - aulas/Aula_03_Gabarito.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md

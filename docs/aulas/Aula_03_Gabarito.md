@@ -1,4 +1,9 @@
-# Gabarito — Exercícios de Fixação da Aula 03
+<!--
+GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
+mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relacionamentos_Cardinalidade.md.
+-->
+
+# Gabarito — Aula 03 — Relacionamentos e Cardinalidade
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -7,7 +12,79 @@
 ---
 
 !!! warning "Antes de conferir"
-    Assim como no gabarito da Aula 02: este documento mostra **uma** solução correta possível para cada exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Aula 03, Seção 2) e a regra de onde entra a FK (Aula 03, Seção 4). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
+    Assim como no gabarito da Aula 02: este documento mostra **uma** solução correta possível para cada Checkpoint e Exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Aula 03, Seção 2) e a regra de onde entra a FK (Aula 03, Seção 4). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
+
+---
+
+## Checkpoint 1 — Cardinalidade: plataforma de streaming de música {: #checkpoint-1 }
+
+**Resposta:**
+
+**(a) USUARIO e PLAYLIST → 1:N.** "Um usuário pode criar várias playlists" (máximo N do lado PLAYLIST) e "cada playlist pertence a exatamente um usuário" (máximo 1 do lado USUARIO). A FK `usuario_id` fica em `PLAYLIST` (lado N), seguindo a Regra 6.
+
+**(b) PLAYLIST e MUSICA → N:M.** "Pode ter mais de uma?" é sim nos dois sentidos — uma playlist tem várias músicas, e uma música está em várias playlists. Precisa de uma tabela associativa (ex.: `ITEM_PLAYLIST`, com `playlist_id FK` e `musica_id FK`).
+
+**(c) USUARIO e ASSINATURA → 1:1.** "Um usuário tem exatamente uma assinatura ativa" e "uma assinatura pertence a exatamente um usuário" — não em quantidade nos dois sentidos. A FK fica no lado de participação parcial (se um usuário puder existir sem assinatura ativa, a FK `usuario_id` vai em `ASSINATURA`).
+
+---
+
+## Checkpoint 2 — Notações: locadora de veículos {: #checkpoint-2 }
+
+**Resposta:**
+
+**(a)** O símbolo `O{`, perto de `FILIAL`, descreve `VEICULO` — significa que **uma filial pode ter zero ou muitos veículos** (mínimo 0, máximo N).
+
+**(b)** O símbolo `||`, perto de `VEICULO`, descreve `FILIAL` — significa que **um veículo pertence a exatamente uma filial** (mínimo 1, máximo 1).
+
+**(c)** Em Min-Max: `FILIAL (0,N) ———— (1,1) VEICULO`.
+
+---
+
+## Checkpoint 3 — De cardinalidade a PK/FK: sistema de manutenção industrial {: #checkpoint-3 }
+
+**Resposta:**
+
+**(a)** `MAQUINA` e `ORDEM_SERVICO` são 1:N — uma máquina pode gerar várias ordens de serviço, mas cada ordem de serviço se refere a exatamente uma máquina. Pela Regra da Seção 4.1, a FK fica no lado N (`ORDEM_SERVICO`), chamada `maquina_id` (Regra 6: nome da tabela referenciada no singular + `_id`).
+
+**(b)** `ORDEM_SERVICO` e `TECNICO` são N:M — uma ordem pode envolver vários técnicos, e um técnico atua em várias ordens. Nenhuma FK simples resolve isso porque nenhum dos dois lados consegue guardar múltiplas referências em uma única coluna (Seção 4.2). Solução: tabela associativa `ATUACAO_TECNICA` (ou similar), com `ordem_servico_id FK` e `tecnico_id FK`.
+
+---
+
+## Checkpoint 4 — Participação: sistema de biblioteca com reservas {: #checkpoint-4 }
+
+**Resposta:**
+
+**RESERVA → participação total** em relação a `LIVRO` e a `MEMBRO`: o enunciado diz que toda reserva obrigatoriamente está vinculada aos dois — não existe reserva "solta" (mínimo 1 dos dois lados).
+
+**LIVRO → participação parcial** no relacionamento de reserva: nem todo livro do acervo precisa ter sido reservado (mínimo 0).
+
+**MEMBRO → participação parcial** no relacionamento de reserva: nem todo membro cadastrado precisa ter feito uma reserva (mínimo 0).
+
+---
+
+## Checkpoint 5 — Auto-relacionamento e Ternário: rede social e e-commerce {: #checkpoint-5 }
+
+**Resposta:**
+
+**(a) Auto-relacionamento.** `USUARIO` se relaciona com `USUARIO` — a mesma entidade em ambos os lados do relacionamento "segue".
+
+```mermaid
+erDiagram
+    USUARIO {
+        int id_usuario PK
+        string nome_usuario
+    }
+    USUARIO ||--o{ USUARIO : "segue"
+```
+
+**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 8.
+
+```mermaid
+erDiagram
+    VENDEDOR }o--o{ PRODUTO : "oferece"
+    PRODUTO }o--o{ CONDICAO_COMERCIAL : "sob"
+    VENDEDOR }o--o{ CONDICAO_COMERCIAL : "define"
+```
 
 ---
 

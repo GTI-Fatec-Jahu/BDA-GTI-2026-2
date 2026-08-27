@@ -84,6 +84,20 @@ Ex: Salário = R$1200"]
 Ex: Padrão salarial da empresa"]
 ```
 
+!!! example "🔍 Checkpoint 1 — Dado, Informação e Conhecimento: app de corrida"
+    Um aplicativo de corrida de rua registra, a cada treino, a sequência bruta de
+    coordenadas de GPS captadas pelo celular do usuário a cada segundo. A partir
+    dessas coordenadas, o app calcula e exibe a distância total percorrida no treino
+    (ex.: "5,2 km"). Depois de meses de uso, o app percebe um padrão no histórico do
+    usuário — toda vez que ele corre mais de 8 km em um treino, o ritmo médio das
+    corridas seguintes melhora — e passa a sugerir ajustes automáticos no plano de
+    treino com base nisso. Classifique cada um dos três elementos do cenário (a
+    sequência bruta de coordenadas, a distância exibida, o padrão identificado) como
+    dado, informação ou conhecimento, justificando cada classificação.
+
+    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-1) — tente
+    resolver antes de conferir.
+
 ---
 
 ## 2. Sistemas de Arquivos vs. SGBDs
@@ -100,6 +114,19 @@ Por muitos anos, os dados foram armazenados em **sistemas de arquivos** convenci
 | **Isolamento de dados** — formatos proprietários por aplicação | Modelo unificado acessível por múltiplas aplicações |
 | **Falta de controle de acesso** | Sistema de permissões e usuários |
 | **Problemas de concorrência** | Controle de transações e bloqueios |
+
+!!! example "🔍 Checkpoint 2 — Sistemas de Arquivos: rede de clínicas populares"
+    Uma rede com três clínicas populares ainda organiza o cadastro de pacientes em
+    planilhas separadas — uma por unidade. Quando um paciente é atendido em mais de
+    uma unidade, seus dados (nome, telefone, histórico de alergias) são digitados de
+    novo em cada planilha, às vezes com pequenas diferenças de grafia entre elas.
+    Além disso, duas recepcionistas já tentaram editar a mesma planilha ao mesmo
+    tempo pela rede local, e uma delas perdeu as alterações. Identifique, entre os
+    problemas listados na tabela desta seção, quais aparecem neste cenário e explique
+    brevemente como um SGBD resolveria cada um.
+
+    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-2) — tente
+    resolver antes de conferir.
 
 ---
 
@@ -140,6 +167,19 @@ Tabelas, Relacionamentos, Restrições]
 
 O **nível externo** é o que cada usuário enxerga — uma visão personalizada dos dados. O **nível conceitual** descreve toda a estrutura lógica do banco, independente de como os dados estão fisicamente armazenados. O **nível interno** cuida dos detalhes de armazenamento em disco, como índices e blocos de dados. Essa separação é chamada de **independência de dados**.
 
+!!! example "🔍 Checkpoint 3 — Arquitetura ANSI/SPARC: sistema de matrícula acadêmica"
+    Em um sistema de matrícula de uma faculdade: (a) um aluno acessa o portal e vê
+    apenas as disciplinas do seu próprio curso, já matriculadas ou não; (b) o
+    administrador do sistema decide adicionar uma nova coluna `situacao_financeira`
+    à estrutura lógica que descreve o aluno, afetando todas as visões que dependem
+    dela; (c) o time de infraestrutura migra os arquivos de dados para um novo
+    tipo de disco (SSD NVMe) sem que nenhuma consulta SQL precise ser reescrita.
+    Associe cada uma das três situações (a, b, c) ao nível da arquitetura ANSI/SPARC
+    (externo, conceitual ou interno) em que ela ocorre, justificando.
+
+    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-3) — tente
+    resolver antes de conferir.
+
 ---
 
 ## 5. Componentes de um SGBD
@@ -147,6 +187,33 @@ O **nível externo** é o que cada usuário enxerga — uma visão personalizada
 ![Componentes de um SGBD](../imgs/Aula_01_img_03.png)
 
 Os principais componentes internos de um SGBD são o **processador de consultas** (que interpreta e otimiza comandos SQL), o **gerenciador de armazenamento** (que controla o acesso físico aos dados), o **gerenciador de transações** (que garante atomicidade e controle de concorrência) e o **gerenciador de buffer** (que mantém dados em memória para melhorar o desempenho).
+
+!!! example "🔍 Checkpoint 4 — Componentes do SGBD: consulta em um app de delivery"
+    Um usuário abre o app de delivery e pesquisa por "pizzaria perto de mim". Nos
+    bastidores: (1) o SGBD recebe o `SELECT` gerado pela busca e decide o plano mais
+    eficiente para executá-lo; (2) o resultado (lista de pizzarias) precisa ser lido
+    dos arquivos onde os dados dos restaurantes estão gravados em disco; (3) ao mesmo
+    tempo, o pedido de outro usuário está sendo confirmado, e o SGBD garante que as
+    duas operações não causem inconsistência uma na outra; (4) para não reler o disco
+    a cada busca repetida, os dados das pizzarias mais pesquisadas ficam guardados
+    temporariamente em memória. Associe cada uma das quatro etapas (1 a 4) ao
+    componente do SGBD responsável por ela.
+
+    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-4) — tente
+    resolver antes de conferir.
+
+---
+
+> 📐 **Sobre convenções de nomenclatura:** a partir da Aula 02, quando começarmos a
+> modelar entidades e atributos de verdade, esta disciplina passa a seguir
+> convenções formais de nomenclatura — a primeira delas é a **Regra 1 (snake_case:**
+> palavras separadas por underline, nunca por espaço ou `camelCase`**)** e a **Regra
+> 2 (sempre minúsculas para nomes criados por você — tabelas, colunas, entidades)**.
+> Outras regras (nomenclatura de chave primária e estrangeira, tipos de dados,
+> constraints) chegam progressivamente ao longo do semestre, culminando na Aula 07 —
+> SQL DDL. Essas regras não são frescura estética: elas tornam o modelo e o código
+> legíveis e previsíveis para qualquer pessoa da turma, inclusive você mesmo(a)
+> daqui a alguns meses.
 
 ---
 
@@ -229,6 +296,12 @@ Excel é uma planilha eletrônica — um exemplo clássico de sistema de arquivo
 ## 📝 Resumo
 
 Nesta aula aprendemos que dados são fatos brutos que se transformam em informação quando contextualizados. Vimos que sistemas de arquivos apresentam problemas sérios de redundância, inconsistência e dificuldade de acesso que os SGBDs resolvem de forma elegante. Entendemos também que a arquitetura em três níveis (externo, conceitual e interno) é o alicerce que garante independência entre a aplicação e o armazenamento físico.
+
+---
+
+📄 **[Ver gabarito dos Checkpoints →](Aula_01_Gabarito.md)**
+
+> Tente resolver os Checkpoints antes de conferir — a comparação com o gabarito rende muito mais quando você já tentou construir sua própria resposta primeiro.
 
 ---
 

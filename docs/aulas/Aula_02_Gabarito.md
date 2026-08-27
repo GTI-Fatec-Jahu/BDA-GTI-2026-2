@@ -1,4 +1,9 @@
-# Gabarito — Exercícios de Fixação da Aula 02
+<!--
+GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
+mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_02_Modelagem_Entidades.md.
+-->
+
+# Gabarito — Aula 02 — Modelagem Conceitual: Entidades e Atributos
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -7,7 +12,95 @@
 ---
 
 !!! warning "Antes de conferir"
-    Este gabarito mostra **uma** solução correta possível para cada exercício — em modelagem conceitual, mais de uma resposta pode estar certa dependendo das suposições feitas sobre o negócio. O que importa é o raciocínio: se sua resposta divergir, releia as [quatro perguntas-chave da seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades) e confira se ela também se sustenta.
+    Este gabarito mostra **uma** solução correta possível para cada Checkpoint e Exercício — em modelagem conceitual, mais de uma resposta pode estar certa dependendo das suposições feitas sobre o negócio. O que importa é o raciocínio: se sua resposta divergir, releia as [quatro perguntas-chave da seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades) e confira se ela também se sustenta. Resolver os Checkpoints e Exercícios antes de conferir aqui rende muito mais do que ler a resposta primeiro.
+
+---
+
+## Checkpoint 1 — Entidades: academia de ginástica {: #checkpoint-1 }
+
+**Resposta:**
+
+| Entidade | Classificação | Justificativa |
+|---|---|---|
+| `ALUNO` | Forte | Existe de forma independente — um aluno é cadastrado no sistema com seus próprios dados, mesmo antes de escolher um plano. |
+| `PLANO` | Forte | Existe independentemente de qualquer aluno — a academia cadastra seus planos (mensal, trimestral, anual) antes mesmo de ter alunos matriculados neles. |
+| `AVALIACAO_FISICA` | Fraca | Só existe em função de um `ALUNO` — o enunciado deixa explícito que, sem o aluno, o registro de avaliação perde sentido, exatamente como `DEPENDENTE` em relação a `FUNCIONARIO` na Seção 2. |
+
+---
+
+## Checkpoint 2 — Atributos: cadastro de imóvel para aluguel {: #checkpoint-2 }
+
+**Resposta:**
+
+| Atributo | Classificação | Justificativa |
+|---|---|---|
+| `codigo_anuncio` | Chave (identificador) | Identifica unicamente cada anúncio — não se repete entre instâncias. |
+| `endereco_completo` | Composto | Pode ser dividido em partes com significado próprio: rua, número, bairro, cidade e CEP. |
+| `valor_aluguel` | Simples | Não se subdivide — é um único valor monetário. |
+| `valor_condominio` | Simples | Mesma lógica de `valor_aluguel`. |
+| `valor_total_mensal` | Derivado | Seu valor é calculado a partir de `valor_aluguel` + `valor_condominio` — não precisa ser armazenado. |
+| `comodidades` | Multivalorado | O anunciante pode marcar quantas quiser (piscina, churrasqueira, vaga, portaria 24h) para o mesmo imóvel. |
+
+---
+
+## Checkpoint 3 — Generalização/Especialização: carteira digital de pagamentos {: #checkpoint-3 }
+
+**Resposta:**
+
+Superclasse `FORMA_PAGAMENTO` com os atributos comuns `apelido` e `data_cadastro`. Subclasses `CARTAO_CREDITO` (`numero_final`, `bandeira`), `CARTAO_DEBITO` (`numero_final`, `banco_emissor`) e `CARTEIRA_DIGITAL_TERCEIROS` (`identificador_externo`, `saldo_disponivel`).
+
+```mermaid
+flowchart TB
+    FORMA["💳 FORMA_PAGAMENTO
+    apelido
+    data_cadastro"]
+
+    CREDITO["💰 CARTAO_CREDITO
+    numero_final
+    bandeira"]
+
+    DEBITO["🏦 CARTAO_DEBITO
+    numero_final
+    banco_emissor"]
+
+    TERCEIROS["📲 CARTEIRA_DIGITAL_TERCEIROS
+    identificador_externo
+    saldo_disponivel"]
+
+    FORMA -->|"d — total"| CREDITO
+    FORMA --> DEBITO
+    FORMA --> TERCEIROS
+```
+
+A especialização é **total** (o enunciado diz que o app não permite cadastrar uma forma de pagamento "sem tipo definido" — toda instância pertence a uma subclasse) e **disjunta** (uma forma de pagamento é sempre exatamente um dos três tipos, nunca mais de um ao mesmo tempo) — o mesmo padrão do Exemplo 3 (`CONTA_FISICA`/`CONTA_JURIDICA`) da seção 4.4.
+
+---
+
+## Checkpoint 4 — Encontre o erro: sistema de oficina mecânica {: #checkpoint-4 }
+
+**Resposta:**
+
+**Erro cometido:** 6.1 — Confundir atributo com entidade. `PLACA_VEICULO` não tem vida própria: ela só descreve `VEICULO` (uma placa não existe nem faz sentido fora do contexto de um veículo específico), e a relação 1-para-1 entre `VEICULO` e `PLACA_VEICULO` é exatamente o sintoma apontado na Seção 6.1 — uma entidade sem atributos próprios relevantes, sempre 1-para-1 com outra. O argumento "é um dado importante" não justifica virar entidade — importância do dado não é o critério; vida própria é.
+
+**Correção:** `placa` deve ser um atributo simples de `VEICULO`, não uma entidade separada.
+
+```mermaid
+erDiagram
+    VEICULO {
+        int id_veiculo PK
+        string placa
+    }
+    CLIENTE {
+        int id_cliente PK
+    }
+    ORDEM_SERVICO {
+        int id_ordem_servico PK
+        int veiculo_id FK
+    }
+
+    CLIENTE ||--o{ VEICULO : "possui"
+    VEICULO ||--o{ ORDEM_SERVICO : "gera"
+```
 
 ---
 

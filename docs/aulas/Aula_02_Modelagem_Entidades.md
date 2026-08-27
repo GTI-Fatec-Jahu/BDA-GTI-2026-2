@@ -119,7 +119,21 @@ erDiagram
 
 No diagrama acima, `FUNCIONARIO` é uma entidade forte e `DEPENDENTE` é uma entidade fraca, pois não faria sentido registrar um dependente sem um funcionário associado.
 
+!!! example "🔍 Checkpoint 1 — Entidades: academia de ginástica"
+    Uma academia está modelando o banco de dados do seu sistema de gestão. No
+    sistema existem `Alunos` (que se matriculam em planos), `Planos` (mensal,
+    trimestral, anual — cada um com valor e duração), e `Avaliações Físicas`
+    (registros de peso, percentual de gordura e medidas, feitos periodicamente —
+    cada avaliação só existe porque está vinculada a um aluno específico; se o
+    aluno for removido do sistema, suas avaliações perdem sentido). Para cada uma
+    dessas três entidades, classifique-a como **forte** ou **fraca**, justificando
+    em uma frase.
+
+    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+
 > 🧭 **Sobre os rótulos `int`, `string`, `date` no diagrama:** você deve ter notado que cada atributo, além do nome, tem uma palavra ao lado (`int`, `string`, `date`...). Esses são **tipos de dados genéricos** — só indicam, de forma informal, se o atributo guarda um número, um texto ou uma data, para deixar o diagrama mais completo e legível. Neste momento **não precisamos escolher o tipo de dado exato** que o banco vai usar (isso é assunto da Aula 4 — Modelo Lógico, quando decidiremos entre `INT`, `VARCHAR(100)`, `DECIMAL(10,2)` etc., já na sintaxe que o SQL entende). Por enquanto, o que importa é identificar **o que é um atributo** — a formalização de "como escrever isso no banco de dados" vem depois.
+
+> 📐 **Convenções de nomenclatura desta disciplina — Regras 1 e 2:** a partir daqui você vai ver os primeiros atributos nomeados de verdade (`cpf`, `data_nascimento`, `logradouro`...), e eles já seguem duas convenções que valem para toda a disciplina, desde já. **Regra 1 — snake_case:** quando um nome de atributo tem mais de uma palavra, elas são separadas por underline, nunca por espaço, hífen ou `camelCase` — `data_nascimento`, não `DataNascimento` nem `data-nascimento`. **Regra 2 — sempre minúsculas para nomes criados por você:** atributos, entidades (quando viram tabelas) e demais nomes do seu modelo usam apenas letras minúsculas. Note que isso é diferente do nome da **entidade** no diagrama conceitual (`CLIENTE`, em maiúsculas) — essa é a notação clássica do MER para entidades, não uma coluna; quando a entidade virar tabela de verdade (Aula 04 em diante), ela também passa a ser escrita em minúsculas, além de no plural. Convenção não é frescura estética: é o que torna um modelo — seu, de um colega, ou seu mesmo daqui a alguns meses — imediatamente legível, sem precisar adivinhar como cada nome foi escrito da última vez. Mais regras de nomenclatura (chave primária, chave estrangeira, tipos e tamanhos) chegam progressivamente nas próximas aulas, culminando na Aula 07 — SQL DDL.
 
 ---
 
@@ -129,15 +143,21 @@ Os **atributos** são as características ou propriedades que descrevem uma enti
 
 ![Entidade com atributos](../imgs/Aula_02_img_02.png)
 
-### 3.1 Classificação dos Atributos
+### 3.1 Tipos de Atributos
 
-Os atributos se classificam de diversas formas, e conhecer essa classificação é fundamental para construir modelos precisos.
+Entender os tipos de atributos é fundamental para fazer uma modelagem precisa. Veja os principais:
 
-O **atributo simples** (ou atômico) não pode ser subdividido — por exemplo, `cpf` ou `salario`. Já o **atributo composto** pode ser decomposto em partes menores com significado próprio — `endereco` pode ser dividido em `logradouro`, `numero`, `bairro`, `cidade` e `cep`.
+**Atributo Simples (ou Atômico):** não pode ser subdividido. Exemplo: `cpf`, `data_nascimento`, `salario`.
 
-O **atributo monovalorado** armazena um único valor por vez — como `data_nascimento`, que para uma pessoa só pode ter um valor. O **atributo multivalorado** pode ter vários valores — como `telefone`, pois uma pessoa pode ter vários números de contato.
+**Atributo Composto:** pode ser dividido em partes menores com significado próprio. O clássico exemplo é `endereco`, que pode ser dividido em `logradouro`, `numero`, `bairro`, `cidade` e `cep`. A decisão de decompô-lo ou não depende de se o sistema precisará consultar ou filtrar por partes do endereço separadamente.
 
-O **atributo derivado** tem seu valor calculado a partir de outro atributo — `idade` pode ser derivado de `data_nascimento` e da data atual. Por isso, geralmente não precisamos armazená-lo.
+**Atributo Multivalorado:** pode ter mais de um valor para uma mesma instância — diferente da maioria dos atributos, que são **monovalorados** (um único valor por vez, como `data_nascimento`). Exemplo: `telefone` de um cliente — uma pessoa pode ter vários números. Na notação do MER, representa-se com **dupla elipse**.
+
+**Atributo Derivado:** seu valor pode ser calculado a partir de outro atributo. Exemplo: `idade` pode ser derivada de `data_nascimento`. Na notação, usa-se **elipse tracejada**. Por isso, geralmente não precisamos armazená-lo.
+
+**Atributo Chave (ou Identificador):** é o atributo cujo valor identifica unicamente cada instância da entidade. Exemplo: `cpf` para `PESSOA`, `matricula` para `ALUNO`. Na notação do MER, é sublinhado. É fundamental que o atributo chave seja **único** (não pode se repetir entre instâncias) e **não nulo** (toda instância precisa ter um valor para ele).
+
+> 🔑 **Nível conceitual vs. chave real de banco de dados:** aqui, no MER, identificar `cpf` ou `matricula` como atributo chave é só reconhecer o que identifica cada instância no mundo real — é assim que a literatura acadêmica costuma nomear. Quando esse modelo virar tabela de verdade (Aula 04 em diante), a chave primária efetivamente usada **não** vai ser o `cpf` nem a `matricula`, e sim um identificador substituto `id_` criado pelo banco — você vai entender exatamente o porquê na Aula 04.
 
 ```mermaid
 erDiagram
@@ -151,11 +171,17 @@ erDiagram
     }
 ```
 
-### 3.2 Atributo Identificador (Chave)
+!!! example "🔍 Checkpoint 2 — Atributos: cadastro de imóvel para aluguel"
+    Uma imobiliária está modelando a entidade `Imovel` para anúncios de aluguel. Os
+    dados coletados no cadastro são: `codigo_anuncio` (identificador único gerado
+    pelo sistema), `endereco_completo` (rua, número, bairro, cidade e CEP do
+    imóvel), `valor_aluguel`, `valor_condominio`, `valor_total_mensal` (calculado
+    somando aluguel e condomínio) e `comodidades` (o anunciante pode marcar quantas
+    quiser, entre piscina, churrasqueira, vaga de garagem e portaria 24h).
+    Classifique cada um desses seis atributos quanto ao tipo — simples, composto,
+    multivalorado, derivado ou chave — justificando cada classificação.
 
-O **atributo identificador** (ou chave) é aquele que distingue de forma única cada ocorrência de uma entidade. Na notação ER clássica, ele é sublinhado. Exemplos: `cpf` em `PESSOA`, `codigo` em `PRODUTO`, `matricula` em `ALUNO`.
-
-É fundamental que o atributo chave seja **único** (não pode se repetir entre instâncias) e **não nulo** (toda instância precisa ter um valor para ele).
+    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
 ---
 
@@ -370,6 +396,21 @@ Use quando você encontrar uma ou mais das seguintes situações no levantamento
 
 > 💡 **Atenção:** generalização/especialização **não é** o mesmo que um relacionamento comum. A seta que conecta superclasse e subclasse representa **herança de atributos**, não uma associação entre entidades distintas. A subclasse é uma especialização da mesma entidade, não uma entidade diferente relacionada a ela.
 
+!!! example "🔍 Checkpoint 3 — Generalização/Especialização: carteira digital de pagamentos"
+    Um app de carteira digital permite que o usuário cadastre diferentes formas de
+    pagamento vinculadas à sua `Conta`. Toda forma de pagamento tem `apelido` (nome
+    dado pelo usuário) e `data_cadastro`. Mas cada tipo tem campos próprios: **Cartão
+    de Crédito** tem `numero_final` e `bandeira`; **Cartão de Débito** tem
+    `numero_final` e `banco_emissor`; **Carteira Digital de Terceiros** (ex.: saldo
+    de outro app) tem `identificador_externo` e `saldo_disponivel`. Uma forma de
+    pagamento cadastrada é sempre exatamente um desses três tipos — nunca mais de
+    um ao mesmo tempo, e o app não permite cadastrar uma forma de pagamento "sem
+    tipo definido". Modele a hierarquia de generalização/especialização, indicando
+    a superclasse, as subclasses, e se a especialização é total ou parcial, disjunta
+    ou com sobreposição — justificando com base no enunciado.
+
+    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
+
 ---
 
 ## 5. Exemplo Completo: Sistema de Biblioteca
@@ -474,6 +515,17 @@ Nem toda diferença entre instâncias de uma entidade justifica criar subclasses
 | Entidade fraca tratada como forte | Modelo permite cadastro "órfão", sem a entidade da qual deveria depender | Pergunte: "isso existe sozinho, sem a outra entidade?" |
 | Atributo multivalorado em campo único | Um campo de texto guardando vários valores separados por vírgula | Pergunte: "essa informação pode se repetir para a mesma instância?" |
 | Especialização sem necessidade | Subclasses criadas para diferenças triviais | Confira a tabela de sinais da seção 4.5 antes de especializar |
+
+!!! example "🔍 Checkpoint 4 — Encontre o erro: sistema de oficina mecânica"
+    Um colega modelou o sistema de uma oficina mecânica com as entidades `CLIENTE`,
+    `VEICULO`, `ORDEM_SERVICO` e — separadamente — `PLACA_VEICULO`, ligada a
+    `VEICULO` por um relacionamento 1 para 1 (cada veículo tem exatamente uma placa,
+    e cada placa pertence a exatamente um veículo). Ele justificou a decisão dizendo
+    que "a placa merece sua própria entidade porque é um dado importante". Qual erro
+    comum (entre os listados nesta seção) foi cometido? Explique por que, e proponha
+    a correção.
+
+    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
 
 ---
 

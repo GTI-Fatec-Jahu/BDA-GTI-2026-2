@@ -141,7 +141,7 @@ erDiagram
 
 Perguntas-chave: *"Um funcionário pode ter mais de um crachá?"* → Não. *"Um crachá pode pertencer a mais de um funcionário?"* → Não. Logo, 1:1.
 
-> 📐 **Convenção de nomenclatura (Regra 5 — chave primária):** repare que a chave primária de `FUNCIONARIO` se chama `id_funcionario` — não `id`, nem `codigo`. Essa é a regra oficial da disciplina: **toda PK segue o padrão `id_` + nome da tabela no singular**. Você já vinha vendo isso desde a Aula 01 sem que tivesse nome — agora tem: é a **Regra 5** das convenções de nomenclatura. Vamos ver a lista completa mais adiante, mas cada regra nova vai ser apresentada exatamente no primeiro lugar em que ela aparece, como agora.
+> 📐 **Convenção de nomenclatura (Regra 5 — chave primária):** repare que a chave primária de `FUNCIONARIO` se chama `id_funcionario` — não `id`, nem `codigo`. Essa é a regra oficial da disciplina: **toda PK segue o padrão `id_` + nome da tabela no singular**. Você já vinha vendo isso desde a Aula 02 sem que tivesse nome — agora tem: é a **Regra 5** das convenções de nomenclatura. Vamos ver a lista completa mais adiante, mas cada regra nova vai ser apresentada exatamente no primeiro lugar em que ela aparece, como agora.
 
 > 📐 **Convenção de nomenclatura (Regra 6 — chave estrangeira):** já a chave estrangeira em `CRACHA` se chama `funcionario_id` — **repare que a ordem inverte**: a FK termina em `_id`, a PK começa com `id_`. Essa inversão não é acidente, é a **Regra 6**: o nome da FK usa o nome da tabela referenciada no singular, seguido de `_id`. É um erro comum (inclusive em material didático mais antigo) nomear a FK igual à PK que ela referencia — mas são papéis diferentes, e nomes diferentes deixam isso claro à primeira vista.
 
@@ -286,6 +286,17 @@ Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela
 - **Autor e Livro** (via `AUTORIA`) — um livro pode ter vários autores; um autor pode ter escrito vários livros. `AUTORIA` guarda `tipo_contribuicao` (autor principal, coautor...).
 - **Médico e Paciente** (via `CONSULTA`) — um médico atende muitos pacientes; um paciente é atendido por vários médicos. `CONSULTA` guarda `data_hora`, `diagnostico`, `prescricao` — atributos ricos o suficiente para deixar claro que a entidade associativa tem vida própria, não existe só para "resolver" o N:M.
 
+!!! example "🔍 Checkpoint 1 — Cardinalidade: plataforma de streaming de música"
+    Uma plataforma de streaming de música tem as seguintes regras de negócio: (a)
+    um `USUARIO` pode criar várias `PLAYLIST`, e cada playlist pertence a exatamente
+    um usuário; (b) uma `PLAYLIST` pode conter várias `MUSICA`, e uma música pode
+    estar em várias playlists diferentes; (c) um `USUARIO` tem exatamente uma
+    `ASSINATURA` ativa por vez, e uma assinatura pertence a exatamente um usuário.
+    Para cada uma das três relações (a, b, c), aplique as perguntas-chave da Seção 2
+    e identifique o tipo de cardinalidade (1:1, 1:N ou N:M), justificando.
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+
 ---
 
 ## 3. Notações: Min-Max e Crow's Foot
@@ -345,6 +356,18 @@ CLIENTE  ───────────────────────�
 | Zero ou muitos | (0,N) | `O{` |
 | Um ou muitos | (1,N) | `\|{` |
 
+!!! example "🔍 Checkpoint 2 — Notações: locadora de veículos"
+    A relação entre `FILIAL` e `VEICULO` de uma locadora é descrita assim em
+    Crow's Foot: `FILIAL ────O{─────||──── VEICULO` (o símbolo `O{` fica do lado de
+    `FILIAL`, e o símbolo `||` fica do lado de `VEICULO`). Aplicando a "regra de
+    ouro" da Seção 3.3: (a) o símbolo `O{`, perto de `FILIAL`, descreve qual das
+    duas entidades, e o que ele significa? (b) o símbolo `||`, perto de `VEICULO`,
+    descreve qual das duas entidades, e o que ele significa? (c) escreva essa mesma
+    cardinalidade na notação Min-Max, no formato `FILIAL (min,max) ———— (min,max)
+    VEICULO`.
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
+
 ---
 
 ## 4. De Cardinalidade para PK e FK: A Conexão Prática
@@ -378,6 +401,19 @@ Como vimos na Seção 2.1, a FK geralmente vai para o lado de participação **p
 | 1:N | Na tabela do lado **N** |
 | N:M | Numa **tabela nova** (associativa), com duas FKs |
 | 1:1 | No lado de participação **parcial** (o "dependente") |
+
+!!! example "🔍 Checkpoint 3 — De cardinalidade a PK/FK: sistema de manutenção industrial"
+    Uma fábrica tem as entidades `MAQUINA` e `ORDEM_SERVICO`: uma máquina pode gerar
+    várias ordens de serviço ao longo do tempo, mas cada ordem de serviço se refere
+    a exatamente uma máquina. Além disso, uma `ORDEM_SERVICO` pode envolver vários
+    `TECNICO`, e um técnico pode atuar em várias ordens de serviço diferentes.
+    (a) Identifique a cardinalidade entre `MAQUINA` e `ORDEM_SERVICO`, e diga em
+    qual das duas tabelas a chave estrangeira deve ficar, com o nome que ela deve
+    ter (siga a Regra 6). (b) Identifique a cardinalidade entre `ORDEM_SERVICO` e
+    `TECNICO`, e explique por que nenhuma FK simples resolve essa relação — proponha
+    o nome da tabela associativa e suas duas FKs.
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
 
 ---
 
@@ -463,6 +499,17 @@ A **participação parcial** (mínimo = 0) significa que a entidade *pode* exist
 
 Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido sem informar o cliente, o banco deve rejeitar essa operação — isso é o que a participação total de `PEDIDO` representa em termos de restrições de integridade referencial (a FK `cliente_id` não pode ser nula).
 
+!!! example "🔍 Checkpoint 4 — Participação: sistema de biblioteca com reservas"
+    Em uma biblioteca: (a) toda `RESERVA` obrigatoriamente está vinculada a um
+    `LIVRO` e a um `MEMBRO` — não existe reserva "solta"; (b) nem todo `LIVRO` do
+    acervo precisa ter sido reservado alguma vez; (c) nem todo `MEMBRO` cadastrado
+    precisa ter feito alguma reserva. Para cada uma das três entidades (`RESERVA`,
+    `LIVRO`, `MEMBRO`) em relação ao relacionamento de reserva, classifique a
+    participação como **total** ou **parcial**, justificando com base no mínimo de
+    cada uma.
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
+
 ---
 
 ## 7. Auto-Relacionamento
@@ -495,6 +542,19 @@ erDiagram
     MEDICAMENTO }o--o{ PACIENTE : "prescrito a"
     MEDICO }o--o{ PACIENTE : "atende"
 ```
+
+!!! example "🔍 Checkpoint 5 — Auto-relacionamento e Ternário: rede social e e-commerce"
+    Analise as duas situações a seguir. **(a)** Em uma rede social, um `USUARIO`
+    pode seguir vários outros `USUARIO`, e um `USUARIO` pode ser seguido por vários
+    outros — a entidade se relaciona com ela mesma. **(b)** Em um marketplace, um
+    `VENDEDOR` oferece um `PRODUTO` sob uma `CONDICAO_COMERCIAL` específica (à
+    vista, parcelado em 3x, ou assinatura mensal) — a combinação das três definições
+    define exatamente qual oferta está disponível; não faz sentido falar de
+    "vendedor oferece produto" sem saber sob qual condição. Para cada situação,
+    identifique se é um caso de **auto-relacionamento** ou de **relacionamento
+    ternário**, e desenhe o `erDiagram` correspondente (inclua a FK, se for o caso).
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-5) — tente resolver antes de conferir.
 
 ---
 
@@ -576,7 +636,8 @@ Ao longo desta aula, cada regra foi apresentada no momento em que apareceu pela 
 
 | Regra | O que diz | Onde vimos |
 |---|---|---|
-| **1 — snake_case** | Nomes de colunas sempre com underline entre palavras, nunca `camelCase` | Em todos os atributos desde a Aula 01 |
+| **1 — snake_case** | Nomes de colunas sempre com underline entre palavras, nunca `camelCase` | Em todos os atributos desde a Aula 02 |
+| **2 — minúsculas** | Nomes criados por você (atributos, entidades quando viram tabelas) sempre em letras minúsculas | Desde a Aula 02 |
 | **4 — Entidade vs. Tabela** | No MER conceitual, entidade é singular e maiúscula (`CLIENTE`); quando virar tabela real, o nome muda para plural e minúsculo (`clientes`) | Seção 1 |
 | **5 — PK: `id_` + tabela no singular** | `id_funcionario`, `id_produto`, `id_cliente` | Seção 2.1 |
 | **6 — FK: tabela no singular + `_id`** | `departamento_id`, `categoria_id`, `produto_id` — a ordem inverte em relação à PK | Seção 2.1 |
