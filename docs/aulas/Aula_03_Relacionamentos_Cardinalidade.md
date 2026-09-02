@@ -12,11 +12,12 @@ Ao final desta aula você deverá ser capaz de:
 - Identificar relacionamentos entre entidades no modelo conceitual e aplicar o método das perguntas-chave para determinar a cardinalidade
 - Ler e escrever cardinalidade nas notações Min-Max e Crow's Foot, evitando a confusão mais comum da disciplina (a posição dos símbolos)
 - Explicar, na prática, como cada tipo de cardinalidade vira chave primária (PK) e chave estrangeira (FK) — inclusive em situações do dia a dia, como a leitura de um produto no caixa de um supermercado
+- Mapear uma hierarquia de generalização/especialização (Aula 02) para tabelas de verdade, escolhendo entre as estratégias possíveis e justificando a recomendada pela disciplina
 - Reconhecer relacionamentos ternários e auto-relacionamentos
 - Aplicar as convenções de nomenclatura obrigatórias da disciplina para nomear entidades, chaves primárias e chaves estrangeiras
 - Visualizar e explorar diagramas também no dbdiagram.io, entendendo o básico da linguagem DBML
 
-> 💡 **Sobre SQL:** esta aula **não** vai te ensinar a escrever `CREATE TABLE`. As convenções de nomenclatura que você vai aprender aqui já preparam o terreno para quando chegarmos lá (Aula 07 — SQL DDL), mas por enquanto o único objetivo é saber **modelar** corretamente. Colocar isso em SQL de verdade é outro passo, deliberadamente adiado.
+> 💡 **Sobre SQL:** esta aula **não** vai te ensinar a escrever `CREATE TABLE`. Você vai sair daqui sabendo exatamente quais tabelas, colunas, PKs e FKs o seu modelo precisa — o **Modelo Lógico Relacional** completo —, mas ainda em notação textual e DBML, não em SQL de verdade. As convenções de nomenclatura que você vai aprender aqui já preparam o terreno para quando chegarmos lá (Aula 06 — SQL DDL). Colocar isso em SQL de verdade é outro passo, deliberadamente adiado.
 
 ---
 
@@ -57,33 +58,40 @@ flowchart LR
     end
 
     ROOT --> T5
-    subgraph T5["🛒 Do dia a dia: leitora do caixa"]
+    subgraph T5["🧬 Herança vira Tabela"]
         direction TB
-        T5A["Código de barras = PK"]
-        T5B["Cupom, Produto, Item"]
+        T5A["Estratégia 2: PK da subclasse = FK"]
+        T5B["Superclasse + 1 tabela por subclasse"]
     end
 
     ROOT --> T6
-    subgraph T6["✅ Participação"]
+    subgraph T6["🛒 Do dia a dia: leitora do caixa"]
         direction TB
-        T6A["Total - obrigatória"]
-        T6B["Parcial - opcional"]
+        T6A["Código de barras = PK"]
+        T6B["Cupom, Produto, Item"]
     end
 
     ROOT --> T7
-    subgraph T7["🔁 Casos Especiais"]
+    subgraph T7["✅ Participação"]
         direction TB
-        T7A["Auto-relacionamento"]
-        T7B["Relacionamento Ternário"]
+        T7A["Total - obrigatória"]
+        T7B["Parcial - opcional"]
     end
 
     ROOT --> T8
-    subgraph T8["📐 Convenções de Nomenclatura"]
+    subgraph T8["🔁 Casos Especiais"]
         direction TB
-        T8A["snake_case"]
-        T8B["PK: id_tabela"]
-        T8C["FK: tabela_id"]
-        T8D["FK por papel semântico"]
+        T8A["Auto-relacionamento"]
+        T8B["Relacionamento Ternário"]
+    end
+
+    ROOT --> T9
+    subgraph T9["📐 Convenções de Nomenclatura"]
+        direction TB
+        T9A["snake_case"]
+        T9B["PK: id_tabela"]
+        T9C["FK: tabela_id"]
+        T9D["FK por papel semântico"]
     end
 ```
 
@@ -97,7 +105,7 @@ Entidades raramente existem de forma isolada. No mundo real, elas interagem: um 
 
 Um relacionamento é representado no DER por um losango conectado às entidades participantes. Assim como as entidades podem ter atributos, os relacionamentos também podem — e isso é um ponto que muitos estudantes não percebem de imediato. Pense num relacionamento `ALUNO` **se matricula em** `DISCIPLINA`: a `data_matricula` não pertence ao aluno nem à disciplina em si, mas sim ao evento da matrícula — ou seja, é um **atributo do relacionamento**.
 
-> 📐 **Sobre os nomes das entidades nos diagramas:** você vai notar que, nos diagramas desta aula (e das anteriores), as entidades aparecem em **maiúsculas e no singular** — `CLIENTE`, `PEDIDO`, `FUNCIONARIO`. Essa é a convenção clássica de modelagem conceitual (Peter Chen): uma entidade representa "um tipo de coisa", então usamos o singular. Mais adiante nesta aula você vai conhecer as **convenções de nomenclatura oficiais da disciplina** — e vai notar que, quando essas entidades virarem **tabelas de verdade** no banco de dados (Aula 07), o nome muda para **plural e minúsculo** (`clientes`, `pedidos`, `funcionarios`). Não é inconsistência: são dois momentos diferentes da modelagem, cada um com sua convenção — e ambas vão valer a partir de agora, para toda a disciplina.
+> 📐 **Sobre os nomes das entidades nos diagramas:** você vai notar que, nos diagramas desta aula (e das anteriores), as entidades aparecem em **maiúsculas e no singular** — `CLIENTE`, `PEDIDO`, `FUNCIONARIO`. Essa é a convenção clássica de modelagem conceitual (Peter Chen): uma entidade representa "um tipo de coisa", então usamos o singular. Mais adiante nesta aula você vai conhecer as **convenções de nomenclatura oficiais da disciplina** — e vai notar que, quando essas entidades virarem **tabelas de verdade** no banco de dados (a partir da Seção 4 desta mesma aula), o nome muda para **plural e minúsculo** (`clientes`, `pedidos`, `funcionarios`). Não é inconsistência: são dois momentos diferentes da modelagem, cada um com sua convenção — e ambas vão valer a partir de agora, para toda a disciplina.
 
 ---
 
@@ -417,11 +425,125 @@ Como vimos na Seção 2.1, a FK geralmente vai para o lado de participação **p
 
 ---
 
-## 5. Do Dia a Dia pro Banco: O Produto na Leitora do Caixa
+## 5. De Generalização/Especialização para Tabelas {: #5-generalizacao-especializacao }
+
+Na [Aula 02, Seção 4](Aula_02_Modelagem_Entidades.md#4-generalizacao-e-especializacao), você aprendeu a modelar hierarquias como `VEICULO` → `CARRO`/`MOTO`/`CAMINHAO`: uma superclasse com os atributos comuns, e subclasses com os atributos exclusivos de cada tipo. Isso resolve o problema **no nível conceitual**. Mas, assim como toda entidade e todo relacionamento, essa hierarquia também precisa virar tabelas de verdade — e aqui, diferente do 1:N e do N:M, existe mais de uma forma de fazer isso, com tradeoffs bem diferentes.
+
+### 5.1 Três Estratégias Possíveis
+
+**Estratégia 1 — Tabela única com coluna discriminadora:** uma única tabela `veiculos`, com todos os atributos de todas as subclasses e uma coluna extra (`tipo_veiculo`) para indicar qual subtipo aquela linha representa.
+
+```mermaid
+erDiagram
+    VEICULOS {
+        int id_veiculo PK
+        string placa
+        string tipo_veiculo "'carro', 'moto' ou 'caminhao'"
+        int numero_portas "NULL se não for carro"
+        int cilindradas "NULL se não for moto"
+        float capacidade_carga "NULL se não for caminhão"
+    }
+```
+
+Problema: cada linha carrega colunas que **não fazem sentido** para o seu tipo (uma moto não tem `numero_portas`), sempre `NULL`. Quanto mais subclasses e mais atributos exclusivos, mais colunas inúteis por linha — e nada impede, só com PK/FK, que alguém preencha `cilindradas` numa linha marcada como `'carro'`.
+
+**Estratégia 2 — Superclasse + uma tabela por subclasse (✅ recomendada nesta disciplina):** uma tabela para a superclasse com os atributos comuns, e **uma tabela por subclasse** contendo só os atributos exclusivos dela — cuja chave primária é, ao mesmo tempo, chave estrangeira única para a superclasse. É a mesma lógica de um 1:1 de participação total dos dois lados (Seção 2.1), só que aplicada a herança em vez de a duas entidades independentes.
+
+```mermaid
+erDiagram
+    VEICULOS {
+        int id_veiculo PK
+        string placa
+        int ano_fabricacao
+        string cor
+        float preco
+    }
+    CARROS {
+        int id_veiculo PK "também FK -> VEICULOS"
+        int numero_portas
+        string tipo_cambio
+    }
+    MOTOS {
+        int id_veiculo PK "também FK -> VEICULOS"
+        int cilindradas
+        string tipo_guidao
+    }
+    CAMINHOES {
+        int id_veiculo PK "também FK -> VEICULOS"
+        float capacidade_carga
+        int numero_eixos
+    }
+    VEICULOS ||--o| CARROS : "é um"
+    VEICULOS ||--o| MOTOS : "é um"
+    VEICULOS ||--o| CAMINHOES : "é um"
+```
+
+Nenhuma coluna fica órfã: `carros` só existe para veículos que são carros, e só tem colunas que fazem sentido para carro. Consultar "todos os veículos", independente do tipo, é uma query simples em `veiculos`. Consultar os detalhes de um carro específico é um JOIN entre `veiculos` e `carros` pela PK/FK compartilhada.
+
+**Estratégia 3 — Tabelas totalmente separadas, sem tabela para a superclasse:** `carros`, `motos` e `caminhoes` cada uma com **todos** os seus atributos, inclusive os que seriam comuns (`placa`, `ano_fabricacao`, `cor`, `preco` repetidos nas três). Problema: duplica atributos comuns em várias tabelas (o mesmo risco de inconsistência que a Aula 02, Seção 4.1, já rejeitou no nível conceitual) e torna impossível consultar "todos os veículos" sem um `UNION` manual das três tabelas.
+
+### 5.2 Por que a Estratégia 2 é a recomendada
+
+| Estratégia | Nulos indevidos? | Duplica atributos comuns? | Consulta "todos os X" |
+|---|---|---|---|
+| 1 — Tabela única | Sim, vários por linha | Não | Trivial (mas mistura tipos) |
+| 2 — Superclasse + subclasses (✅) | Não | Não | Trivial (consulta a superclasse) |
+| 3 — Tabelas separadas | Não | Sim | Precisa `UNION` manual |
+
+> 📐 **Convenção desta disciplina:** hierarquias de generalização/especialização **sempre** usam a Estratégia 2 — uma tabela para a superclasse, e uma tabela por subclasse cuja PK é, ao mesmo tempo, FK única para a superclasse. Repare que essa tabela de subclasse **não segue a Regra 5 normalmente**: sua PK não é um novo `id_` autoincrementado, é o mesmo valor da PK da superclasse, reaproveitado como FK — isso é o que garante, na própria estrutura do banco, que um carro só pode existir se já existir a linha correspondente em `veiculos`.
+
+**🔎 Veja o modelo completo no dbdiagram.io:**
+
+```dbml
+Table veiculos {
+  id_veiculo int [pk, increment]
+  placa varchar
+  ano_fabricacao int
+  cor varchar
+  preco decimal
+}
+
+Table carros {
+  id_veiculo int [pk]
+  numero_portas int
+  tipo_cambio varchar
+}
+
+Table motos {
+  id_veiculo int [pk]
+  cilindradas int
+  tipo_guidao varchar
+}
+
+Ref: carros.id_veiculo > veiculos.id_veiculo
+Ref: motos.id_veiculo > veiculos.id_veiculo
+```
+
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgdmVpY3Vsb3MgewogIGlkX3ZlaWN1bG8gaW50IFtwaywgaW5jcmVtZW50XQogIHBsYWNhIHZhcmNoYXIKICBhbm9fZmFicmljYWNhbyBpbnQKICBjb3IgdmFyY2hhcgogIHByZWNvIGRlY2ltYWwKfQoKVGFibGUgY2Fycm9zIHsKICBpZF92ZWljdWxvIGludCBbcGtdCiAgbnVtZXJvX3BvcnRhcyBpbnQKICB0aXBvX2NhbWJpbyB2YXJjaGFyCn0KClRhYmxlIG1vdG9zIHsKICBpZF92ZWljdWxvIGludCBbcGtdCiAgY2lsaW5kcmFkYXMgaW50CiAgdGlwb19ndWlkYW8gdmFyY2hhcgp9CgpSZWY6IGNhcnJvcy5pZF92ZWljdWxvID4gdmVpY3Vsb3MuaWRfdmVpY3VsbwpSZWY6IG1vdG9zLmlkX3ZlaWN1bG8gPiB2ZWljdWxvcy5pZF92ZWljdWxvCg%3D%3D)**
+
+### 5.3 E quando a especialização é com sobreposição?
+
+Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**, uma instância pode pertencer a mais de uma subclasse ao mesmo tempo — como `MEDICO` que também é `FUNCIONARIO`. Na Estratégia 2, isso não muda a estrutura das tabelas: `pessoas` continua sendo a superclasse, e simplesmente **existe uma linha com o mesmo `id_pessoa` tanto em `medicos` quanto em `funcionarios`**. Nenhuma tabela nova é necessária só por causa da sobreposição — o que muda é apenas que, para essa pessoa específica, duas FKs diferentes (em tabelas diferentes) apontam de volta para a mesma linha de `pessoas`.
+
+!!! example "🔍 Checkpoint 4 — De Herança a Tabelas: sistema de conteúdo de uma escola online"
+    Uma escola online tem `CONTEUDO` como superclasse, especializada em `VIDEO_AULA`
+    (com `duracao_minutos` e `url_video`) e `MATERIAL_PDF` (com `numero_paginas` e
+    `url_arquivo`) — todo conteúdo obrigatoriamente é um dos dois tipos, nunca os
+    dois ao mesmo tempo (especialização total e disjunta, Aula 02 Seção 4.3). Os
+    atributos comuns a qualquer conteúdo são `titulo` e `data_publicacao`.
+    (a) Desenhe as tabelas seguindo a Estratégia 2, com PK e FK nomeadas
+    corretamente. (b) Explique, em uma frase, por que a Estratégia 1 (tabela única
+    com coluna discriminadora) seria uma escolha pior aqui.
+
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
+
+---
+
+## 6. Do Dia a Dia pro Banco: O Produto na Leitora do Caixa
 
 Vamos aplicar tudo o que vimos até aqui num evento que você já viveu centenas de vezes: passar um produto na leitora do caixa de um supermercado.
 
-Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá na [Aula 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPOM_FISCAL`, `PRODUTO` e `ITEM_CUPOM`. Agora, com cardinalidade e PK/FK, dá pra fechar esse modelo por completo.
+Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá na [Aula 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPOM_FISCAL`, `PRODUTO` e `ITEM_CUPOM`. Agora, com cardinalidade, PK/FK e mapeamento de herança, dá pra fechar esse modelo por completo.
 
 **O que acontece, passo a passo, quando o produto passa na leitora:**
 
@@ -487,7 +609,7 @@ Ref: itens_cupom.produto_id > produtos.codigo_barras
 
 ---
 
-## 6. Participação: Total vs. Parcial
+## 7. Participação: Total vs. Parcial
 
 Além da cardinalidade máxima, precisamos indicar se a **participação** de uma entidade num relacionamento é **total** ou **parcial** — essa informação vem exatamente do **mínimo** que você calculou com as perguntas-chave da Seção 2.
 
@@ -499,7 +621,7 @@ A **participação parcial** (mínimo = 0) significa que a entidade *pode* exist
 
 Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido sem informar o cliente, o banco deve rejeitar essa operação — isso é o que a participação total de `PEDIDO` representa em termos de restrições de integridade referencial (a FK `cliente_id` não pode ser nula).
 
-!!! example "🔍 Checkpoint 4 — Participação: sistema de biblioteca com reservas"
+!!! example "🔍 Checkpoint 5 — Participação: sistema de biblioteca com reservas"
     Em uma biblioteca: (a) toda `RESERVA` obrigatoriamente está vinculada a um
     `LIVRO` e a um `MEMBRO` — não existe reserva "solta"; (b) nem todo `LIVRO` do
     acervo precisa ter sido reservado alguma vez; (c) nem todo `MEMBRO` cadastrado
@@ -508,11 +630,11 @@ Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido s
     participação como **total** ou **parcial**, justificando com base no mínimo de
     cada uma.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-5) — tente resolver antes de conferir.
 
 ---
 
-## 7. Auto-Relacionamento
+## 8. Auto-Relacionamento
 
 Um auto-relacionamento ocorre quando uma entidade se relaciona **consigo mesma**. O exemplo clássico é a hierarquia de funcionários: um `FUNCIONÁRIO` pode ser supervisor de outros funcionários, e cada funcionário tem (ou não) um supervisor — que também é um funcionário.
 
@@ -530,7 +652,7 @@ erDiagram
 
 ---
 
-## 8. Relacionamento Ternário
+## 9. Relacionamento Ternário
 
 Quando três entidades participam de um único relacionamento, temos um **relacionamento ternário**. São mais complexos e devem ser usados apenas quando o negócio realmente exige que as três entidades sejam analisadas em conjunto para definir a ocorrência.
 
@@ -543,7 +665,7 @@ erDiagram
     MEDICO }o--o{ PACIENTE : "atende"
 ```
 
-!!! example "🔍 Checkpoint 5 — Auto-relacionamento e Ternário: rede social e e-commerce"
+!!! example "🔍 Checkpoint 6 — Auto-relacionamento e Ternário: rede social e e-commerce"
     Analise as duas situações a seguir. **(a)** Em uma rede social, um `USUARIO`
     pode seguir vários outros `USUARIO`, e um `USUARIO` pode ser seguido por vários
     outros — a entidade se relaciona com ela mesma. **(b)** Em um marketplace, um
@@ -554,11 +676,11 @@ erDiagram
     identifique se é um caso de **auto-relacionamento** ou de **relacionamento
     ternário**, e desenhe o `erDiagram` correspondente (inclua a FK, se for o caso).
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-5) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-6) — tente resolver antes de conferir.
 
 ---
 
-## 9. Exemplos Resolvidos
+## 10. Exemplos Resolvidos
 
 Três exemplos guiados, do jeito que você vai precisar resolver em prova: com o raciocínio completo, não só a resposta.
 
@@ -616,7 +738,7 @@ Para cada situação, identifique 1:1, 1:N ou N:M:
 
 ---
 
-## 10. Armadilhas Clássicas
+## 11. Armadilhas Clássicas
 
 **Armadilha 1 — Inverter os símbolos:** colocar o pé de galinha no lado errado é o erro mais comum. Lembre-se: o pé de galinha fica do lado da entidade que aparece **em quantidade**. Se muitos `ALUNOS` pertencem a uma `TURMA`, o pé de galinha fica do lado de `ALUNO`.
 
@@ -630,18 +752,21 @@ Para cada situação, identifique 1:1, 1:N ou N:M:
 
 ---
 
-## 📐 Convenções de Nomenclatura — Resumo
+## 📐 Convenções de Nomenclatura — Resumo {: #convencoes-de-nomenclatura }
 
-Ao longo desta aula, cada regra foi apresentada no momento em que apareceu pela primeira vez. Aqui está o resumo, para consulta rápida — a lista completa (com mais regras específicas de SQL) volta com força total na Aula 07:
+Ao longo desta aula, cada regra foi apresentada no momento em que apareceu pela primeira vez. Aqui está a lista **completa e oficial das 9 regras** desta disciplina, para consulta rápida — as Regras 3, 8 e 9 aparecem aqui só de forma introdutória, porque dependem de sintaxe SQL que ainda vamos formalizar nas Aulas 06 e 07:
 
 | Regra | O que diz | Onde vimos |
 |---|---|---|
 | **1 — snake_case** | Nomes de colunas sempre com underline entre palavras, nunca `camelCase` | Em todos os atributos desde a Aula 02 |
 | **2 — minúsculas** | Nomes criados por você (atributos, entidades quando viram tabelas) sempre em letras minúsculas | Desde a Aula 02 |
+| **3 — palavras reservadas em maiúsculas** | Comandos e tipos SQL/DBML ficam em maiúsculas (`BIGINT UNSIGNED`, `NOT NULL`, `PRIMARY KEY`) — só o que você nomeia fica minúsculo (Regra 2) | Visto nos blocos DBML desta aula; detalhado na Aula 06 — SQL DDL |
 | **4 — Entidade vs. Tabela** | No MER conceitual, entidade é singular e maiúscula (`CLIENTE`); quando virar tabela real, o nome muda para plural e minúsculo (`clientes`) | Seção 1 |
 | **5 — PK: `id_` + tabela no singular** | `id_funcionario`, `id_produto`, `id_cliente` | Seção 2.1 |
 | **6 — FK: tabela no singular + `_id`** | `departamento_id`, `categoria_id`, `produto_id` — a ordem inverte em relação à PK | Seção 2.1 |
-| **7 — FK pelo papel semântico** | Quando a FK referencia uma tabela cuja entidade pode ter papéis diferentes, o nome usa o papel, não a tabela: `supervisor_id`, não `funcionario_id` | Seção 7 |
+| **7 — FK pelo papel semântico** | Quando a FK referencia uma tabela cuja entidade pode ter papéis diferentes, o nome usa o papel, não a tabela: `supervisor_id`, não `funcionario_id` | Seção 8 |
+| **8 — Tipo e tamanho adequados ao dado** | Escolher o tipo pelo domínio real do dado, nunca "o que parece mais simples" — ex.: `DECIMAL` para dinheiro, nunca `FLOAT`/`DOUBLE` | Detalhada por completo na Aula 06 — SQL DDL |
+| **9 — Toda tabela tem campos de log** | `criado_em`, `atualizado_em`, `deletado_em` em toda tabela, sem exceção — inclusive tabelas associativas e de subclasse | Detalhada por completo na Aula 07 — Restrições de Integridade |
 
 > 💡 **Por que isso importa de verdade:** convenção não é frescura estética. Quando **todo mundo** nomeia PK e FK do mesmo jeito, você para de gastar energia mental decidindo "como eu escrevi isso da última vez?" — e sobra atenção para o que realmente importa nesta fase da disciplina: **a modelagem em si**. Um diagrama de um colega, de uma aula passada, ou de você mesmo daqui a um ano, fica imediatamente legível, porque a nomenclatura não muda — só o domínio do problema muda.
 
@@ -675,6 +800,9 @@ Ao longo desta aula, cada regra foi apresentada no momento em que apareceu pela 
 
 ??? question "Por que às vezes a FK usa um 'papel semântico' em vez do nome da tabela referenciada?"
     Porque, quando a mesma tabela pode ser referenciada em papéis diferentes dentro do mesmo relacionamento (como um funcionário que supervisiona outro funcionário), nomear a FK só com o nome da tabela seria ambíguo. O papel (`supervisor_id`) comunica a função; o nome da tabela sozinho não comunicaria.
+
+??? question "Na Estratégia 2 de mapeamento de generalização/especialização, o que é a PK de uma tabela de subclasse?"
+    É, ao mesmo tempo, uma FK única para a PK da superclasse — não é um novo `id_` autoincrementado. Isso garante, na própria estrutura do banco, que uma linha de subclasse só existe se já existir a linha correspondente na superclasse.
 
 ---
 
@@ -740,6 +868,16 @@ No exemplo do cupom fiscal, por que o código de barras pode ser a chave primár
 Chave primária não precisa ser um número gerado automaticamente — qualquer valor único e não-nulo serve, incluindo identificadores que já existem fora do banco, como o código de barras de um produto.
 </quiz>
 
+<quiz>
+Uma hierarquia CONTEUDO → VIDEO_AULA / MATERIAL_PDF foi mapeada seguindo a Estratégia 2. Qual afirmação está correta?
+- [ ] video_aulas e material_pdfs ganham um novo id_ autoincrementado, sem relação com conteudos
+- [x] video_aulas.id_conteudo e material_pdfs.id_conteudo são, ao mesmo tempo, PK da subclasse e FK para conteudos
+- [ ] Todos os atributos, comuns e exclusivos, ficam numa única tabela conteudos
+- [ ] Cada subclasse duplica os atributos comuns de conteudos
+
+Na Estratégia 2, a PK da tabela de subclasse é reaproveitada como FK única para a superclasse — é isso que impede, na própria estrutura do banco, que exista um video_aulas sem o conteudos correspondente.
+</quiz>
+
 ---
 
 ## ✏️ Exercícios de Fixação Práticos
@@ -802,32 +940,34 @@ Dadas as tabelas abaixo (já no plural, seguindo a Regra 4), escreva o nome corr
 
 *"Toda vez que um aluno passa a carteirinha na catraca de uma academia, o sistema registra o acesso: data, hora e qual catraca (entrada ou saída) foi usada. Cada aluno tem uma carteirinha com um número único, que funciona como identificador do aluno dentro da academia. Um aluno pode ter muitos acessos registrados ao longo do tempo."*
 
-Siga o mesmo raciocínio da Seção 5 (cupom fiscal): identifique as entidades, escolha a chave primária de `ALUNO` com base no enunciado, modele a cardinalidade entre `ALUNO` e `ACESSO`, e nomeie a FK corretamente.
+Siga o mesmo raciocínio da Seção 6 (cupom fiscal): identifique as entidades, escolha a chave primária de `ALUNO` com base no enunciado, modele a cardinalidade entre `ALUNO` e `ACESSO`, e nomeie a FK corretamente.
 
 ---
 
 📄 **[Ver gabarito dos exercícios →](Aula_03_Gabarito.md)**
 
-> Tente resolver todos os exercícios antes de conferir — principalmente o Exercício 5, que reaproveita exatamente o raciocínio da Seção 5, só que em um domínio diferente.
+> Tente resolver todos os exercícios antes de conferir — principalmente o Exercício 5, que reaproveita exatamente o raciocínio da Seção 6, só que em um domínio diferente.
 
 ---
 
 ## 📝 Resumo
 
-Nesta aula aprendemos que relacionamentos descrevem as interações entre entidades e podem ter atributos próprios. A cardinalidade (1:1, 1:N, N:M) — determinada com o método das três perguntas-chave — é uma das informações mais críticas do modelo conceitual, porque impacta diretamente a estrutura das tabelas: vimos exatamente como cada tipo de cardinalidade se traduz em chave primária e chave estrangeira, inclusive num evento do dia a dia como a leitura de um produto no caixa de um supermercado. Aprendemos a distinguir participação total de parcial, conhecemos casos especiais como o auto-relacionamento e o relacionamento ternário, e vimos as duas notações mais usadas (Min-Max e Crow's Foot) — com atenção especial ao "segredo da posição" que mais confunde estudantes. Por fim, começamos a aplicar as convenções de nomenclatura oficiais da disciplina, que vão acompanhar todo o restante do curso.
+Nesta aula aprendemos que relacionamentos descrevem as interações entre entidades e podem ter atributos próprios. A cardinalidade (1:1, 1:N, N:M) — determinada com o método das três perguntas-chave — é uma das informações mais críticas do modelo conceitual, porque impacta diretamente a estrutura das tabelas: vimos exatamente como cada tipo de cardinalidade se traduz em chave primária e chave estrangeira, inclusive num evento do dia a dia como a leitura de um produto no caixa de um supermercado. Vimos também como mapear as hierarquias de generalização/especialização da Aula 02 para tabelas de verdade, usando a Estratégia 2 (superclasse + uma tabela por subclasse, com PK compartilhada). Aprendemos a distinguir participação total de parcial, conhecemos casos especiais como o auto-relacionamento e o relacionamento ternário, e vimos as duas notações mais usadas (Min-Max e Crow's Foot) — com atenção especial ao "segredo da posição" que mais confunde estudantes. Por fim, fechamos as 9 regras oficiais de nomenclatura da disciplina — com isso, você já sai desta aula sabendo transformar qualquer modelo conceitual completo (entidades, relacionamentos e hierarquias) no Modelo Lógico Relacional correspondente.
+
+Para praticar tudo isso de uma vez, com um cenário maior e a ferramenta [dbdiagram.io](https://dbdiagram.io), veja a [Prática — Modelagem com dbdiagram.io](../atividades/Pratica_Modelagem_dbdiagram.md) na página de Atividades.
 
 ---
 
 ## 🏆 Conquista da Aula
 
 !!! success "Selo desbloqueado: 🔗 Mestre dos Relacionamentos"
-    Você aprendeu a determinar cardinalidade com método, a ler Crow's Foot sem cair na armadilha da posição, e — o mais importante — a transformar isso em chave primária e estrangeira de verdade. Você já consegue explicar, em termos de banco de dados, o que acontece no caixa de qualquer supermercado. A próxima parada da Trilha do(a) Modelador(a) de Dados: transformar tudo isso no Modelo Lógico Relacional completo.
+    Você aprendeu a determinar cardinalidade com método, a ler Crow's Foot sem cair na armadilha da posição, e — o mais importante — a transformar isso em chave primária e estrangeira de verdade, inclusive em hierarquias de herança. Você já consegue explicar, em termos de banco de dados, o que acontece no caixa de qualquer supermercado, e já sabe montar o Modelo Lógico Relacional completo a partir de qualquer modelo conceitual. A próxima parada da Trilha do(a) Modelador(a) de Dados: eliminar redundância e inconsistência com Normalização de Dados.
 
 ---
 
 ## 🔗 Navegação
 
-⬅️ [Aula 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ 🔒 Aula 04 — em breve.
+⬅️ [Aula 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ 🔒 Aula 04 — Normalização de Dados — em breve.
 
 ---
 

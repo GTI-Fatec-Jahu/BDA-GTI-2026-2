@@ -210,8 +210,9 @@ Os principais componentes internos de um SGBD são o **processador de consultas*
 > palavras separadas por underline, nunca por espaço ou `camelCase`**)** e a **Regra
 > 2 (sempre minúsculas para nomes criados por você — tabelas, colunas, entidades)**.
 > Outras regras (nomenclatura de chave primária e estrangeira, tipos de dados,
-> constraints) chegam progressivamente ao longo do semestre, culminando na Aula 07 —
-> SQL DDL. Essas regras não são frescura estética: elas tornam o modelo e o código
+> constraints) chegam progressivamente ao longo do semestre — chave primária e
+> estrangeira já na Aula 03, tipos de dados exatos e constraints culminando na
+> Aula 06 — SQL DDL. Essas regras não são frescura estética: elas tornam o modelo e o código
 > legíveis e previsíveis para qualquer pessoa da turma, inclusive você mesmo(a)
 > daqui a alguns meses.
 

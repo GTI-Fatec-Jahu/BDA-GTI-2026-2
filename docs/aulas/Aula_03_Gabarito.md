@@ -50,7 +50,38 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 ---
 
-## Checkpoint 4 — Participação: sistema de biblioteca com reservas {: #checkpoint-4 }
+## Checkpoint 4 — De Herança a Tabelas: sistema de conteúdo de uma escola online {: #checkpoint-4 }
+
+**Resposta:**
+
+**(a)** Seguindo a Estratégia 2 (Seção 5.1): `conteudos` é a superclasse, com os atributos comuns; `video_aulas` e `material_pdfs` são as subclasses, cada uma com seus atributos exclusivos, e cuja PK é, ao mesmo tempo, FK única para `conteudos`.
+
+```mermaid
+erDiagram
+    CONTEUDOS {
+        int id_conteudo PK
+        string titulo
+        date data_publicacao
+    }
+    VIDEO_AULAS {
+        int id_conteudo PK
+        int duracao_minutos
+        string url_video
+    }
+    MATERIAL_PDFS {
+        int id_conteudo PK
+        int numero_paginas
+        string url_arquivo
+    }
+    CONTEUDOS ||--o| VIDEO_AULAS : "é um"
+    CONTEUDOS ||--o| MATERIAL_PDFS : "é um"
+```
+
+**(b)** A Estratégia 1 (tabela única com coluna discriminadora) obrigaria toda linha de `conteudos` a ter as quatro colunas exclusivas (`duracao_minutos`, `url_video`, `numero_paginas`, `url_arquivo`) — metade delas sempre `NULL` para qualquer linha, já que um conteúdo nunca é os dois tipos ao mesmo tempo (especialização disjunta). Além disso, nada impediria alguém de preencher `numero_paginas` numa linha marcada como vídeo-aula.
+
+---
+
+## Checkpoint 5 — Participação: sistema de biblioteca com reservas {: #checkpoint-5 }
 
 **Resposta:**
 
@@ -62,7 +93,7 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 ---
 
-## Checkpoint 5 — Auto-relacionamento e Ternário: rede social e e-commerce {: #checkpoint-5 }
+## Checkpoint 6 — Auto-relacionamento e Ternário: rede social e e-commerce {: #checkpoint-6 }
 
 **Resposta:**
 
@@ -77,7 +108,7 @@ erDiagram
     USUARIO ||--o{ USUARIO : "segue"
 ```
 
-**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 8.
+**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 9.
 
 ```mermaid
 erDiagram
@@ -197,7 +228,7 @@ Seguindo a Regra 6 (FK: nome da tabela referenciada no singular + `_id`), a chav
 
 ## Exercício 5 — A Catraca da Academia
 
-**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTO` na Seção 5. Então a PK de `ALUNO` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
+**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTO` na Seção 6. Então a PK de `ALUNO` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
 
 ```mermaid
 erDiagram
@@ -215,7 +246,7 @@ erDiagram
     ALUNO ||--o{ ACESSO : "registra"
 ```
 
-Note que `aluno_id` (a FK em `ACESSO`) segue a Regra 6 normalmente — mesmo a PK de `ALUNO` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTO`/`codigo_barras` da Seção 5.
+Note que `aluno_id` (a FK em `ACESSO`) segue a Regra 6 normalmente — mesmo a PK de `ALUNO` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTO`/`codigo_barras` da Seção 6.
 
 ---
 

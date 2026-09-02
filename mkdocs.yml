@@ -81,6 +81,7 @@ nav:
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md
+      - atividades/Pratica_Modelagem_dbdiagram.md
 
 extra:
   social:

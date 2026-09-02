@@ -65,29 +65,28 @@ A nota final é calculada pela fórmula:
 |---|---|---|---|
 | 01 | [Introdução a Banco de Dados](aulas/Aula_01_Introducao_BD.md) | Sistemas de Arquivos vs. SGBD; Dados, Informação e Conhecimento; Arquitetura de SGBD | ✅ Disponível |
 | 02 | [Modelagem Conceitual: Entidades](aulas/Aula_02_Modelagem_Entidades.md) | Modelo Entidade-Relacionamento (MER), Entidades e Atributos | ✅ Disponível |
-| 03 | [Relacionamentos e Cardinalidade](aulas/Aula_03_Relacionamentos_Cardinalidade.md) | Tipos de relacionamentos e regras de cardinalidade | ✅ Disponível |
-| 04 | Modelo Lógico Relacional | Tabelas, Chaves Primárias (PK) e Estrangeiras (FK) | 🔒 Em breve |
-| 05 | Normalização de Dados | Formas Normais (1FN, 2FN e 3FN) | 🔒 Em breve |
-| 06 | ✏️ Atividade Avaliativa: Modelagem | Oficina prática de modelagem completa | 🔒 Em breve |
-| 07 | SQL: Linguagem de Definição (DDL) | Comandos DDL (CREATE) e Tipos de Dados | 🔒 Em breve |
-| 08 | Restrições de Integridade | Constraints (PK, FK, UNIQUE, NOT NULL) | 🔒 Em breve |
-| 09 | 📝 Avaliação P1 | Todo o conteúdo de Modelagem e DDL | 🔒 Em breve |
+| 03 | [Relacionamentos e Cardinalidade](aulas/Aula_03_Relacionamentos_Cardinalidade.md) | Cardinalidade, Modelo Lógico Relacional completo — Chaves Primárias (PK), Estrangeiras (FK) e mapeamento de generalização/especialização | ✅ Disponível |
+| 04 | Normalização de Dados | Formas Normais (1FN, 2FN e 3FN) | 🔒 Em breve |
+| 05 | ✏️ Atividade Avaliativa: Modelagem | Oficina prática de modelagem completa | 🔒 Em breve |
+| 06 | SQL: Linguagem de Definição (DDL) | Comandos DDL (CREATE) e Tipos de Dados | 🔒 Em breve |
+| 07 | Restrições de Integridade | Constraints (PK, FK, UNIQUE, NOT NULL) | 🔒 Em breve |
+| 08 | 📝 Avaliação P1 | Todo o conteúdo de Modelagem e DDL | 🔒 Em breve |
 
 ### 🟢 Bloco 2 — Manipulação e Consultas
 
 | # | Aula | Conteúdo Principal | Status |
 |---|---|---|---|
-| 10 | SQL: Manipulação de Dados (DML) | Comandos INSERT, UPDATE, DELETE | 🔒 Em breve |
-| 11 | Consultas Básicas (DQL) | Comando SELECT e projeção de colunas | 🔒 Em breve |
-| 12 | Filtragem Avançada | Cláusula WHERE, Operadores e ORDER BY | 🔒 Em breve |
-| 13 | Agregação de Dados | Funções COUNT, SUM, AVG e GROUP BY | 🔒 Em breve |
-| 14 | Junção de Tabelas — Inner Join | INNER JOIN | 🔒 Em breve |
-| 15 | Junções Externas — Outer Join | LEFT JOIN e RIGHT JOIN | 🔒 Em breve |
-| 16 | Introdução ao PL/SQL | Visão geral de procedimentos armazenados | 🔒 Em breve |
-| 17 | ✏️ Atividade Prática: SQL | Resolução de problemas complexos de consulta | 🔒 Em breve |
-| 18 | 📝 Avaliação P2 | DML, DQL e Junções | 🔒 Em breve |
-| 19 | 🔄 Avaliação Substitutiva | Todo o conteúdo semestral | 🔒 Em breve |
-| 20 | 🎓 Encerramento do Semestre | Feedback e Novas Tecnologias (NoSQL/Cloud) | 🔒 Em breve |
+| 09 | SQL: Manipulação de Dados (DML) | Comandos INSERT, UPDATE, DELETE | 🔒 Em breve |
+| 10 | Consultas Básicas (DQL) | Comando SELECT e projeção de colunas | 🔒 Em breve |
+| 11 | Filtragem Avançada | Cláusula WHERE, Operadores e ORDER BY | 🔒 Em breve |
+| 12 | Agregação de Dados | Funções COUNT, SUM, AVG e GROUP BY | 🔒 Em breve |
+| 13 | Junção de Tabelas — Inner Join | INNER JOIN | 🔒 Em breve |
+| 14 | Junções Externas — Outer Join | LEFT JOIN e RIGHT JOIN | 🔒 Em breve |
+| 15 | Introdução ao PL/SQL | Visão geral de procedimentos armazenados | 🔒 Em breve |
+| 16 | ✏️ Atividade Prática: SQL | Resolução de problemas complexos de consulta | 🔒 Em breve |
+| 17 | 📝 Avaliação P2 | DML, DQL e Junções | 🔒 Em breve |
+| 18 | 🔄 Avaliação Substitutiva | Todo o conteúdo semestral | 🔒 Em breve |
+| 19 | 🎓 Encerramento do Semestre | Feedback e Novas Tecnologias (NoSQL/Cloud) | 🔒 Em breve |
 
 > Planejamento provisório espelhando a estrutura do 1º semestre/2026 — sujeito a ajustes do professor conforme as aulas forem entregues.
 
