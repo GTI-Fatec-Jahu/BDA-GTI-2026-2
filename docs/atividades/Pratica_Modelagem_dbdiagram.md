@@ -76,12 +76,12 @@ negócio apresentados, você deve produzir um diagrama em
    sentido, se há generalização/especialização (nem todo exercício exige isso: releia a
    [Aula 02, Seção 4.5](../aulas/Aula_02_Modelagem_Entidades.md) para saber quando ela
    se justifica e quando é complexidade desnecessária, e a
-   [Aula 03, Seção 5](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#5-generalizacao-especializacao)
+   [Aula 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)
    para como mapear a hierarquia em tabelas).
 2. **Aplique a tipificação de dados correta** e as **convenções de nomenclatura** desta
    disciplina — veja a tabela de tipos e o resumo de convenções logo abaixo.
 3. **Defina cardinalidade e participação** de cada relacionamento (1:1, 1:N, N:M —
-   [Aula 03, Seção 2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)).
+   [Aula 03, Seção 5](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)).
 4. **Modele a gestão de usuários e acessos** — item **obrigatório em todo exercício**.
    Nos dois exercícios fáceis, isso significa autenticação simples com um tipo básico
    (`administrador` / `usuario`). Nos dois avançados, significa um sistema de **papéis
@@ -131,7 +131,7 @@ negócio apresentados, você deve produzir um diagrama em
     ```
 
 4. Para **chave primária composta** (o padrão de tabela intermediária N:M da
-   [Aula 03, Seção 4.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)), marque
+   [Aula 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)), marque
    `[pk]` nas duas colunas envolvidas — o dbdiagram.io entende que a chave é a
    combinação das duas.
 5. Para restrições `UNIQUE` que envolvem mais de uma coluna, use um bloco `Indexes`
@@ -205,13 +205,13 @@ Além das 9 regras, dois padrões estruturais que você vai usar o tempo todo ne
 atividade:
 
 **Relacionamento N:M vira tabela intermediária com PK composta**
-([Aula 03, Seção 4.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)): as duas
+([Aula 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)): as duas
 FKs, juntas, formam a chave primária — sem PK substituta própria — e os atributos que
 pertencem ao *relacionamento em si* (não a nenhuma das duas entidades) vivem nessa
 tabela. Exemplo: `itens_pedidos (pedido_id PK FK, produto_id PK FK, quantidade)`.
 
 **Generalização/especialização usa a Estratégia 2**
-([Aula 03, Seção 5](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#5-generalizacao-especializacao)):
+([Aula 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)):
 uma tabela para a superclasse, e uma tabela por subclasse cuja PK é, ao mesmo tempo, FK
 única para a superclasse. Exemplo: `produtos (id_produto PK)` e `jogos (id_produto PK
 FK)`.
@@ -235,7 +235,7 @@ FK)`.
 
 ## 🧾 Exemplo Completo e Comentado — Cupom Fiscal
 
-O exemplo abaixo retoma o mesmo domínio da [Seção 6 da Aula 03](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)
+O exemplo abaixo retoma o mesmo domínio da [Seção 9 da Aula 03](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)
 (o produto na leitora do caixa), já no nível de **Modelo Lógico**, 100% aderente a
 todas as convenções acima. Use-o como referência de "isto está certo" antes de começar
 os exercícios — cole o bloco inteiro em [dbdiagram.io](https://dbdiagram.io) para ver o

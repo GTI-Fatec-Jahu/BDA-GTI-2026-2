@@ -12,7 +12,7 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 ---
 
 !!! warning "Antes de conferir"
-    Assim como no gabarito da Aula 02: este documento mostra **uma** solução correta possível para cada Checkpoint e Exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Aula 03, Seção 2) e a regra de onde entra a FK (Aula 03, Seção 4). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
+    Assim como no gabarito da Aula 02: este documento mostra **uma** solução correta possível para cada Checkpoint e Exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Aula 03, Seção 5) e a regra de onde entra a FK (Aula 03, Seção 7). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
 
 ---
 
@@ -44,9 +44,9 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 **Resposta:**
 
-**(a)** `MAQUINA` e `ORDEM_SERVICO` são 1:N — uma máquina pode gerar várias ordens de serviço, mas cada ordem de serviço se refere a exatamente uma máquina. Pela Regra da Seção 4.1, a FK fica no lado N (`ORDEM_SERVICO`), chamada `maquina_id` (Regra 6: nome da tabela referenciada no singular + `_id`).
+**(a)** `MAQUINA` e `ORDEM_SERVICO` são 1:N — uma máquina pode gerar várias ordens de serviço, mas cada ordem de serviço se refere a exatamente uma máquina. Pela Regra da Seção 7.1, a FK fica no lado N (`ORDEM_SERVICO`), chamada `maquina_id` (Regra 6: nome da tabela referenciada no singular + `_id`).
 
-**(b)** `ORDEM_SERVICO` e `TECNICO` são N:M — uma ordem pode envolver vários técnicos, e um técnico atua em várias ordens. Nenhuma FK simples resolve isso porque nenhum dos dois lados consegue guardar múltiplas referências em uma única coluna (Seção 4.2). Solução: tabela associativa `ATUACAO_TECNICA` (ou similar), com `ordem_servico_id FK` e `tecnico_id FK`.
+**(b)** `ORDEM_SERVICO` e `TECNICO` são N:M — uma ordem pode envolver vários técnicos, e um técnico atua em várias ordens. Nenhuma FK simples resolve isso porque nenhum dos dois lados consegue guardar múltiplas referências em uma única coluna (Seção 7.2). Solução: tabela associativa `ATUACAO_TECNICA` (ou similar), com `ordem_servico_id FK` e `tecnico_id FK`.
 
 ---
 
@@ -54,7 +54,7 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 **Resposta:**
 
-**(a)** Seguindo a Estratégia 2 (Seção 5.1): `conteudos` é a superclasse, com os atributos comuns; `video_aulas` e `material_pdfs` são as subclasses, cada uma com seus atributos exclusivos, e cuja PK é, ao mesmo tempo, FK única para `conteudos`.
+**(a)** Seguindo a Estratégia 2 (Seção 8.1): `conteudos` é a superclasse, com os atributos comuns; `video_aulas` e `material_pdfs` são as subclasses, cada uma com seus atributos exclusivos, e cuja PK é, ao mesmo tempo, FK única para `conteudos`.
 
 ```mermaid
 erDiagram
@@ -108,7 +108,7 @@ erDiagram
     USUARIO ||--o{ USUARIO : "segue"
 ```
 
-**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 9.
+**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 12.
 
 ```mermaid
 erDiagram
@@ -157,7 +157,7 @@ erDiagram
     VEICULO ||--o{ ORDEM_SERVICO : "passa por"
 ```
 
-Seguindo a regra da Seção 4.1: a FK sempre fica no lado N. `cliente_id` fica em `VEICULO`; `veiculo_id` fica em `ORDEM_SERVICO`. Ambas seguem a Regra 6 (nome da tabela referenciada no singular + `_id`).
+Seguindo a regra da Seção 7.1: a FK sempre fica no lado N. `cliente_id` fica em `VEICULO`; `veiculo_id` fica em `ORDEM_SERVICO`. Ambas seguem a Regra 6 (nome da tabela referenciada no singular + `_id`).
 
 ---
 
@@ -228,7 +228,7 @@ Seguindo a Regra 6 (FK: nome da tabela referenciada no singular + `_id`), a chav
 
 ## Exercício 5 — A Catraca da Academia
 
-**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTO` na Seção 6. Então a PK de `ALUNO` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
+**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTO` na Seção 9. Então a PK de `ALUNO` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
 
 ```mermaid
 erDiagram
@@ -246,7 +246,7 @@ erDiagram
     ALUNO ||--o{ ACESSO : "registra"
 ```
 
-Note que `aluno_id` (a FK em `ACESSO`) segue a Regra 6 normalmente — mesmo a PK de `ALUNO` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTO`/`codigo_barras` da Seção 6.
+Note que `aluno_id` (a FK em `ACESSO`) segue a Regra 6 normalmente — mesmo a PK de `ALUNO` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTO`/`codigo_barras` da Seção 9.
 
 ---
 

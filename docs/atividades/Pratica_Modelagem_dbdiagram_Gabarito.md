@@ -220,7 +220,7 @@ Ref fk_execucao_treino:   execucoes_treino.treino_id   > treinos.id_treino
 
 **Entidades identificadas:** `USUARIOS`, `PLANOS`, `ASSINATURAS` (histórico),
 `PODCASTS`, `AUDIOLIVROS`, `CONTEUDOS` (superclasse), `EPISODIOS_PODCAST` e
-`CAPITULOS_AUDIOLIVRO` (subclasses — Estratégia 2, Aula 03, Seção 5), `PLAYLISTS`,
+`CAPITULOS_AUDIOLIVRO` (subclasses — Estratégia 2, Aula 03, Seção 8), `PLAYLISTS`,
 `ITENS_PLAYLIST` (associativa). Restrição da hierarquia: **Total Exclusiva** — todo
 conteúdo é episódio ou capítulo, nunca os dois, nunca nenhum.
 
@@ -301,7 +301,7 @@ Table audiolivros {
   deletado_em       DATETIME
 }
 
-// Superclasse (Estratégia 2 — Aula 03, Seção 5)
+// Superclasse (Estratégia 2 — Aula 03, Seção 8)
 Table conteudos {
   id_conteudo       BIGINT UNSIGNED [pk, increment]
   titulo            VARCHAR(255)   [not null]
@@ -385,7 +385,7 @@ Ref fk_item_conteudo:       itens_playlist.conteudo_id         > conteudos.id_co
 
 **Entidades identificadas:** `PESSOAS` (superclasse — e também a tabela de
 autenticação), `MOTORISTAS` e `PASSAGEIROS` (subclasses — Estratégia 2, Aula 03, Seção
-5), `CARONAS`, `RESERVAS_CARONA` (associativa), `AVALIACOES`. Restrição da hierarquia:
+8), `CARONAS`, `RESERVAS_CARONA` (associativa), `AVALIACOES`. Restrição da hierarquia:
 **Parcial Sobreposta** — uma pessoa pode não ser nenhum dos dois papéis ainda, ou ser
 os dois ao mesmo tempo.
 
@@ -507,7 +507,7 @@ Ref fk_avaliacao_avaliado:   avaliacoes.avaliado_id         > pessoas.id_pessoa
   é essa distinção que sustenta `RESERVAS_CARONA.passageiro_id` apontar para
   `PASSAGEIROS`, não direto para `PESSOAS`.
 - `avaliador_id` e `avaliado_id` resolvem a avaliação mútua sem ambiguidade — o mesmo
-  problema do auto-relacionamento `supervisor_id` da Aula 03, Seção 8, mas aqui via
+  problema do auto-relacionamento `supervisor_id` da Aula 03, Seção 11, mas aqui via
   duas FKs numa tabela separada em vez de auto-relacionamento direto em `PESSOAS`.
 
 ---
@@ -920,7 +920,7 @@ Ref fk_avaliacao_avaliado:  avaliacoes.avaliado_id                > usuarios.id_
   dá para um usuário sem perfil de prestador anunciar um serviço, e essa regra fica
   garantida pela própria FK, sem precisar de validação na aplicação.
 - `CONTRATOS.proposta_id` é `UNIQUE` — é isso que transforma o 1:N natural (uma
-  proposta pode gerar um contrato) num 1:1 de fato (Aula 03, Seção 2.1): sem o
+  proposta pode gerar um contrato) num 1:1 de fato (Aula 03, Seção 5.1): sem o
   `UNIQUE`, nada impediria duas linhas de `CONTRATOS` para a mesma proposta.
   `PROPOSTAS` continua guardando `status` — inclusive `'aceita'` — mesmo depois de
   virar contrato, porque é o próprio histórico da negociação, não um dado redundante
