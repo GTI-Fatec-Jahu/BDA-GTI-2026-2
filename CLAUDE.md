@@ -14,6 +14,33 @@ comportar ao lidar com o repositório, não substitui o julgamento dele.
 > completa, **diga isso explicitamente ao professor** em vez de entregar uma versão
 > resumida, incompleta ou malfeita.
 
+## 🎓 Perfil da turma e didática exigida
+
+A turma de IBD951 tem, em geral, **baixo conhecimento prévio de TI e programação** —
+para boa parte dos alunos este é o primeiro contato real com lógica de dados,
+sintaxe técnica e o vocabulário da área. Isso vale para **todo** conteúdo do
+repositório — aulas, atividades, avaliações e gabaritos —, não só para o pipeline de
+aulas descrito abaixo:
+
+- **Nunca introduza um termo técnico sem explicá-lo no momento em que aparece**, mesmo
+  que pareça básico para quem já programa (ex.: "chave estrangeira", "cardinalidade
+  N:M", "ENUM", "atributo derivado", "JOIN").
+- **Ao lado de toda explicação técnica, inclua uma analogia do dia a dia de um
+  brasileiro do interior de SP** — mercado, padaria, feira livre, posto de gasolina,
+  fila do banco, cartório, prefeitura, açougue, rodízio de pizza aos domingos, etc.
+  A analogia entra **ao lado** do conceito técnico, nunca no lugar dele: o aluno
+  precisa sair sabendo o termo técnico correto, a analogia é ponte, não substituto.
+- **Complexidade é progressiva e literal**: um exercício ou trecho rotulado como
+  "fácil"/"básico" precisa ser fácil de verdade — poucos conceitos novos por vez,
+  enunciado direto, sem jargão empilhado. Se um conteúdo classificado como fácil está
+  na prática empilhando vários conceitos avançados ao mesmo tempo (ex.: atributo
+  derivado *e* duas tabelas associativas N:M com atributo próprio no mesmo exercício),
+  isso é uma bandeira vermelha — **sinalize ao professor em vez de aplicar** ou de
+  simplesmente confiar no rótulo de dificuldade já presente no arquivo.
+- Isso se aplica com o mesmo rigor a `docs/atividades/` (enunciados de exercícios e
+  avaliações) e aos gabaritos — a exigência não é exclusiva da Fase 2 do pipeline de
+  aulas descrito a seguir.
+
 ## Stack e comandos
 
 - **MkDocs Material** (`mkdocs.yml` na raiz, `docs_dir: docs`)

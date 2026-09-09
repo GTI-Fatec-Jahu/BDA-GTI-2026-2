@@ -11,6 +11,12 @@
 !!! info "Conteúdo em construção progressiva"
     As aulas deste semestre são publicadas semanalmente. A tabela abaixo mostra o planejamento completo — os itens marcados com 🔒 ainda não foram liberados.
 
+!!! tip "📝 Atividades e Avaliações"
+    Exercícios práticos, provas e trabalhos da disciplina ficam reunidos numa página
+    própria, sempre atualizada conforme novas atividades são liberadas.
+
+    [:material-format-list-checks: Ver todas as Atividades e Avaliações](atividades/index.md){ .md-button .md-button--primary }
+
 ---
 
 ## 🏫 Informações da Disciplina
@@ -94,7 +100,7 @@ A nota final é calculada pela fórmula:
 
 ## 📝 Atividades e Avaliações
 
-Confira a lista completa, sempre atualizada, na página [Atividades e Avaliações](atividades/index.md).
+[:material-format-list-checks: Ver todas as Atividades e Avaliações](atividades/index.md){ .md-button .md-button--primary }
 
 ---
 
