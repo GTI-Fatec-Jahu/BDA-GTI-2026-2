@@ -121,7 +121,7 @@ negócio apresentados, você deve produzir um diagrama em
 
     ```dbml
     Table nome_da_tabela {
-      id_nome_da_tabela BIGINT UNSIGNED [PK, INCREMENT]
+      id_nome_da_tabela "BIGINT UNSIGNED" [PK, INCREMENT]
       alguma_coluna     VARCHAR(255)    [NOT NULL]
 
       Note: 'observações sobre a tabela, se precisar'
@@ -155,8 +155,8 @@ negócio apresentados, você deve produzir um diagrama em
 
     ```dbml
     Table avaliacoes {
-      usuario_id BIGINT UNSIGNED [NOT NULL]
-      produto_id BIGINT UNSIGNED [NOT NULL]
+      usuario_id "BIGINT UNSIGNED" [NOT NULL]
+      produto_id "BIGINT UNSIGNED" [NOT NULL]
 
       Indexes {
         (usuario_id, produto_id) [UNIQUE]
@@ -201,6 +201,24 @@ dentro.
 | `DATETIME` | AAAA-MM-DD HH:MM:SS | Datas com horário, incluindo os três campos de log opcionais (veja nota acima) |
 | `BOOLEAN` (`TINYINT(1)`) | 0 ou 1 | Indicadores verdadeiro/falso |
 | `ENUM(...)` | lista fechada | Conjunto **pequeno e estável** de valores — se a lista pode crescer ou precisa de metadados próprios, use tabela de domínio (é exatamente o caso de `papeis` nos exercícios avançados) |
+
+!!! warning "⚠️ No DBML, tipo com espaço precisa de aspas"
+    A tabela acima escreve `BIGINT UNSIGNED`, `INT UNSIGNED` etc. sem aspas só porque é
+    assim que o tipo se chama no MariaDB. Mas ao **digitar no dbdiagram.io**, qualquer
+    tipo composto por mais de uma palavra precisa ir entre aspas duplas, senão a
+    ferramenta acusa erro de sintaxe — é uma exigência documentada na própria
+    [documentação oficial do DBML](https://dbml.dbdiagram.io/docs/). Ou seja:
+
+    ```dbml
+    // ✅ Certo
+    id_usuario "BIGINT UNSIGNED" [PK, INCREMENT]
+
+    // ❌ Errado — dbdiagram.io recusa, acusando erro de sintaxe
+    id_usuario BIGINT UNSIGNED [PK, INCREMENT]
+    ```
+
+    Todos os blocos DBML desta atividade e das aulas já seguem essa regra — preste
+    atenção nela ao digitar o seu próprio diagrama do zero.
 
 ---
 
@@ -297,7 +315,7 @@ Enum forma_pagamento_enum {
 
 // Regra 4 (plural) + Regra 9 (campos de log em toda tabela)
 Table clientes {
-  id_cliente     BIGINT UNSIGNED [PK, INCREMENT, note: 'Regra 5 — PK = id_ + tabela no singular']
+  id_cliente     "BIGINT UNSIGNED" [PK, INCREMENT, note: 'Regra 5 — PK = id_ + tabela no singular']
   nome           VARCHAR(255)    [NOT NULL]
   cpf            CHAR(11)        [NOT NULL, UNIQUE, note: 'Regra 8 — tamanho fixo, só dígitos']
   email          VARCHAR(255)    [NOT NULL, UNIQUE]
@@ -309,7 +327,7 @@ Table clientes {
 }
 
 Table produtos {
-  id_produto      BIGINT UNSIGNED [PK, INCREMENT]
+  id_produto      "BIGINT UNSIGNED" [PK, INCREMENT]
   descricao       VARCHAR(255)    [NOT NULL]
   valor_unitario  DECIMAL(10,2)   [NOT NULL, note: 'Regra 8 — DECIMAL para dinheiro, nunca FLOAT/DOUBLE']
   criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
@@ -318,8 +336,8 @@ Table produtos {
 }
 
 Table cupons_fiscais {
-  id_cupom_fiscal  BIGINT UNSIGNED   [PK, INCREMENT]
-  cliente_id       BIGINT UNSIGNED   [NOT NULL, note: 'Regra 6 — FK = tabela_singular + _id']
+  id_cupom_fiscal  "BIGINT UNSIGNED"   [PK, INCREMENT]
+  cliente_id       "BIGINT UNSIGNED"   [NOT NULL, note: 'Regra 6 — FK = tabela_singular + _id']
   numero_cupom     VARCHAR(20)       [NOT NULL, UNIQUE]
   data_emissao     DATETIME          [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
   forma_pagamento  forma_pagamento_enum [NOT NULL]
@@ -332,9 +350,9 @@ Table cupons_fiscais {
 // Relacionamento N:M entre cupons_fiscais e produtos (Aula 03, 4.2):
 // PK composta pelas duas FKs, sem PK substituta própria.
 Table itens_cupom {
-  cupom_fiscal_id  BIGINT UNSIGNED [PK, NOT NULL]
-  produto_id       BIGINT UNSIGNED [PK, NOT NULL]
-  quantidade       INT UNSIGNED    [NOT NULL]
+  cupom_fiscal_id  "BIGINT UNSIGNED" [PK, NOT NULL]
+  produto_id       "BIGINT UNSIGNED" [PK, NOT NULL]
+  quantidade       "INT UNSIGNED"    [NOT NULL]
   valor_unitario   DECIMAL(10,2)   [NOT NULL, note: 'snapshot do preço na venda']
   criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
   atualizado_em    DATETIME        [NOT NULL]

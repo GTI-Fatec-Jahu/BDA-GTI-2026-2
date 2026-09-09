@@ -125,12 +125,20 @@ Em DBML (a linguagem do dbdiagram.io, que você vai usar o curso inteiro), a PK 
 
 ```dbml
 Table produtos {
-  id_produto BIGINT UNSIGNED [PK, INCREMENT]
+  id_produto "BIGINT UNSIGNED" [PK, INCREMENT]
   descricao  VARCHAR(255)
 }
 ```
 
 `INCREMENT` diz que o valor é gerado automaticamente pelo banco, incrementando a cada nova linha (1, 2, 3...) — você nunca escolhe ou informa esse valor manualmente. Isso é o que chamamos de **chave substituta** (surrogate key): um identificador artificial, sem significado no mundo real, criado só para o banco distinguir as linhas.
+
+!!! warning "⚠️ Repare nas aspas em `\"BIGINT UNSIGNED\"`"
+    No DBML do dbdiagram.io, todo tipo composto por mais de uma palavra precisa ir
+    entre aspas duplas — sem elas, a ferramenta recusa o diagrama com erro de sintaxe
+    (é uma exigência documentada em [dbml.dbdiagram.io/docs](https://dbml.dbdiagram.io/docs/)).
+    `VARCHAR(255)` não precisa de aspas porque é uma palavra só; `BIGINT UNSIGNED` tem
+    duas palavras, por isso leva aspas. Todo exemplo desta disciplina já segue essa
+    regra — preste atenção nela quando for escrever seu próprio diagrama do zero.
 
 > 💡 **Adiantando:** em SQL de verdade (Aula 06 — SQL DDL), a mesma ideia se escreve `id_produto BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT`. A sintaxe muda, o conceito é idêntico — você já sai desta aula sabendo o que essa linha de SQL vai significar.
 
@@ -156,13 +164,13 @@ Em DBML, a FK é uma coluna comum — sem `[PK]` — mais uma linha `Ref` que de
 
 ```dbml
 Table produtos {
-  id_produto BIGINT UNSIGNED [PK, INCREMENT]
+  id_produto "BIGINT UNSIGNED" [PK, INCREMENT]
   descricao  VARCHAR(255)
 }
 
 Table itens_pedido {
-  id_item_pedido BIGINT UNSIGNED [PK, INCREMENT]
-  produto_id     BIGINT UNSIGNED [NOT NULL]
+  id_item_pedido "BIGINT UNSIGNED" [PK, INCREMENT]
+  produto_id     "BIGINT UNSIGNED" [NOT NULL]
 }
 
 Ref: itens_pedido.produto_id > produtos.id_produto
@@ -271,13 +279,13 @@ Além do Mermaid (que você acabou de ver acima), você também pode desenhar e 
 
 ```dbml
 Table funcionarios {
-  id_funcionario BIGINT UNSIGNED [PK, INCREMENT]
+  id_funcionario "BIGINT UNSIGNED" [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
 Table crachas {
-  id_cracha BIGINT UNSIGNED [PK, INCREMENT]
-  funcionario_id BIGINT UNSIGNED
+  id_cracha "BIGINT UNSIGNED" [PK, INCREMENT]
+  funcionario_id "BIGINT UNSIGNED"
   numero_serie VARCHAR(50)
 }
 
@@ -286,7 +294,7 @@ Ref: crachas.funcionario_id > funcionarios.id_funcionario
 
 A sintaxe é simples: `Table nome_da_tabela { ... }` declara uma tabela; cada linha dentro dela é `nome_da_coluna tipo`, e `[PK]` marca a chave primária — exatamente como você viu nas Seções 1 e 2. Não precisa decorar mais nada por enquanto — só isso já é suficiente para o próximo exemplo.
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgZnVuY2lvbmFyaW9zIHsKICBpZF9mdW5jaW9uYXJpbyBCSUdJTlQgVU5TSUdORUQgW1BLLCBJTkNSRU1FTlRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgY3JhY2hhcyB7CiAgaWRfY3JhY2hhIEJJR0lOVCBVTlNJR05FRCBbUEssIElOQ1JFTUVOVF0KICBmdW5jaW9uYXJpb19pZCBCSUdJTlQgVU5TSUdORUQKICBudW1lcm9fc2VyaWUgVkFSQ0hBUig1MCkKfQoKUmVmOiBjcmFjaGFzLmZ1bmNpb25hcmlvX2lkID4gZnVuY2lvbmFyaW9zLmlkX2Z1bmNpb25hcmlvCg%3D%3D)** — clique para ver o mesmo modelo renderizado por outra ferramenta. Documentação oficial da linguagem: [dbml.dbdiagram.io/docs](https://dbml.dbdiagram.io/docs/).
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgZnVuY2lvbmFyaW9zIHsKICBpZF9mdW5jaW9uYXJpbyAiQklHSU5UIFVOU0lHTkVEIiBbUEssIElOQ1JFTUVOVF0KICBub21lIFZBUkNIQVIoMjU1KQp9CgpUYWJsZSBjcmFjaGFzIHsKICBpZF9jcmFjaGEgIkJJR0lOVCBVTlNJR05FRCIgW1BLLCBJTkNSRU1FTlRdCiAgZnVuY2lvbmFyaW9faWQgIkJJR0lOVCBVTlNJR05FRCIKICBudW1lcm9fc2VyaWUgVkFSQ0hBUig1MCkKfQoKUmVmOiBjcmFjaGFzLmZ1bmNpb25hcmlvX2lkID4gZnVuY2lvbmFyaW9zLmlkX2Z1bmNpb25hcmlvCg%3D%3D)** — clique para ver o mesmo modelo renderizado por outra ferramenta. Documentação oficial da linguagem: [dbml.dbdiagram.io/docs](https://dbml.dbdiagram.io/docs/).
 
 **Outros exemplos de 1:1:**
 
@@ -378,18 +386,18 @@ Note que o N:M original entre `ALUNOS` e `DISCIPLINAS` foi decomposto em **dois*
 
 ```dbml
 Table alunos {
-  id_aluno BIGINT UNSIGNED [PK, INCREMENT]
+  id_aluno "BIGINT UNSIGNED" [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
 Table disciplinas {
-  id_disciplina BIGINT UNSIGNED [PK, INCREMENT]
+  id_disciplina "BIGINT UNSIGNED" [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
 Table matriculas {
-  aluno_id BIGINT UNSIGNED
-  disciplina_id BIGINT UNSIGNED
+  aluno_id "BIGINT UNSIGNED"
+  disciplina_id "BIGINT UNSIGNED"
   nota DECIMAL(4,2)
 }
 
@@ -399,7 +407,7 @@ Ref: matriculas.disciplina_id > disciplinas.id_disciplina
 
 Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela associativa. É assim que todo N:M vira DBML: uma tabela no meio, duas setas saindo dela.
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgYWx1bm9zIHsKICBpZF9hbHVubyBCSUdJTlQgVU5TSUdORUQgW1BLLCBJTkNSRU1FTlRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgZGlzY2lwbGluYXMgewogIGlkX2Rpc2NpcGxpbmEgQklHSU5UIFVOU0lHTkVEIFtQSywgSU5DUkVNRU5UXQogIG5vbWUgVkFSQ0hBUigyNTUpCn0KClRhYmxlIG1hdHJpY3VsYXMgewogIGFsdW5vX2lkIEJJR0lOVCBVTlNJR05FRAogIGRpc2NpcGxpbmFfaWQgQklHSU5UIFVOU0lHTkVECiAgbm90YSBERUNJTUFMKDQsMikKfQoKUmVmOiBtYXRyaWN1bGFzLmFsdW5vX2lkID4gYWx1bm9zLmlkX2FsdW5vClJlZjogbWF0cmljdWxhcy5kaXNjaXBsaW5hX2lkID4gZGlzY2lwbGluYXMuaWRfZGlzY2lwbGluYQo%3D)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgYWx1bm9zIHsKICBpZF9hbHVubyAiQklHSU5UIFVOU0lHTkVEIiBbUEssIElOQ1JFTUVOVF0KICBub21lIFZBUkNIQVIoMjU1KQp9CgpUYWJsZSBkaXNjaXBsaW5hcyB7CiAgaWRfZGlzY2lwbGluYSAiQklHSU5UIFVOU0lHTkVEIiBbUEssIElOQ1JFTUVOVF0KICBub21lIFZBUkNIQVIoMjU1KQp9CgpUYWJsZSBtYXRyaWN1bGFzIHsKICBhbHVub19pZCAiQklHSU5UIFVOU0lHTkVEIgogIGRpc2NpcGxpbmFfaWQgIkJJR0lOVCBVTlNJR05FRCIKICBub3RhIERFQ0lNQUwoNCwyKQp9CgpSZWY6IG1hdHJpY3VsYXMuYWx1bm9faWQgPiBhbHVub3MuaWRfYWx1bm8KUmVmOiBtYXRyaWN1bGFzLmRpc2NpcGxpbmFfaWQgPiBkaXNjaXBsaW5hcy5pZF9kaXNjaXBsaW5hCg%3D%3D)**
 
 **Outros exemplos de N:M:**
 
@@ -608,22 +616,22 @@ Nenhuma coluna fica órfã: `carros` só existe para veículos que são carros, 
 
 ```dbml
 Table veiculos {
-  id_veiculo BIGINT UNSIGNED [PK, INCREMENT]
+  id_veiculo "BIGINT UNSIGNED" [PK, INCREMENT]
   placa VARCHAR(10)
-  ano_fabricacao INT UNSIGNED
+  ano_fabricacao "INT UNSIGNED"
   cor VARCHAR(50)
   preco DECIMAL(10,2)
 }
 
 Table carros {
-  id_veiculo BIGINT UNSIGNED [PK]
-  numero_portas TINYINT UNSIGNED
+  id_veiculo "BIGINT UNSIGNED" [PK]
+  numero_portas "TINYINT UNSIGNED"
   tipo_cambio VARCHAR(20)
 }
 
 Table motos {
-  id_veiculo BIGINT UNSIGNED [PK]
-  cilindradas INT UNSIGNED
+  id_veiculo "BIGINT UNSIGNED" [PK]
+  cilindradas "INT UNSIGNED"
   tipo_guidao VARCHAR(20)
 }
 
@@ -631,7 +639,7 @@ Ref: carros.id_veiculo > veiculos.id_veiculo
 Ref: motos.id_veiculo > veiculos.id_veiculo
 ```
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgdmVpY3Vsb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtQSywgSU5DUkVNRU5UXQogIHBsYWNhIFZBUkNIQVIoMTApCiAgYW5vX2ZhYnJpY2FjYW8gSU5UIFVOU0lHTkVECiAgY29yIFZBUkNIQVIoNTApCiAgcHJlY28gREVDSU1BTCgxMCwyKQp9CgpUYWJsZSBjYXJyb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtQS10KICBudW1lcm9fcG9ydGFzIFRJTllJTlQgVU5TSUdORUQKICB0aXBvX2NhbWJpbyBWQVJDSEFSKDIwKQp9CgpUYWJsZSBtb3RvcyB7CiAgaWRfdmVpY3VsbyBCSUdJTlQgVU5TSUdORUQgW1BLXQogIGNpbGluZHJhZGFzIElOVCBVTlNJR05FRAogIHRpcG9fZ3VpZGFvIFZBUkNIQVIoMjApCn0KClJlZjogY2Fycm9zLmlkX3ZlaWN1bG8gPiB2ZWljdWxvcy5pZF92ZWljdWxvClJlZjogbW90b3MuaWRfdmVpY3VsbyA%2BIHZlaWN1bG9zLmlkX3ZlaWN1bG8K)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgdmVpY3Vsb3MgewogIGlkX3ZlaWN1bG8gIkJJR0lOVCBVTlNJR05FRCIgW1BLLCBJTkNSRU1FTlRdCiAgcGxhY2EgVkFSQ0hBUigxMCkKICBhbm9fZmFicmljYWNhbyAiSU5UIFVOU0lHTkVEIgogIGNvciBWQVJDSEFSKDUwKQogIHByZWNvIERFQ0lNQUwoMTAsMikKfQoKVGFibGUgY2Fycm9zIHsKICBpZF92ZWljdWxvICJCSUdJTlQgVU5TSUdORUQiIFtQS10KICBudW1lcm9fcG9ydGFzICJUSU5ZSU5UIFVOU0lHTkVEIgogIHRpcG9fY2FtYmlvIFZBUkNIQVIoMjApCn0KClRhYmxlIG1vdG9zIHsKICBpZF92ZWljdWxvICJCSUdJTlQgVU5TSUdORUQiIFtQS10KICBjaWxpbmRyYWRhcyAiSU5UIFVOU0lHTkVEIgogIHRpcG9fZ3VpZGFvIFZBUkNIQVIoMjApCn0KClJlZjogY2Fycm9zLmlkX3ZlaWN1bG8gPiB2ZWljdWxvcy5pZF92ZWljdWxvClJlZjogbW90b3MuaWRfdmVpY3VsbyA%2BIHZlaWN1bG9zLmlkX3ZlaWN1bG8K)**
 
 ### 8.3 E quando a especialização é com sobreposição?
 
@@ -695,7 +703,7 @@ Perceba a cardinalidade aplicada: `CUPONS_FISCAIS` contém **zero ou muitos** `I
 
 ```dbml
 Table cupons_fiscais {
-  id_cupom BIGINT UNSIGNED [PK, INCREMENT]
+  id_cupom "BIGINT UNSIGNED" [PK, INCREMENT]
   data_emissao DATE
   valor_total DECIMAL(10,2)
 }
@@ -707,9 +715,9 @@ Table produtos {
 }
 
 Table itens_cupom {
-  cupom_id BIGINT UNSIGNED
+  cupom_id "BIGINT UNSIGNED"
   produto_id VARCHAR(14)
-  quantidade INT UNSIGNED
+  quantidade "INT UNSIGNED"
   valor_total_item DECIMAL(10,2)
 }
 
@@ -717,7 +725,7 @@ Ref: itens_cupom.cupom_id > cupons_fiscais.id_cupom
 Ref: itens_cupom.produto_id > produtos.codigo_barras
 ```
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgY3Vwb25zX2Zpc2NhaXMgewogIGlkX2N1cG9tIEJJR0lOVCBVTlNJR05FRCBbUEssIElOQ1JFTUVOVF0KICBkYXRhX2VtaXNzYW8gREFURQogIHZhbG9yX3RvdGFsIERFQ0lNQUwoMTAsMikKfQoKVGFibGUgcHJvZHV0b3MgewogIGNvZGlnb19iYXJyYXMgVkFSQ0hBUigxNCkgW1BLXQogIGRlc2NyaWNhbyBWQVJDSEFSKDI1NSkKICB2YWxvcl91bml0YXJpbyBERUNJTUFMKDEwLDIpCn0KClRhYmxlIGl0ZW5zX2N1cG9tIHsKICBjdXBvbV9pZCBCSUdJTlQgVU5TSUdORUQKICBwcm9kdXRvX2lkIFZBUkNIQVIoMTQpCiAgcXVhbnRpZGFkZSBJTlQgVU5TSUdORUQKICB2YWxvcl90b3RhbF9pdGVtIERFQ0lNQUwoMTAsMikKfQoKUmVmOiBpdGVuc19jdXBvbS5jdXBvbV9pZCA%2BIGN1cG9uc19maXNjYWlzLmlkX2N1cG9tClJlZjogaXRlbnNfY3Vwb20ucHJvZHV0b19pZCA%2BIHByb2R1dG9zLmNvZGlnb19iYXJyYXMK)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgY3Vwb25zX2Zpc2NhaXMgewogIGlkX2N1cG9tICJCSUdJTlQgVU5TSUdORUQiIFtQSywgSU5DUkVNRU5UXQogIGRhdGFfZW1pc3NhbyBEQVRFCiAgdmFsb3JfdG90YWwgREVDSU1BTCgxMCwyKQp9CgpUYWJsZSBwcm9kdXRvcyB7CiAgY29kaWdvX2JhcnJhcyBWQVJDSEFSKDE0KSBbUEtdCiAgZGVzY3JpY2FvIFZBUkNIQVIoMjU1KQogIHZhbG9yX3VuaXRhcmlvIERFQ0lNQUwoMTAsMikKfQoKVGFibGUgaXRlbnNfY3Vwb20gewogIGN1cG9tX2lkICJCSUdJTlQgVU5TSUdORUQiCiAgcHJvZHV0b19pZCBWQVJDSEFSKDE0KQogIHF1YW50aWRhZGUgIklOVCBVTlNJR05FRCIKICB2YWxvcl90b3RhbF9pdGVtIERFQ0lNQUwoMTAsMikKfQoKUmVmOiBpdGVuc19jdXBvbS5jdXBvbV9pZCA%2BIGN1cG9uc19maXNjYWlzLmlkX2N1cG9tClJlZjogaXRlbnNfY3Vwb20ucHJvZHV0b19pZCA%2BIHByb2R1dG9zLmNvZGlnb19iYXJyYXMK)**
 
 ---
 
