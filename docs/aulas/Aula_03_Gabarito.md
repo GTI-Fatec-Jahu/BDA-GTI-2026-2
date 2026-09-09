@@ -20,11 +20,11 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 **Resposta:**
 
-**(a) USUARIO e PLAYLIST → 1:N.** "Um usuário pode criar várias playlists" (máximo N do lado PLAYLIST) e "cada playlist pertence a exatamente um usuário" (máximo 1 do lado USUARIO). A FK `usuario_id` fica em `PLAYLIST` (lado N), seguindo a Regra 6.
+**(a) USUARIOS e PLAYLISTS → 1:N.** "Um usuário pode criar várias playlists" (máximo N do lado PLAYLISTS) e "cada playlist pertence a exatamente um usuário" (máximo 1 do lado USUARIOS). A FK `usuario_id` fica em `PLAYLISTS` (lado N), seguindo a Regra 6.
 
-**(b) PLAYLIST e MUSICA → N:M.** "Pode ter mais de uma?" é sim nos dois sentidos — uma playlist tem várias músicas, e uma música está em várias playlists. Precisa de uma tabela associativa (ex.: `ITEM_PLAYLIST`, com `playlist_id FK` e `musica_id FK`).
+**(b) PLAYLISTS e MUSICAS → N:M.** "Pode ter mais de uma?" é sim nos dois sentidos — uma playlist tem várias músicas, e uma música está em várias playlists. Precisa de uma tabela associativa (ex.: `ITENS_PLAYLIST`, com `playlist_id FK` e `musica_id FK`).
 
-**(c) USUARIO e ASSINATURA → 1:1.** "Um usuário tem exatamente uma assinatura ativa" e "uma assinatura pertence a exatamente um usuário" — não em quantidade nos dois sentidos. A FK fica no lado de participação parcial (se um usuário puder existir sem assinatura ativa, a FK `usuario_id` vai em `ASSINATURA`).
+**(c) USUARIOS e ASSINATURAS → 1:1.** "Um usuário tem exatamente uma assinatura ativa" e "uma assinatura pertence a exatamente um usuário" — não em quantidade nos dois sentidos. A FK fica no lado de participação parcial (se um usuário puder existir sem assinatura ativa, a FK `usuario_id` vai em `ASSINATURAS`).
 
 ---
 
@@ -32,11 +32,11 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 **Resposta:**
 
-**(a)** O símbolo `O{`, perto de `FILIAL`, descreve `VEICULO` — significa que **uma filial pode ter zero ou muitos veículos** (mínimo 0, máximo N).
+**(a)** O símbolo `O{`, perto de `FILIAIS`, descreve `VEICULOS` — significa que **uma filial pode ter zero ou muitos veículos** (mínimo 0, máximo N).
 
-**(b)** O símbolo `||`, perto de `VEICULO`, descreve `FILIAL` — significa que **um veículo pertence a exatamente uma filial** (mínimo 1, máximo 1).
+**(b)** O símbolo `||`, perto de `VEICULOS`, descreve `FILIAIS` — significa que **um veículo pertence a exatamente uma filial** (mínimo 1, máximo 1).
 
-**(c)** Em Min-Max: `FILIAL (0,N) ———— (1,1) VEICULO`.
+**(c)** Em Min-Max: `FILIAIS (0,N) ———— (1,1) VEICULOS`.
 
 ---
 
@@ -44,9 +44,9 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 
 **Resposta:**
 
-**(a)** `MAQUINA` e `ORDEM_SERVICO` são 1:N — uma máquina pode gerar várias ordens de serviço, mas cada ordem de serviço se refere a exatamente uma máquina. Pela Regra da Seção 7.1, a FK fica no lado N (`ORDEM_SERVICO`), chamada `maquina_id` (Regra 6: nome da tabela referenciada no singular + `_id`).
+**(a)** `MAQUINAS` e `ORDENS_SERVICO` são 1:N — uma máquina pode gerar várias ordens de serviço, mas cada ordem de serviço se refere a exatamente uma máquina. Pela Regra da Seção 7.1, a FK fica no lado N (`ORDENS_SERVICO`), chamada `maquina_id` (Regra 6: nome da tabela referenciada no singular + `_id`).
 
-**(b)** `ORDEM_SERVICO` e `TECNICO` são N:M — uma ordem pode envolver vários técnicos, e um técnico atua em várias ordens. Nenhuma FK simples resolve isso porque nenhum dos dois lados consegue guardar múltiplas referências em uma única coluna (Seção 7.2). Solução: tabela associativa `ATUACAO_TECNICA` (ou similar), com `ordem_servico_id FK` e `tecnico_id FK`.
+**(b)** `ORDENS_SERVICO` e `TECNICOS` são N:M — uma ordem pode envolver vários técnicos, e um técnico atua em várias ordens. Nenhuma FK simples resolve isso porque nenhum dos dois lados consegue guardar múltiplas referências em uma única coluna (Seção 7.2). Solução: tabela associativa `ATUACOES_TECNICAS` (ou similar), com `ordem_servico_id FK` e `tecnico_id FK`.
 
 ---
 
@@ -85,11 +85,11 @@ erDiagram
 
 **Resposta:**
 
-**RESERVA → participação total** em relação a `LIVRO` e a `MEMBRO`: o enunciado diz que toda reserva obrigatoriamente está vinculada aos dois — não existe reserva "solta" (mínimo 1 dos dois lados).
+**RESERVAS → participação total** em relação a `LIVROS` e a `MEMBROS`: o enunciado diz que toda reserva obrigatoriamente está vinculada aos dois — não existe reserva "solta" (mínimo 1 dos dois lados).
 
-**LIVRO → participação parcial** no relacionamento de reserva: nem todo livro do acervo precisa ter sido reservado (mínimo 0).
+**LIVROS → participação parcial** no relacionamento de reserva: nem todo livro do acervo precisa ter sido reservado (mínimo 0).
 
-**MEMBRO → participação parcial** no relacionamento de reserva: nem todo membro cadastrado precisa ter feito uma reserva (mínimo 0).
+**MEMBROS → participação parcial** no relacionamento de reserva: nem todo membro cadastrado precisa ter feito uma reserva (mínimo 0).
 
 ---
 
@@ -97,117 +97,117 @@ erDiagram
 
 **Resposta:**
 
-**(a) Auto-relacionamento.** `USUARIO` se relaciona com `USUARIO` — a mesma entidade em ambos os lados do relacionamento "segue".
+**(a) Auto-relacionamento.** `USUARIOS` se relaciona com `USUARIOS` — a mesma entidade em ambos os lados do relacionamento "segue".
 
 ```mermaid
 erDiagram
-    USUARIO {
+    USUARIOS {
         int id_usuario PK
         string nome_usuario
     }
-    USUARIO ||--o{ USUARIO : "segue"
+    USUARIOS ||--o{ USUARIOS : "segue"
 ```
 
-**(b) Relacionamento ternário.** As três entidades `VENDEDOR`, `PRODUTO` e `CONDICAO_COMERCIAL` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 12.
+**(b) Relacionamento ternário.** As três entidades `VENDEDORES`, `PRODUTOS` e `CONDICOES_COMERCIAIS` participam juntas de uma única ocorrência — a oferta só existe pela combinação das três, exatamente como no exemplo médico/medicamento/paciente da Seção 12.
 
 ```mermaid
 erDiagram
-    VENDEDOR }o--o{ PRODUTO : "oferece"
-    PRODUTO }o--o{ CONDICAO_COMERCIAL : "sob"
-    VENDEDOR }o--o{ CONDICAO_COMERCIAL : "define"
+    VENDEDORES }o--o{ PRODUTOS : "oferece"
+    PRODUTOS }o--o{ CONDICOES_COMERCIAIS : "sob"
+    VENDEDORES }o--o{ CONDICOES_COMERCIAIS : "define"
 ```
 
 ---
 
 ## Exercício 1 — Leitura de Diagrama
 
-**a) Um fornecedor pode existir sem fornecer nenhum produto?** Sim. O símbolo `O{`, próximo a `FORNECEDOR`, descreve `PRODUTO` e começa com círculo — mínimo 0. Um fornecedor recém-cadastrado pode ainda não ter nenhum produto associado.
+**a) Um fornecedor pode existir sem fornecer nenhum produto?** Sim. O símbolo `O{`, próximo a `FORNECEDORES`, descreve `PRODUTOS` e começa com círculo — mínimo 0. Um fornecedor recém-cadastrado pode ainda não ter nenhum produto associado.
 
-**b) Um produto pode existir sem estar vinculado a um fornecedor?** Não. O símbolo `||`, próximo a `PRODUTO`, descreve `FORNECEDOR` e começa com barra dupla — mínimo 1. Todo produto precisa ter um fornecedor.
+**b) Um produto pode existir sem estar vinculado a um fornecedor?** Não. O símbolo `||`, próximo a `PRODUTOS`, descreve `FORNECEDORES` e começa com barra dupla — mínimo 1. Todo produto precisa ter um fornecedor.
 
-**c) Cardinalidade em Min-Max:** `FORNECEDOR (0,N) ———— (1,1) PRODUTO`.
+**c) Cardinalidade em Min-Max:** `FORNECEDORES (0,N) ———— (1,1) PRODUTOS`.
 
 ---
 
 ## Exercício 2 — Oficina Mecânica
 
-**Raciocínio:** há duas cadeias 1:N encadeadas. `CLIENTE` (1) para `VEICULO` (N) — um cliente pode ter vários veículos, mas cada veículo pertence a exatamente um cliente (participação total: não faz sentido um veículo cadastrado sem dono). `VEICULO` (1) para `ORDEM_SERVICO` (N) — um veículo pode passar por várias ordens de serviço ao longo do tempo, mas cada ordem de serviço se refere a exatamente um veículo.
+**Raciocínio:** há duas cadeias 1:N encadeadas. `CLIENTES` (1) para `VEICULOS` (N) — um cliente pode ter vários veículos, mas cada veículo pertence a exatamente um cliente (participação total: não faz sentido um veículo cadastrado sem dono). `VEICULOS` (1) para `ORDENS_SERVICO` (N) — um veículo pode passar por várias ordens de serviço ao longo do tempo, mas cada ordem de serviço se refere a exatamente um veículo.
 
 ```mermaid
 erDiagram
-    CLIENTE {
+    CLIENTES {
         int id_cliente PK
         string nome
         string telefone
     }
-    VEICULO {
+    VEICULOS {
         int id_veiculo PK
         string placa
         string modelo
         int cliente_id FK
     }
-    ORDEM_SERVICO {
+    ORDENS_SERVICO {
         int id_ordem_servico PK
         date data_abertura
         string descricao_problema
         float valor_total
         int veiculo_id FK
     }
-    CLIENTE ||--o{ VEICULO : "possui"
-    VEICULO ||--o{ ORDEM_SERVICO : "passa por"
+    CLIENTES ||--o{ VEICULOS : "possui"
+    VEICULOS ||--o{ ORDENS_SERVICO : "passa por"
 ```
 
-Seguindo a regra da Seção 7.1: a FK sempre fica no lado N. `cliente_id` fica em `VEICULO`; `veiculo_id` fica em `ORDEM_SERVICO`. Ambas seguem a Regra 6 (nome da tabela referenciada no singular + `_id`).
+Seguindo a regra da Seção 7.1: a FK sempre fica no lado N. `cliente_id` fica em `VEICULOS`; `veiculo_id` fica em `ORDENS_SERVICO`. Ambas seguem a Regra 6 (nome da tabela referenciada no singular + `_id`).
 
 ---
 
 ## Exercício 3 — Identifique o Tipo e Decomponha
 
-**a) Ingresso e Evento → 1:N.** Um evento pode vender muitos ingressos; cada ingresso é válido para exatamente um evento. A FK `evento_id` fica em `INGRESSO`.
+**a) Ingresso e Evento → 1:N.** Um evento pode vender muitos ingressos; cada ingresso é válido para exatamente um evento. A FK `evento_id` fica em `INGRESSOS`.
 
 ```mermaid
 erDiagram
-    EVENTO {
+    EVENTOS {
         int id_evento PK
         string nome
         date data_evento
     }
-    INGRESSO {
+    INGRESSOS {
         int id_ingresso PK
         string codigo
         float preco
         int evento_id FK
     }
-    EVENTO ||--o{ INGRESSO : "vende"
+    EVENTOS ||--o{ INGRESSOS : "vende"
 ```
 
-**b) Aluno e Turma → N:M.** Um aluno pode estar em várias turmas no mesmo semestre (ex: turmas de disciplinas diferentes); uma turma tem vários alunos. Entidade associativa: `MATRICULA`, com `aluno_id FK` e `turma_id FK`.
+**b) Aluno e Turma → N:M.** Um aluno pode estar em várias turmas no mesmo semestre (ex: turmas de disciplinas diferentes); uma turma tem vários alunos. Entidade associativa: `MATRICULAS`, com `aluno_id FK` e `turma_id FK`.
 
 ```mermaid
 erDiagram
-    ALUNO { }
-    TURMA { }
-    MATRICULA {
+    ALUNOS { }
+    TURMAS { }
+    MATRICULAS {
         int aluno_id FK
         int turma_id FK
     }
-    ALUNO ||--o{ MATRICULA : "realiza"
-    TURMA ||--o{ MATRICULA : "recebe"
+    ALUNOS ||--o{ MATRICULAS : "realiza"
+    TURMAS ||--o{ MATRICULAS : "recebe"
 ```
 
-**c) Passageiro e Voo → N:M.** Um passageiro pode reservar assento em vários voos; um voo tem vários passageiros. Entidade associativa: `RESERVA`, com `passageiro_id FK`, `voo_id FK` e o atributo próprio `numero_assento` (que só faz sentido na combinação passageiro+voo, não em cada entidade isolada).
+**c) Passageiro e Voo → N:M.** Um passageiro pode reservar assento em vários voos; um voo tem vários passageiros. Entidade associativa: `RESERVAS`, com `passageiro_id FK`, `voo_id FK` e o atributo próprio `numero_assento` (que só faz sentido na combinação passageiro+voo, não em cada entidade isolada).
 
 ```mermaid
 erDiagram
-    PASSAGEIRO { }
-    VOO { }
-    RESERVA {
+    PASSAGEIROS { }
+    VOOS { }
+    RESERVAS {
         int passageiro_id FK
         int voo_id FK
         string numero_assento
     }
-    PASSAGEIRO ||--o{ RESERVA : "faz"
-    VOO ||--o{ RESERVA : "recebe"
+    PASSAGEIROS ||--o{ RESERVAS : "faz"
+    VOOS ||--o{ RESERVAS : "recebe"
 ```
 
 ---
@@ -228,25 +228,25 @@ Seguindo a Regra 6 (FK: nome da tabela referenciada no singular + `_id`), a chav
 
 ## Exercício 5 — A Catraca da Academia
 
-**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTO` na Seção 9. Então a PK de `ALUNO` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
+**Raciocínio:** o enunciado diz explicitamente que a carteirinha "funciona como identificador do aluno dentro da academia" — exatamente o mesmo papel que o código de barras cumpria para `PRODUTOS` na Seção 9. Então a PK de `ALUNOS` não precisa ser um número sequencial: pode ser o próprio `numero_carteirinha`. Um aluno pode ter zero ou muitos acessos registrados (um aluno recém-cadastrado ainda não passou pela catraca); cada acesso pertence a exatamente um aluno — 1:N clássico, FK no lado N.
 
 ```mermaid
 erDiagram
-    ALUNO {
+    ALUNOS {
         string numero_carteirinha PK
         string nome
     }
-    ACESSO {
+    ACESSOS {
         int id_acesso PK
         date data_acesso
         time hora_acesso
         string tipo_catraca
         string aluno_id FK
     }
-    ALUNO ||--o{ ACESSO : "registra"
+    ALUNOS ||--o{ ACESSOS : "registra"
 ```
 
-Note que `aluno_id` (a FK em `ACESSO`) segue a Regra 6 normalmente — mesmo a PK de `ALUNO` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTO`/`codigo_barras` da Seção 9.
+Note que `aluno_id` (a FK em `ACESSOS`) segue a Regra 6 normalmente — mesmo a PK de `ALUNOS` não sendo um número, o nome da FK continua sendo `tabela_singular` + `_id`, e não `aluno_numero_carteirinha` ou algo do tipo. É o mesmo padrão aplicado no Exercício de `PRODUTOS`/`codigo_barras` da Seção 9.
 
 ---
 

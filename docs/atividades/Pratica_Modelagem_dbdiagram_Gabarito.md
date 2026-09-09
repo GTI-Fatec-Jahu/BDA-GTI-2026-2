@@ -43,54 +43,54 @@ Enum tipo_usuario_enum {
 }
 
 Table usuarios {
-  id_usuario     BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(255)    [not null]
-  email          VARCHAR(255)    [not null, unique]
-  senha_hash     VARCHAR(255)    [not null]
-  tipo_usuario   tipo_usuario_enum [not null, default: 'usuario']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_usuario     BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table grupos {
-  id_grupo       BIGINT UNSIGNED [pk, increment]
-  criador_id     BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "criador", não "usuario_id"']
-  nome           VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_grupo       BIGINT UNSIGNED [PK, INCREMENT]
+  criador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "criador", não "usuario_id"']
+  nome           VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // N:M usuarios <-> grupos — PK composta (Aula 03, 4.2)
 Table membros_grupo {
-  grupo_id       BIGINT UNSIGNED [pk, not null]
-  usuario_id     BIGINT UNSIGNED [pk, not null]
-  entrou_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  grupo_id       BIGINT UNSIGNED [PK, NOT NULL]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  entrou_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table despesas {
-  id_despesa     BIGINT UNSIGNED [pk, increment]
-  grupo_id       BIGINT UNSIGNED [not null]
-  pagador_id     BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "pagador"']
-  descricao      VARCHAR(255)    [not null]
-  valor_total    DECIMAL(10,2)   [not null]
-  data_despesa   DATE            [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_despesa     BIGINT UNSIGNED [PK, INCREMENT]
+  grupo_id       BIGINT UNSIGNED [NOT NULL]
+  pagador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "pagador"']
+  descricao      VARCHAR(255)    [NOT NULL]
+  valor_total    DECIMAL(10,2)   [NOT NULL]
+  data_despesa   DATE            [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // N:M despesas <-> usuarios, com o atributo do próprio relacionamento (valor_devido)
 Table participantes_despesa {
-  despesa_id     BIGINT UNSIGNED [pk, not null]
-  usuario_id     BIGINT UNSIGNED [pk, not null]
-  valor_devido   DECIMAL(10,2)   [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  despesa_id     BIGINT UNSIGNED [PK, NOT NULL]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  valor_devido   DECIMAL(10,2)   [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
@@ -140,56 +140,56 @@ Enum tipo_usuario_enum {
 }
 
 Table usuarios {
-  id_usuario     BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(255)    [not null]
-  email          VARCHAR(255)    [not null, unique]
-  senha_hash     VARCHAR(255)    [not null]
-  tipo_usuario   tipo_usuario_enum [not null, default: 'usuario']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_usuario     BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table exercicios {
-  id_exercicio    BIGINT UNSIGNED [pk, increment]
-  nome            VARCHAR(255)    [not null, unique]
-  grupo_muscular  VARCHAR(100)    [not null]
+  id_exercicio    BIGINT UNSIGNED [PK, INCREMENT]
+  nome            VARCHAR(255)    [NOT NULL, UNIQUE]
+  grupo_muscular  VARCHAR(100)    [NOT NULL]
   instrucoes      TEXT
-  criado_em       DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em   DATETIME        [not null]
+  criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME        [NOT NULL]
   deletado_em     DATETIME
 }
 
 Table treinos {
-  id_treino      BIGINT UNSIGNED [pk, increment]
-  usuario_id     BIGINT UNSIGNED [not null]
-  nome           VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_treino      BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id     BIGINT UNSIGNED [NOT NULL]
+  nome           VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // N:M treinos <-> exercicios, com atributos próprios do relacionamento
 Table itens_treino {
-  treino_id      BIGINT UNSIGNED [pk, not null]
-  exercicio_id   BIGINT UNSIGNED [pk, not null]
-  ordem          TINYINT UNSIGNED [not null, note: 'ordem de execução dentro do treino']
-  series         TINYINT UNSIGNED [not null]
-  repeticoes     TINYINT UNSIGNED [not null]
-  carga_kg       DECIMAL(5,2)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  treino_id      BIGINT UNSIGNED [PK, NOT NULL]
+  exercicio_id   BIGINT UNSIGNED [PK, NOT NULL]
+  ordem          TINYINT UNSIGNED [NOT NULL, note: 'ordem de execução dentro do treino']
+  series         TINYINT UNSIGNED [NOT NULL]
+  repeticoes     TINYINT UNSIGNED [NOT NULL]
+  carga_kg       DECIMAL(5,2)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table execucoes_treino {
-  id_execucao        BIGINT UNSIGNED [pk, increment]
-  treino_id          BIGINT UNSIGNED [not null]
-  executado_em       DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  duracao_minutos    INT UNSIGNED    [not null]
-  esforco_percebido  TINYINT UNSIGNED [not null, note: 'escala de 1 a 10']
-  criado_em          DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em      DATETIME        [not null]
+  id_execucao        BIGINT UNSIGNED [PK, INCREMENT]
+  treino_id          BIGINT UNSIGNED [NOT NULL]
+  executado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  duracao_minutos    INT UNSIGNED    [NOT NULL]
+  esforco_percebido  TINYINT UNSIGNED [NOT NULL, note: 'escala de 1 a 10']
+  criado_em          DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em      DATETIME        [NOT NULL]
   deletado_em        DATETIME
 }
 
@@ -249,106 +249,106 @@ Enum tipo_usuario_enum {
 }
 
 Table usuarios {
-  id_usuario     BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(255)    [not null]
-  email          VARCHAR(255)    [not null, unique]
-  senha_hash     VARCHAR(255)    [not null]
-  tipo_usuario   tipo_usuario_enum [not null, default: 'usuario']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_usuario     BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table planos {
-  id_plano                    BIGINT UNSIGNED [pk, increment]
-  nome                        VARCHAR(100)    [not null, unique]
-  preco_mensal                DECIMAL(8,2)    [not null]
-  limite_downloads_offline    INT UNSIGNED    [not null]
-  criado_em                   DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em               DATETIME        [not null]
+  id_plano                    BIGINT UNSIGNED [PK, INCREMENT]
+  nome                        VARCHAR(100)    [NOT NULL, UNIQUE]
+  preco_mensal                DECIMAL(8,2)    [NOT NULL]
+  limite_downloads_offline    INT UNSIGNED    [NOT NULL]
+  criado_em                   DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em               DATETIME        [NOT NULL]
   deletado_em                 DATETIME
 }
 
 // Histórico de assinaturas — 1:N a partir de usuarios e de planos
 Table assinaturas {
-  id_assinatura  BIGINT UNSIGNED [pk, increment]
-  usuario_id     BIGINT UNSIGNED [not null]
-  plano_id       BIGINT UNSIGNED [not null]
-  data_inicio    DATE            [not null]
+  id_assinatura  BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id     BIGINT UNSIGNED [NOT NULL]
+  plano_id       BIGINT UNSIGNED [NOT NULL]
+  data_inicio    DATE            [NOT NULL]
   data_fim       DATE            [note: 'NULL enquanto a assinatura estiver ativa']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table podcasts {
-  id_podcast     BIGINT UNSIGNED [pk, increment]
-  titulo         VARCHAR(255)    [not null]
-  categoria      VARCHAR(100)    [not null]
-  apresentador   VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_podcast     BIGINT UNSIGNED [PK, INCREMENT]
+  titulo         VARCHAR(255)    [NOT NULL]
+  categoria      VARCHAR(100)    [NOT NULL]
+  apresentador   VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table audiolivros {
-  id_audiolivro     BIGINT UNSIGNED [pk, increment]
-  titulo            VARCHAR(255)   [not null]
-  autor             VARCHAR(255)   [not null]
-  narrador_principal VARCHAR(255)  [not null]
-  criado_em         DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em     DATETIME       [not null]
+  id_audiolivro     BIGINT UNSIGNED [PK, INCREMENT]
+  titulo            VARCHAR(255)   [NOT NULL]
+  autor             VARCHAR(255)   [NOT NULL]
+  narrador_principal VARCHAR(255)  [NOT NULL]
+  criado_em         DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em     DATETIME       [NOT NULL]
   deletado_em       DATETIME
 }
 
 // Superclasse (Estratégia 2 — Aula 03, Seção 8)
 Table conteudos {
-  id_conteudo       BIGINT UNSIGNED [pk, increment]
-  titulo            VARCHAR(255)   [not null]
-  duracao_segundos  INT UNSIGNED   [not null]
-  data_publicacao   DATE           [not null]
-  criado_em         DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em     DATETIME       [not null]
+  id_conteudo       BIGINT UNSIGNED [PK, INCREMENT]
+  titulo            VARCHAR(255)   [NOT NULL]
+  duracao_segundos  INT UNSIGNED   [NOT NULL]
+  data_publicacao   DATE           [NOT NULL]
+  criado_em         DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em     DATETIME       [NOT NULL]
   deletado_em       DATETIME
 }
 
 // Subclasse — PK é, ao mesmo tempo, FK única para a superclasse
 Table episodios_podcast {
-  id_conteudo             BIGINT UNSIGNED [pk]
-  podcast_id              BIGINT UNSIGNED [not null]
-  numero_episodio         INT UNSIGNED    [not null]
-  transcricao_disponivel  BOOLEAN         [not null, default: false]
-  criado_em               DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em           DATETIME        [not null]
+  id_conteudo             BIGINT UNSIGNED [PK]
+  podcast_id              BIGINT UNSIGNED [NOT NULL]
+  numero_episodio         INT UNSIGNED    [NOT NULL]
+  transcricao_disponivel  BOOLEAN         [NOT NULL, DEFAULT: false]
+  criado_em               DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em           DATETIME        [NOT NULL]
   deletado_em             DATETIME
 }
 
 Table capitulos_audiolivro {
-  id_conteudo       BIGINT UNSIGNED [pk]
-  audiolivro_id     BIGINT UNSIGNED [not null]
-  numero_capitulo   INT UNSIGNED    [not null]
-  narrador          VARCHAR(255)    [not null]
-  criado_em         DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em     DATETIME        [not null]
+  id_conteudo       BIGINT UNSIGNED [PK]
+  audiolivro_id     BIGINT UNSIGNED [NOT NULL]
+  numero_capitulo   INT UNSIGNED    [NOT NULL]
+  narrador          VARCHAR(255)    [NOT NULL]
+  criado_em         DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em     DATETIME        [NOT NULL]
   deletado_em       DATETIME
 }
 
 Table playlists {
-  id_playlist    BIGINT UNSIGNED [pk, increment]
-  usuario_id     BIGINT UNSIGNED [not null]
-  nome           VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_playlist    BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id     BIGINT UNSIGNED [NOT NULL]
+  nome           VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // N:M playlists <-> conteudos (mistura episódios e capítulos livremente)
 Table itens_playlist {
-  playlist_id    BIGINT UNSIGNED  [pk, not null]
-  conteudo_id    BIGINT UNSIGNED  [pk, not null]
-  ordem          SMALLINT UNSIGNED [not null]
-  criado_em      DATETIME         [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME         [not null]
+  playlist_id    BIGINT UNSIGNED  [PK, NOT NULL]
+  conteudo_id    BIGINT UNSIGNED  [PK, NOT NULL]
+  ordem          SMALLINT UNSIGNED [NOT NULL]
+  criado_em      DATETIME         [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME         [NOT NULL]
   deletado_em    DATETIME
 }
 
@@ -417,70 +417,70 @@ Enum status_reserva_enum {
 
 // Superclasse — também é a tabela de login/autenticação da plataforma
 Table pessoas {
-  id_pessoa      BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(255)    [not null]
-  cpf            CHAR(11)        [not null, unique]
-  email          VARCHAR(255)    [not null, unique]
-  telefone       VARCHAR(20)     [not null]
-  senha_hash     VARCHAR(255)    [not null]
-  tipo_usuario   tipo_usuario_enum [not null, default: 'usuario']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_pessoa      BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  cpf            CHAR(11)        [NOT NULL, UNIQUE]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  telefone       VARCHAR(20)     [NOT NULL]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table motoristas {
-  id_pessoa       BIGINT UNSIGNED [pk]
-  cnh             VARCHAR(20)    [not null, unique]
-  placa_veiculo   CHAR(7)        [not null, unique]
-  modelo_veiculo  VARCHAR(100)   [not null]
-  criado_em       DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em   DATETIME       [not null]
+  id_pessoa       BIGINT UNSIGNED [PK]
+  cnh             VARCHAR(20)    [NOT NULL, UNIQUE]
+  placa_veiculo   CHAR(7)        [NOT NULL, UNIQUE]
+  modelo_veiculo  VARCHAR(100)   [NOT NULL]
+  criado_em       DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME       [NOT NULL]
   deletado_em     DATETIME
 }
 
 Table passageiros {
-  id_pessoa                  BIGINT UNSIGNED [pk]
+  id_pessoa                  BIGINT UNSIGNED [PK]
   endereco_padrao_embarque   VARCHAR(255)
-  criado_em                  DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em              DATETIME        [not null]
+  criado_em                  DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em              DATETIME        [NOT NULL]
   deletado_em                DATETIME
 }
 
 Table caronas {
-  id_carona          BIGINT UNSIGNED [pk, increment]
-  motorista_id       BIGINT UNSIGNED [not null]
-  origem             VARCHAR(255)    [not null]
-  destino            VARCHAR(255)    [not null]
-  data_hora_saida    DATETIME        [not null]
-  vagas_disponiveis  TINYINT UNSIGNED [not null]
-  valor_por_vaga     DECIMAL(8,2)    [not null]
-  criado_em          DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em      DATETIME        [not null]
+  id_carona          BIGINT UNSIGNED [PK, INCREMENT]
+  motorista_id       BIGINT UNSIGNED [NOT NULL]
+  origem             VARCHAR(255)    [NOT NULL]
+  destino            VARCHAR(255)    [NOT NULL]
+  data_hora_saida    DATETIME        [NOT NULL]
+  vagas_disponiveis  TINYINT UNSIGNED [NOT NULL]
+  valor_por_vaga     DECIMAL(8,2)    [NOT NULL]
+  criado_em          DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em      DATETIME        [NOT NULL]
   deletado_em        DATETIME
 }
 
 // N:M caronas <-> passageiros
 Table reservas_carona {
-  carona_id      BIGINT UNSIGNED [pk, not null]
-  passageiro_id  BIGINT UNSIGNED [pk, not null]
-  status         status_reserva_enum [not null, default: 'solicitada']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  carona_id      BIGINT UNSIGNED [PK, NOT NULL]
+  passageiro_id  BIGINT UNSIGNED [PK, NOT NULL]
+  status         status_reserva_enum [NOT NULL, DEFAULT: 'solicitada']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // Avaliação mútua — motorista avalia passageiro E passageiro avalia motorista,
 // ambos representados por FKs de PAPEL (Regra 7) apontando para a mesma tabela PESSOAS
 Table avaliacoes {
-  id_avaliacao   BIGINT UNSIGNED [pk, increment]
-  carona_id      BIGINT UNSIGNED [not null]
-  avaliador_id   BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "avaliador"']
-  avaliado_id    BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "avaliado"']
-  nota           TINYINT UNSIGNED [not null]
+  id_avaliacao   BIGINT UNSIGNED [PK, INCREMENT]
+  carona_id      BIGINT UNSIGNED [NOT NULL]
+  avaliador_id   BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "avaliador"']
+  avaliado_id    BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "avaliado"']
+  nota           TINYINT UNSIGNED [NOT NULL]
   comentario     TEXT
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
@@ -544,135 +544,135 @@ AVALIACOES (id_avaliacao PK, usuario_id FK -> USUARIOS, produto_id FK -> PRODUTO
 
 ```dbml
 Table usuarios {
-  id_usuario      BIGINT UNSIGNED [pk, increment]
-  nome_exibicao   VARCHAR(255)    [not null]
-  email           VARCHAR(255)    [not null, unique]
-  senha_hash      VARCHAR(255)    [not null]
-  criado_em       DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em   DATETIME        [not null]
+  id_usuario      BIGINT UNSIGNED [PK, INCREMENT]
+  nome_exibicao   VARCHAR(255)    [NOT NULL]
+  email           VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash      VARCHAR(255)    [NOT NULL]
+  criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME        [NOT NULL]
   deletado_em     DATETIME
 
   Note: 'Sem coluna tipo_usuario — controle de acesso é 100% via PAPEIS/PERMISSOES (RBAC)'
 }
 
 Table papeis {
-  id_papel       BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(100)    [not null, unique, note: "ex.: 'administrador', 'desenvolvedor', 'suporte', 'jogador'"]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_papel       BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(100)    [NOT NULL, UNIQUE, note: "ex.: 'administrador', 'desenvolvedor', 'suporte', 'jogador'"]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table permissoes {
-  id_permissao   BIGINT UNSIGNED [pk, increment]
-  codigo         VARCHAR(100)    [not null, unique, note: "ex.: 'gerenciar_catalogo_proprio', 'processar_reembolso'"]
-  descricao      VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_permissao   BIGINT UNSIGNED [PK, INCREMENT]
+  codigo         VARCHAR(100)    [NOT NULL, UNIQUE, note: "ex.: 'gerenciar_catalogo_proprio', 'processar_reembolso'"]
+  descricao      VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // RBAC: um papel agrupa várias permissões (N:M)
 Table papeis_permissoes {
-  papel_id       BIGINT UNSIGNED [pk, not null]
-  permissao_id   BIGINT UNSIGNED [pk, not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  papel_id       BIGINT UNSIGNED [PK, NOT NULL]
+  permissao_id   BIGINT UNSIGNED [PK, NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // RBAC: um usuário pode acumular mais de um papel (N:M)
 Table usuarios_papeis {
-  usuario_id     BIGINT UNSIGNED [pk, not null]
-  papel_id       BIGINT UNSIGNED [pk, not null]
-  atribuido_em   DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  papel_id       BIGINT UNSIGNED [PK, NOT NULL]
+  atribuido_em   DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table desenvolvedoras {
-  id_desenvolvedora  BIGINT UNSIGNED [pk, increment]
-  nome_estudio       VARCHAR(255)   [not null]
-  pais_sede          VARCHAR(100)   [not null]
-  criado_em          DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em      DATETIME       [not null]
+  id_desenvolvedora  BIGINT UNSIGNED [PK, INCREMENT]
+  nome_estudio       VARCHAR(255)   [NOT NULL]
+  pais_sede          VARCHAR(100)   [NOT NULL]
+  criado_em          DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em      DATETIME       [NOT NULL]
   deletado_em        DATETIME
 }
 
 // Superclasse (Estratégia 2)
 Table produtos {
-  id_produto        BIGINT UNSIGNED [pk, increment]
-  desenvolvedora_id BIGINT UNSIGNED [not null]
-  titulo            VARCHAR(255)   [not null]
-  preco_base        DECIMAL(10,2)  [not null]
-  data_lancamento   DATE           [not null]
-  criado_em         DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em     DATETIME       [not null]
+  id_produto        BIGINT UNSIGNED [PK, INCREMENT]
+  desenvolvedora_id BIGINT UNSIGNED [NOT NULL]
+  titulo            VARCHAR(255)   [NOT NULL]
+  preco_base        DECIMAL(10,2)  [NOT NULL]
+  data_lancamento   DATE           [NOT NULL]
+  criado_em         DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em     DATETIME       [NOT NULL]
   deletado_em       DATETIME
 }
 
 Table jogos {
-  id_produto            BIGINT UNSIGNED [pk]
-  classificacao_etaria  VARCHAR(10)    [not null]
-  tamanho_download_gb   DECIMAL(6,2)   [not null]
-  criado_em             DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em         DATETIME       [not null]
+  id_produto            BIGINT UNSIGNED [PK]
+  classificacao_etaria  VARCHAR(10)    [NOT NULL]
+  tamanho_download_gb   DECIMAL(6,2)   [NOT NULL]
+  criado_em             DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em         DATETIME       [NOT NULL]
   deletado_em           DATETIME
 }
 
 Table dlcs {
-  id_produto     BIGINT UNSIGNED [pk]
-  jogo_base_id   BIGINT UNSIGNED [not null, note: 'toda DLC pertence a exatamente um jogo-base']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_produto     BIGINT UNSIGNED [PK]
+  jogo_base_id   BIGINT UNSIGNED [NOT NULL, note: 'toda DLC pertence a exatamente um jogo-base']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table compras {
-  id_compra      BIGINT UNSIGNED [pk, increment]
-  usuario_id     BIGINT UNSIGNED [not null]
-  produto_id     BIGINT UNSIGNED [not null]
-  valor_pago     DECIMAL(10,2)   [not null, note: 'snapshot do preço na compra — não recalcula pelo preco_base atual']
-  data_compra    DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_compra      BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id     BIGINT UNSIGNED [NOT NULL]
+  produto_id     BIGINT UNSIGNED [NOT NULL]
+  valor_pago     DECIMAL(10,2)   [NOT NULL, note: 'snapshot do preço na compra — não recalcula pelo preco_base atual']
+  data_compra    DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table conquistas {
-  id_conquista   BIGINT UNSIGNED [pk, increment]
-  jogo_id        BIGINT UNSIGNED [not null]
-  nome           VARCHAR(255)    [not null]
+  id_conquista   BIGINT UNSIGNED [PK, INCREMENT]
+  jogo_id        BIGINT UNSIGNED [NOT NULL]
+  nome           VARCHAR(255)    [NOT NULL]
   descricao      TEXT
-  pontos         TINYINT UNSIGNED [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  pontos         TINYINT UNSIGNED [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 // N:M usuarios <-> conquistas
 Table conquistas_desbloqueadas {
-  usuario_id       BIGINT UNSIGNED [pk, not null]
-  conquista_id     BIGINT UNSIGNED [pk, not null]
-  desbloqueada_em  DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em        DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em    DATETIME        [not null]
+  usuario_id       BIGINT UNSIGNED [PK, NOT NULL]
+  conquista_id     BIGINT UNSIGNED [PK, NOT NULL]
+  desbloqueada_em  DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME        [NOT NULL]
   deletado_em      DATETIME
 }
 
 Table avaliacoes {
-  id_avaliacao   BIGINT UNSIGNED [pk, increment]
-  usuario_id     BIGINT UNSIGNED [not null]
-  produto_id     BIGINT UNSIGNED [not null]
-  nota           TINYINT UNSIGNED [not null]
+  id_avaliacao   BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id     BIGINT UNSIGNED [NOT NULL]
+  produto_id     BIGINT UNSIGNED [NOT NULL]
+  nota           TINYINT UNSIGNED [NOT NULL]
   comentario     TEXT
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 
   Indexes {
-    (usuario_id, produto_id) [unique, note: 'um usuário só pode avaliar o mesmo produto uma vez']
+    (usuario_id, produto_id) [UNIQUE, note: 'um usuário só pode avaliar o mesmo produto uma vez']
   }
 }
 
@@ -767,129 +767,129 @@ Enum status_pagamento_enum {
 }
 
 Table usuarios {
-  id_usuario     BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(255)    [not null]
-  email          VARCHAR(255)    [not null, unique]
-  senha_hash     VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_usuario     BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 
   Note: 'Sem coluna tipo_usuario — controle de acesso é 100% via PAPEIS/PERMISSOES (RBAC)'
 }
 
 Table papeis {
-  id_papel       BIGINT UNSIGNED [pk, increment]
-  nome           VARCHAR(100)    [not null, unique, note: "ex.: 'administrador', 'moderador', 'cliente', 'prestador'"]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_papel       BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(100)    [NOT NULL, UNIQUE, note: "ex.: 'administrador', 'moderador', 'cliente', 'prestador'"]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table permissoes {
-  id_permissao   BIGINT UNSIGNED [pk, increment]
-  codigo         VARCHAR(100)    [not null, unique]
-  descricao      VARCHAR(255)    [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_permissao   BIGINT UNSIGNED [PK, INCREMENT]
+  codigo         VARCHAR(100)    [NOT NULL, UNIQUE]
+  descricao      VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table papeis_permissoes {
-  papel_id       BIGINT UNSIGNED [pk, not null]
-  permissao_id   BIGINT UNSIGNED [pk, not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  papel_id       BIGINT UNSIGNED [PK, NOT NULL]
+  permissao_id   BIGINT UNSIGNED [PK, NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table usuarios_papeis {
-  usuario_id     BIGINT UNSIGNED [pk, not null]
-  papel_id       BIGINT UNSIGNED [pk, not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  papel_id       BIGINT UNSIGNED [PK, NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table categorias_servico {
-  id_categoria_servico  BIGINT UNSIGNED [pk, increment]
-  nome                  VARCHAR(100)    [not null, unique]
-  criado_em             DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em         DATETIME        [not null]
+  id_categoria_servico  BIGINT UNSIGNED [PK, INCREMENT]
+  nome                  VARCHAR(100)    [NOT NULL, UNIQUE]
+  criado_em             DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em         DATETIME        [NOT NULL]
   deletado_em           DATETIME
 }
 
 // Especialização parcial de USUARIOS — só quem oferece serviço tem este perfil
 Table perfis_prestador {
-  id_usuario               BIGINT UNSIGNED [pk]
+  id_usuario               BIGINT UNSIGNED [PK]
   biografia                TEXT
-  categoria_principal_id   BIGINT UNSIGNED [not null]
-  criado_em                DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em            DATETIME        [not null]
+  categoria_principal_id   BIGINT UNSIGNED [NOT NULL]
+  criado_em                DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em            DATETIME        [NOT NULL]
   deletado_em               DATETIME
 }
 
 Table servicos_ofertados {
-  id_servico     BIGINT UNSIGNED [pk, increment]
-  prestador_id   BIGINT UNSIGNED [not null]
-  categoria_id   BIGINT UNSIGNED [not null]
-  titulo         VARCHAR(255)    [not null]
-  descricao      TEXT            [not null]
-  preco_base     DECIMAL(10,2)   [not null]
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  id_servico     BIGINT UNSIGNED [PK, INCREMENT]
+  prestador_id   BIGINT UNSIGNED [NOT NULL]
+  categoria_id   BIGINT UNSIGNED [NOT NULL]
+  titulo         VARCHAR(255)    [NOT NULL]
+  descricao      TEXT            [NOT NULL]
+  preco_base     DECIMAL(10,2)   [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 
 Table propostas {
-  id_proposta      BIGINT UNSIGNED [pk, increment]
-  servico_id       BIGINT UNSIGNED [not null]
-  cliente_id       BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "cliente" sobre usuarios']
+  id_proposta      BIGINT UNSIGNED [PK, INCREMENT]
+  servico_id       BIGINT UNSIGNED [NOT NULL]
+  cliente_id       BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "cliente" sobre usuarios']
   mensagem         TEXT
-  valor_proposto   DECIMAL(10,2)  [not null]
-  status           status_proposta_enum [not null, default: 'pendente']
-  data_proposta    DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em        DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em    DATETIME       [not null]
+  valor_proposto   DECIMAL(10,2)  [NOT NULL]
+  status           status_proposta_enum [NOT NULL, DEFAULT: 'pendente']
+  data_proposta    DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em        DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME       [NOT NULL]
   deletado_em      DATETIME
 }
 
 // 1:1 com PROPOSTAS — só uma proposta aceita vira um contrato
 Table contratos {
-  id_contrato               BIGINT UNSIGNED [pk, increment]
-  proposta_id               BIGINT UNSIGNED [not null, unique]
-  data_inicio                DATE           [not null]
-  data_conclusao_prevista    DATE           [not null]
+  id_contrato               BIGINT UNSIGNED [PK, INCREMENT]
+  proposta_id               BIGINT UNSIGNED [NOT NULL, UNIQUE]
+  data_inicio                DATE           [NOT NULL]
+  data_conclusao_prevista    DATE           [NOT NULL]
   data_conclusao_real        DATE
-  status                     status_contrato_enum [not null, default: 'em_andamento']
-  valor_final                DECIMAL(10,2)  [not null]
-  criado_em                  DATETIME       [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em               DATETIME      [not null]
+  status                     status_contrato_enum [NOT NULL, DEFAULT: 'em_andamento']
+  valor_final                DECIMAL(10,2)  [NOT NULL]
+  criado_em                  DATETIME       [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em               DATETIME      [NOT NULL]
   deletado_em                 DATETIME
 }
 
 // 1:N a partir de CONTRATOS — permite pagamento parcelado
 Table pagamentos {
-  id_pagamento     BIGINT UNSIGNED [pk, increment]
-  contrato_id      BIGINT UNSIGNED [not null]
-  valor            DECIMAL(10,2)   [not null]
-  forma_pagamento  forma_pagamento_enum [not null]
-  status           status_pagamento_enum [not null, default: 'pendente']
-  data_pagamento   DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  criado_em        DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em    DATETIME        [not null]
+  id_pagamento     BIGINT UNSIGNED [PK, INCREMENT]
+  contrato_id      BIGINT UNSIGNED [NOT NULL]
+  valor            DECIMAL(10,2)   [NOT NULL]
+  forma_pagamento  forma_pagamento_enum [NOT NULL]
+  status           status_pagamento_enum [NOT NULL, DEFAULT: 'pendente']
+  data_pagamento   DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME        [NOT NULL]
   deletado_em      DATETIME
 }
 
 Table avaliacoes {
-  id_avaliacao   BIGINT UNSIGNED [pk, increment]
-  contrato_id    BIGINT UNSIGNED [not null]
-  avaliador_id   BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "avaliador"']
-  avaliado_id    BIGINT UNSIGNED [not null, note: 'Regra 7 — papel "avaliado"']
-  nota           TINYINT UNSIGNED [not null]
+  id_avaliacao   BIGINT UNSIGNED [PK, INCREMENT]
+  contrato_id    BIGINT UNSIGNED [NOT NULL]
+  avaliador_id   BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "avaliador"']
+  avaliado_id    BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "avaliado"']
+  nota           TINYINT UNSIGNED [NOT NULL]
   comentario     TEXT
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [not null]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
   deletado_em    DATETIME
 }
 

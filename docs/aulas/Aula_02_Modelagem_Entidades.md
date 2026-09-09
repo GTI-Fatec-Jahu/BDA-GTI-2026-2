@@ -98,26 +98,26 @@ O **Modelo Entidade-Relacionamento (MER)**, proposto por Peter Chen em 1976, é 
 
 Uma **entidade** representa um objeto do mundo real sobre o qual desejamos armazenar informações. Ela pode ser uma pessoa, um lugar, um evento, um conceito ou qualquer coisa que tenha existência própria e seja relevante para o sistema.
 
-Exemplos de entidades em sistemas reais: `CLIENTE`, `PRODUTO`, `PEDIDO`, `FUNCIONÁRIO`, `DEPARTAMENTO`, `CURSO`, `ALUNO`.
+Exemplos de entidades em sistemas reais: `CLIENTES`, `PRODUTOS`, `PEDIDOS`, `FUNCIONÁRIOS`, `DEPARTAMENTOS`, `CURSOS`, `ALUNOS`.
 
-Existem dois tipos fundamentais de entidades que precisamos distinguir desde o início. Uma **entidade forte** existe de forma independente — um `CLIENTE` existe sozinho, sem depender de nenhum outro objeto. Já uma **entidade fraca** só existe em função de outra entidade — por exemplo, um `DEPENDENTE` só faz sentido existir porque há um `FUNCIONÁRIO` ao qual ele pertence.
+Existem dois tipos fundamentais de entidades que precisamos distinguir desde o início. Uma **entidade forte** existe de forma independente — `CLIENTES` existem sozinhos, sem depender de nenhum outro objeto. Já uma **entidade fraca** só existe em função de outra entidade — por exemplo, `DEPENDENTES` só fazem sentido existir porque há `FUNCIONÁRIOS` aos quais eles pertencem.
 
 ```mermaid
 erDiagram
-    FUNCIONARIO {
+    FUNCIONARIOS {
         int id_funcionario PK
         string nome
         date data_admissao
     }
-    DEPENDENTE {
+    DEPENDENTES {
         int id_dependente PK
         string nome
         string parentesco
     }
-    FUNCIONARIO ||--o{ DEPENDENTE : "possui"
+    FUNCIONARIOS ||--o{ DEPENDENTES : "possui"
 ```
 
-No diagrama acima, `FUNCIONARIO` é uma entidade forte e `DEPENDENTE` é uma entidade fraca, pois não faria sentido registrar um dependente sem um funcionário associado.
+No diagrama acima, `FUNCIONARIOS` é uma entidade forte e `DEPENDENTES` é uma entidade fraca, pois não faria sentido registrar um dependente sem um funcionário associado.
 
 !!! example "🔍 Checkpoint 1 — Entidades: academia de ginástica"
     Uma academia está modelando o banco de dados do seu sistema de gestão. No
@@ -133,13 +133,13 @@ No diagrama acima, `FUNCIONARIO` é uma entidade forte e `DEPENDENTE` é uma ent
 
 > 🧭 **Sobre os rótulos `int`, `string`, `date` no diagrama:** você deve ter notado que cada atributo, além do nome, tem uma palavra ao lado (`int`, `string`, `date`...). Esses são **tipos de dados genéricos** — só indicam, de forma informal, se o atributo guarda um número, um texto ou uma data, para deixar o diagrama mais completo e legível. Neste momento **não precisamos escolher o tipo de dado exato** que o banco vai usar (isso é assunto da Aula 06 — SQL DDL, quando decidiremos entre `INT`, `VARCHAR(100)`, `DECIMAL(10,2)` etc., já na sintaxe que o SQL entende). Por enquanto, o que importa é identificar **o que é um atributo** — a formalização de "como escrever isso no banco de dados" vem depois.
 
-> 📐 **Convenções de nomenclatura desta disciplina — Regras 1 e 2:** a partir daqui você vai ver os primeiros atributos nomeados de verdade (`cpf`, `data_nascimento`, `logradouro`...), e eles já seguem duas convenções que valem para toda a disciplina, desde já. **Regra 1 — snake_case:** quando um nome de atributo tem mais de uma palavra, elas são separadas por underline, nunca por espaço, hífen ou `camelCase` — `data_nascimento`, não `DataNascimento` nem `data-nascimento`. **Regra 2 — sempre minúsculas para nomes criados por você:** atributos, entidades (quando viram tabelas) e demais nomes do seu modelo usam apenas letras minúsculas. Note que isso é diferente do nome da **entidade** no diagrama conceitual (`CLIENTE`, em maiúsculas) — essa é a notação clássica do MER para entidades, não uma coluna; quando a entidade virar tabela de verdade (Aula 03 em diante), ela também passa a ser escrita em minúsculas, além de no plural. Convenção não é frescura estética: é o que torna um modelo — seu, de um colega, ou seu mesmo daqui a alguns meses — imediatamente legível, sem precisar adivinhar como cada nome foi escrito da última vez. Mais regras de nomenclatura chegam progressivamente nas próximas aulas — chave primária e estrangeira já na Aula 03, tipos e tamanhos culminando na Aula 06 — SQL DDL.
+> 📐 **Convenções de nomenclatura desta disciplina — Regras 1 e 2:** a partir daqui você vai ver os primeiros atributos nomeados de verdade (`cpf`, `data_nascimento`, `logradouro`...), e eles já seguem duas convenções que valem para toda a disciplina, desde já. **Regra 1 — snake_case:** quando um nome de atributo tem mais de uma palavra, elas são separadas por underline, nunca por espaço, hífen ou `camelCase` — `data_nascimento`, não `DataNascimento` nem `data-nascimento`. **Regra 2 — sempre minúsculas para nomes criados por você:** atributos, entidades (quando viram tabelas) e demais nomes do seu modelo usam apenas letras minúsculas. Note que isso é diferente do nome da **entidade** no diagrama conceitual (`CLIENTES`, em maiúsculas e já no plural) — essa é a notação clássica do MER para entidades, não uma coluna; quando a entidade virar tabela de verdade (Aula 03 em diante), ela passa a ser escrita em minúsculas, mantendo o plural (Regra 4, formalizada na Aula 03). Convenção não é frescura estética: é o que torna um modelo — seu, de um colega, ou seu mesmo daqui a alguns meses — imediatamente legível, sem precisar adivinhar como cada nome foi escrito da última vez. Mais regras de nomenclatura chegam progressivamente nas próximas aulas — chave primária e estrangeira já na Aula 03, tipos e tamanhos culminando na Aula 06 — SQL DDL.
 
 ---
 
 ## 3. Atributos
 
-Os **atributos** são as características ou propriedades que descrevem uma entidade. Se `CLIENTE` é a entidade, então `nome`, `cpf`, `email` e `data_nascimento` são seus atributos.
+Os **atributos** são as características ou propriedades que descrevem uma entidade. Se `CLIENTES` é a entidade, então `nome`, `cpf`, `email` e `data_nascimento` são seus atributos.
 
 ![Entidade com atributos](../imgs/Aula_02_img_02.png)
 
@@ -155,13 +155,13 @@ Entender os tipos de atributos é fundamental para fazer uma modelagem precisa. 
 
 **Atributo Derivado:** seu valor pode ser calculado a partir de outro atributo. Exemplo: `idade` pode ser derivada de `data_nascimento`. Na notação, usa-se **elipse tracejada**. Por isso, geralmente não precisamos armazená-lo.
 
-**Atributo Chave (ou Identificador):** é o atributo cujo valor identifica unicamente cada instância da entidade. Exemplo: `cpf` para `PESSOA`, `matricula` para `ALUNO`. Na notação do MER, é sublinhado. É fundamental que o atributo chave seja **único** (não pode se repetir entre instâncias) e **não nulo** (toda instância precisa ter um valor para ele).
+**Atributo Chave (ou Identificador):** é o atributo cujo valor identifica unicamente cada instância da entidade. Exemplo: `cpf` para `PESSOAS`, `matricula` para `ALUNOS`. Na notação do MER, é sublinhado. É fundamental que o atributo chave seja **único** (não pode se repetir entre instâncias) e **não nulo** (toda instância precisa ter um valor para ele).
 
 > 🔑 **Nível conceitual vs. chave real de banco de dados:** aqui, no MER, identificar `cpf` ou `matricula` como atributo chave é só reconhecer o que identifica cada instância no mundo real — é assim que a literatura acadêmica costuma nomear. Quando esse modelo virar tabela de verdade (Aula 03 em diante), a chave primária efetivamente usada **não** vai ser o `cpf` nem a `matricula`, e sim um identificador substituto `id_` criado pelo banco — você vai entender exatamente o porquê na Aula 03.
 
 ```mermaid
 erDiagram
-    CLIENTE {
+    CLIENTES {
         int id_cliente PK "Identificador único"
         string cpf "Simples - não se divide"
         string nome "Simples"
@@ -172,7 +172,7 @@ erDiagram
 ```
 
 !!! example "🔍 Checkpoint 2 — Atributos: cadastro de imóvel para aluguel"
-    Uma imobiliária está modelando a entidade `Imovel` para anúncios de aluguel. Os
+    Uma imobiliária está modelando a entidade `Imóveis` para anúncios de aluguel. Os
     dados coletados no cadastro são: `codigo_anuncio` (identificador único gerado
     pelo sistema), `endereco_completo` (rua, número, bairro, cidade e CEP do
     imóvel), `valor_aluguel`, `valor_condominio`, `valor_total_mensal` (calculado
@@ -201,11 +201,11 @@ Imagine que você está modelando o sistema de uma concessionária. Ela trabalha
 
 Como modelar isso? Existem duas abordagens ingênuas e uma correta:
 
-❌ **Abordagem 1 — Uma tabela só:** criar uma única tabela `VEICULO` com todos os atributos de todos os tipos. Resultado: linhas de carro com `cilindradas` nulas, linhas de moto com `numero_eixos` nulos. Desperdício, confusão e impossibilidade de aplicar restrições corretas.
+❌ **Abordagem 1 — Uma tabela só:** criar uma única tabela `VEICULOS` com todos os atributos de todos os tipos. Resultado: linhas de carro com `cilindradas` nulas, linhas de moto com `numero_eixos` nulos. Desperdício, confusão e impossibilidade de aplicar restrições corretas.
 
 ❌ **Abordagem 2 — Tabelas totalmente separadas:** criar três tabelas completamente separadas, duplicando `placa`, `ano_fabricacao`, `cor` e `preco` em todas elas. Resultado: redundância, risco de inconsistência e violação das formas normais.
 
-✅ **Abordagem correta — Generalização e Especialização:** criar uma entidade genérica `VEICULO` com os atributos comuns, e entidades especializadas `CARRO`, `MOTO` e `CAMINHAO` com apenas seus atributos exclusivos, herdando tudo que está em `VEICULO`.
+✅ **Abordagem correta — Generalização e Especialização:** criar uma entidade genérica `VEICULOS` com os atributos comuns, e entidades especializadas `CARROS`, `MOTOS` e `CAMINHOES` com apenas seus atributos exclusivos, herdando tudo que está em `VEICULOS`.
 
 ### 4.2 Os Conceitos
 
@@ -213,32 +213,32 @@ A **generalização** é o processo de subir na hierarquia: observamos entidades
 
 A **especialização** é o processo inverso, de descer na hierarquia: partindo de uma entidade geral, identificamos subgrupos com características ou comportamentos próprios e criamos entidades mais específicas para eles. É um processo de refinamento — do geral para o específico.
 
-Na prática, os dois processos andam juntos: você tanto pode identificar `CARRO` e `MOTO` e depois generalizar para `VEICULO` (generalização), quanto partir de `VEICULO` e perceber que há subtipos com necessidades diferentes (especialização). O resultado no diagrama é o mesmo.
+Na prática, os dois processos andam juntos: você tanto pode identificar `CARROS` e `MOTOS` e depois generalizar para `VEICULOS` (generalização), quanto partir de `VEICULOS` e perceber que há subtipos com necessidades diferentes (especialização). O resultado no diagrama é o mesmo.
 
 ```mermaid
 flowchart TB
-    VEICULO["🚗 VEICULO
+    VEICULOS["🚗 VEICULOS
     placa, ano, cor, preco
     (Entidade Genérica / Superclasse)"]
 
-    CARRO["🚘 CARRO
+    CARROS["🚘 CARROS
     numero_portas
     tipo_cambio
     (Especialização)"]
 
-    MOTO["🏍️ MOTO
+    MOTOS["🏍️ MOTOS
     cilindradas
     tipo_guidao
     (Especialização)"]
 
-    CAMINHAO["🚛 CAMINHAO
+    CAMINHOES["🚛 CAMINHOES
     capacidade_carga
     numero_eixos
     (Especialização)"]
 
-    VEICULO --> CARRO
-    VEICULO --> MOTO
-    VEICULO --> CAMINHAO
+    VEICULOS --> CARROS
+    VEICULOS --> MOTOS
+    VEICULOS --> CAMINHOES
 ```
 
 A entidade no topo da hierarquia é chamada de **superclasse** (ou entidade genérica). As entidades derivadas são chamadas de **subclasses** (ou entidades especializadas). As subclasses **herdam** todos os atributos e relacionamentos da superclasse — e acrescentam apenas o que é exclusivo delas.
@@ -249,30 +249,30 @@ A especialização não é uma estrutura livre — ela possui duas restrições 
 
 **Restrição de participação (totalidade):**
 
-- **Total:** toda instância da superclasse **obrigatoriamente** pertence a pelo menos uma subclasse. Não pode existir um `FUNCIONARIO` que não seja nem `HORISTA` nem `MENSALISTA`. Representado com linha dupla ou a palavra *"total"* no diagrama.
-- **Parcial:** uma instância da superclasse **pode** não pertencer a nenhuma subclasse. Um `ANIMAL` pode ser genérico, sem se enquadrar em nenhuma especialização específica do modelo. Representado com linha simples ou a palavra *"parcial"*.
+- **Total:** toda instância da superclasse **obrigatoriamente** pertence a pelo menos uma subclasse. Não pode existir um funcionário que não seja nem horista nem mensalista. Representado com linha dupla ou a palavra *"total"* no diagrama.
+- **Parcial:** uma instância da superclasse **pode** não pertencer a nenhuma subclasse. Um animal pode ser genérico, sem se enquadrar em nenhuma especialização específica do modelo. Representado com linha simples ou a palavra *"parcial"*.
 
 **Restrição de disjunção (sobreposição):**
 
-- **Disjunta:** uma instância da superclasse pertence a **no máximo uma** subclasse. Um `VEÍCULO` é carro, moto **ou** caminhão — nunca dois ao mesmo tempo. Representado com a letra **d** no diagrama.
-- **Sobreposição:** uma instância da superclasse pode pertencer a **mais de uma** subclasse simultaneamente. Um `PROFISSIONAL` pode ser ao mesmo tempo `MÉDICO` e `PROFESSOR` (médico que dá aulas). Representado com a letra **o** no diagrama.
+- **Disjunta:** uma instância da superclasse pertence a **no máximo uma** subclasse. Um veículo é carro, moto **ou** caminhão — nunca dois ao mesmo tempo. Representado com a letra **d** no diagrama.
+- **Sobreposição:** uma instância da superclasse pode pertencer a **mais de uma** subclasse simultaneamente. Um profissional pode ser ao mesmo tempo médico e professor (médico que dá aulas). Representado com a letra **o** no diagrama.
 
 ```mermaid
 flowchart TB
     subgraph DISJUNTA["Especialização Disjunta (d) — um ou outro"]
-        V["VEICULO"]
-        C["CARRO"]
-        M["MOTO"]
-        K["CAMINHAO"]
+        V["VEICULOS"]
+        C["CARROS"]
+        M["MOTOS"]
+        K["CAMINHOES"]
         V -->|"d — total"| C
         V --> M
         V --> K
     end
 
     subgraph SOBREPOSICAO["Especialização com Sobreposição (o) — pode ser os dois"]
-        P["PROFISSIONAL"]
-        MD["MEDICO"]
-        PR["PROFESSOR"]
+        P["PROFISSIONAIS"]
+        MD["MEDICOS"]
+        PR["PROFESSORES"]
         P -->|"o — parcial"| MD
         P --> PR
     end
@@ -280,106 +280,106 @@ flowchart TB
 
 ### 4.4 Exemplos Completos
 
-**Exemplo 1 — Sistema Hospitalar: Pessoa → Paciente / Médico / Funcionário**
+**Exemplo 1 — Sistema Hospitalar: Pessoas → Pacientes / Médicos / Funcionários**
 
 Um hospital trabalha com diferentes tipos de pessoas: pacientes, médicos e outros funcionários administrativos. Todos têm `nome`, `cpf` e `data_nascimento` em comum. Mas:
 
-- **Paciente** tem `convenio` e `data_internacao`
-- **Médico** tem `crm` e `especialidade`
-- **Funcionario** tem `cargo` e `salario`
+- **Pacientes** têm `convenio` e `data_internacao`
+- **Médicos** têm `crm` e `especialidade`
+- **Funcionários** têm `cargo` e `salario`
 
-Além disso, um médico **também é funcionário** do hospital — o que configura uma especialização com **sobreposição**: a mesma pessoa pode ser ao mesmo tempo `MEDICO` e `FUNCIONARIO`.
+Além disso, um médico **também é funcionário** do hospital — o que configura uma especialização com **sobreposição**: a mesma pessoa pode ser, ao mesmo tempo, médica(o) e funcionária(o).
 
 ```mermaid
 flowchart TB
-    PESSOA["👤 PESSOA
+    PESSOAS["👤 PESSOAS
     nome
     cpf
     data_nascimento"]
 
-    PACIENTE["🛏️ PACIENTE
+    PACIENTES["🛏️ PACIENTES
     convenio
     data_internacao"]
 
-    MEDICO["🩺 MEDICO
+    MEDICOS["🩺 MEDICOS
     crm
     especialidade"]
 
-    FUNCIONARIO["💼 FUNCIONARIO
+    FUNCIONARIOS["💼 FUNCIONARIOS
     cargo
     salario"]
 
-    PESSOA -->|"o — parcial"| PACIENTE
-    PESSOA --> MEDICO
-    PESSOA --> FUNCIONARIO
+    PESSOAS -->|"o — parcial"| PACIENTES
+    PESSOAS --> MEDICOS
+    PESSOAS --> FUNCIONARIOS
 ```
 
 A especialização é **parcial** (uma pessoa pode ser cadastrada sem ser nenhum dos três tipos — ex: um visitante) e **com sobreposição** (um médico é também um funcionário).
 
 ---
 
-**Exemplo 2 — Plataforma de Conteúdo: Conteúdo → Artigo / Vídeo / Podcast**
+**Exemplo 2 — Plataforma de Conteúdo: Conteúdos → Artigos / Vídeos / Podcasts**
 
 Uma plataforma de mídia armazena diferentes tipos de conteúdo. Todos os conteúdos têm `titulo`, `data_publicacao` e `autor`. Mas cada tipo tem características próprias:
 
-- **Artigo** tem `numero_palavras` e `formato` (HTML, Markdown)
-- **Vídeo** tem `duracao_segundos` e `resolucao`
-- **Podcast** tem `duracao_segundos` e `temporada`
+- **Artigos** têm `numero_palavras` e `formato` (HTML, Markdown)
+- **Vídeos** têm `duracao_segundos` e `resolucao`
+- **Podcasts** têm `duracao_segundos` e `temporada`
 
 Todo conteúdo **obrigatoriamente** é de um tipo específico — não existe conteúdo "genérico" sem tipo definido. A especialização é, portanto, **total** e **disjunta** (um conteúdo é exatamente um dos três tipos).
 
 ```mermaid
 flowchart TB
-    CONTEUDO["📄 CONTEUDO
+    CONTEUDOS["📄 CONTEUDOS
     titulo
     data_publicacao
     autor"]
 
-    ARTIGO["📝 ARTIGO
+    ARTIGOS["📝 ARTIGOS
     numero_palavras
     formato"]
 
-    VIDEO["🎬 VIDEO
+    VIDEOS["🎬 VIDEOS
     duracao_segundos
     resolucao"]
 
-    PODCAST["🎙️ PODCAST
+    PODCASTS["🎙️ PODCASTS
     duracao_segundos
     temporada"]
 
-    CONTEUDO -->|"d — total"| ARTIGO
-    CONTEUDO --> VIDEO
-    CONTEUDO --> PODCAST
+    CONTEUDOS -->|"d — total"| ARTIGOS
+    CONTEUDOS --> VIDEOS
+    CONTEUDOS --> PODCASTS
 ```
 
 ---
 
-**Exemplo 3 — E-commerce: Conta → Conta Física / Conta Jurídica**
+**Exemplo 3 — E-commerce: Contas → Contas Físicas / Contas Jurídicas**
 
 Uma loja virtual permite cadastro tanto de pessoas físicas quanto jurídicas. Toda conta tem `email`, `senha` e `data_cadastro`. Mas:
 
-- **Conta Física** (pessoa física) tem `cpf` e `data_nascimento`
-- **Conta Jurídica** (empresa) tem `cnpj` e `razao_social`
+- **Contas Físicas** (pessoas físicas) têm `cpf` e `data_nascimento`
+- **Contas Jurídicas** (empresas) têm `cnpj` e `razao_social`
 
 Uma conta é sempre de um tipo ou do outro — nunca os dois. Especialização **total** e **disjunta**.
 
 ```mermaid
 flowchart TB
-    CONTA["👤 CONTA
+    CONTAS["👤 CONTAS
     email
     senha
     data_cadastro"]
 
-    FISICA["🧍 CONTA_FISICA
+    FISICA["🧍 CONTAS_FISICAS
     cpf
     data_nascimento"]
 
-    JURIDICA["🏢 CONTA_JURIDICA
+    JURIDICA["🏢 CONTAS_JURIDICAS
     cnpj
     razao_social"]
 
-    CONTA -->|"d — total"| FISICA
-    CONTA --> JURIDICA
+    CONTAS -->|"d — total"| FISICA
+    CONTAS --> JURIDICA
 ```
 
 ### 4.5 Resumo: Quando Usar Generalização/Especialização?
@@ -423,18 +423,18 @@ A partir desse texto, identificamos as seguintes entidades e seus atributos:
 
 ```mermaid
 erDiagram
-    LIVRO {
+    LIVROS {
         string isbn PK
         string titulo
         int ano_publicacao
         int num_paginas
     }
-    AUTOR {
+    AUTORES {
         int id_autor PK
         string nome
         string nacionalidade
     }
-    MEMBRO {
+    MEMBROS {
         int id_membro PK
         string nome
         string cpf
@@ -452,20 +452,20 @@ Quem está começando a modelar tende a cometer os mesmos tropeços. Conhecê-lo
 
 Este é o erro mais frequente. A regra prática: se a informação **só faz sentido descrevendo outra coisa** e não tem vida própria, é atributo. Se ela **tem existência independente**, pode ser relacionada a mais de uma outra entidade, ou possui vários atributos próprios que também precisam ser armazenados, é entidade.
 
-❌ **Errado:** modelar `ENDERECO` como uma entidade separada de `CLIENTE`, ligada por um relacionamento, quando na prática cada cliente tem só um endereço e o sistema nunca precisa consultar endereços de forma independente.
+❌ **Errado:** modelar `ENDERECOS` como uma entidade separada de `CLIENTES`, ligada por um relacionamento, quando na prática cada cliente tem só um endereço e o sistema nunca precisa consultar endereços de forma independente.
 
 ```mermaid
 erDiagram
-    CLIENTE { }
-    ENDERECO { }
-    CLIENTE ||--|| ENDERECO : "tem"
+    CLIENTES { }
+    ENDERECOS { }
+    CLIENTES ||--|| ENDERECOS : "tem"
 ```
 
-✅ **Certo (na maioria dos casos):** `endereco` como atributo composto de `CLIENTE` (`logradouro`, `numero`, `bairro`, `cidade`, `cep`) — a menos que o negócio realmente precise de múltiplos endereços por cliente ou consultas independentes sobre endereços, caso em que promovê-lo a entidade passa a se justificar.
+✅ **Certo (na maioria dos casos):** `endereco` como atributo composto de `CLIENTES` (`logradouro`, `numero`, `bairro`, `cidade`, `cep`) — a menos que o negócio realmente precise de múltiplos endereços por cliente ou consultas independentes sobre endereços, caso em que promovê-lo a entidade passa a se justificar.
 
 ```mermaid
 erDiagram
-    CLIENTE {
+    CLIENTES {
         string logradouro
         string numero
         string bairro
@@ -478,25 +478,25 @@ erDiagram
 
 O erro oposto também acontece: transformar em entidade algo que é, na verdade, a **associação entre duas entidades**.
 
-❌ **Errado:** criar uma entidade `MATRICULA` isolada, sem perceber que ela só existe como o encontro entre `ALUNO` e `CURSO`.
+❌ **Errado:** criar uma entidade `MATRICULAS` isolada, sem perceber que ela só existe como o encontro entre `ALUNOS` e `CURSOS`.
 
-✅ **Certo:** `MATRICULA` deve ser modelada como o **relacionamento** entre `ALUNO` e `CURSO` — que pode, sim, virar uma entidade associativa quando tem atributos próprios (`data_matricula`, `situacao`), mas continua representando a ligação entre as duas, não um terceiro objeto solto.
+✅ **Certo:** `MATRICULAS` deve ser modelada como o **relacionamento** entre `ALUNOS` e `CURSOS` — que pode, sim, virar uma entidade associativa quando tem atributos próprios (`data_matricula`, `situacao`), mas continua representando a ligação entre as duas, não um terceiro objeto solto.
 
 ```mermaid
 erDiagram
-    ALUNO { }
-    CURSO { }
-    MATRICULA {
+    ALUNOS { }
+    CURSOS { }
+    MATRICULAS {
         date data_matricula
         string situacao
     }
-    ALUNO ||--o{ MATRICULA : "realiza"
-    CURSO ||--o{ MATRICULA : "recebe"
+    ALUNOS ||--o{ MATRICULAS : "realiza"
+    CURSOS ||--o{ MATRICULAS : "recebe"
 ```
 
 ### 6.3 Esquecer de identificar entidades fracas
 
-É comum modelar tudo como entidade forte por hábito, sem parar para perguntar "isso existe sozinho, ou só faz sentido por causa de outra entidade?". Esquecer essa pergunta leva a modelos que permitem, por exemplo, cadastrar um `DEPENDENTE` sem nenhum `FUNCIONARIO` associado — uma inconsistência que o modelo deveria impedir desde o desenho conceitual.
+É comum modelar tudo como entidade forte por hábito, sem parar para perguntar "isso existe sozinho, ou só faz sentido por causa de outra entidade?". Esquecer essa pergunta leva a modelos que permitem, por exemplo, cadastrar um dependente sem nenhum funcionário associado — uma inconsistência que o modelo deveria impedir desde o desenho conceitual.
 
 ### 6.4 Modelar atributo multivalorado como um único campo
 
@@ -504,7 +504,7 @@ Ainda na fase conceitual, é comum já cometer o erro que a 1ª Forma Normal (as
 
 ### 6.5 Usar generalização/especialização sem necessidade real
 
-Nem toda diferença entre instâncias de uma entidade justifica criar subclasses. Se `CLIENTE` só varia entre "pessoa física" e "pessoa jurídica" em dois campos (`cpf` vs `cnpj`), pode valer a pena — mas criar uma hierarquia de especialização para diferenças triviais (ex: só porque um campo é opcional para alguns registros) é over-engineering: complica o modelo sem ganho real. Volte à tabela da seção 4.5 para checar se o sinal realmente está lá no enunciado.
+Nem toda diferença entre instâncias de uma entidade justifica criar subclasses. Se `CLIENTES` só variam entre "pessoa física" e "pessoa jurídica" em dois campos (`cpf` vs `cnpj`), pode valer a pena — mas criar uma hierarquia de especialização para diferenças triviais (ex: só porque um campo é opcional para alguns registros) é over-engineering: complica o modelo sem ganho real. Volte à tabela da seção 4.5 para checar se o sinal realmente está lá no enunciado.
 
 ### Resumo dos Erros Comuns
 
@@ -517,9 +517,9 @@ Nem toda diferença entre instâncias de uma entidade justifica criar subclasses
 | Especialização sem necessidade | Subclasses criadas para diferenças triviais | Confira a tabela de sinais da seção 4.5 antes de especializar |
 
 !!! example "🔍 Checkpoint 4 — Encontre o erro: sistema de oficina mecânica"
-    Um colega modelou o sistema de uma oficina mecânica com as entidades `CLIENTE`,
-    `VEICULO`, `ORDEM_SERVICO` e — separadamente — `PLACA_VEICULO`, ligada a
-    `VEICULO` por um relacionamento 1 para 1 (cada veículo tem exatamente uma placa,
+    Um colega modelou o sistema de uma oficina mecânica com as entidades `CLIENTES`,
+    `VEICULOS`, `ORDENS_SERVICO` e — separadamente — `PLACAS_VEICULO`, ligada a
+    `VEICULOS` por um relacionamento 1 para 1 (cada veículo tem exatamente uma placa,
     e cada placa pertence a exatamente um veículo). Ele justificou a decisão dizendo
     que "a placa merece sua própria entidade porque é um dado importante". Qual erro
     comum (entre os listados nesta seção) foi cometido? Explique por que, e proponha
@@ -573,20 +573,20 @@ Para cada item da lista, faça estas perguntas nesta ordem:
 
 | Elemento do documento | Pergunta que se aplica | Conclusão |
 |---|---|---|
-| Nome da loja, CNPJ, endereço da loja | Descreve quem emitiu o cupom (pergunta 3); é sempre a mesma loja em todos os cupons deste sistema | Atributos de uma entidade `LOJA` (ou atributos fixos do emissor, se o sistema só atende uma loja) |
-| Data, hora, valor total, forma de pagamento, bandeira | Descrevem o cupom em si, não se repetem dentro dele (pergunta 3) | Atributos da entidade `CUPOM_FISCAL` |
+| Nome da loja, CNPJ, endereço da loja | Descreve quem emitiu o cupom (pergunta 3); é sempre a mesma loja em todos os cupons deste sistema | Atributos de uma entidade `LOJAS` (ou atributos fixos do emissor, se o sistema só atende uma loja) |
+| Data, hora, valor total, forma de pagamento, bandeira | Descrevem o cupom em si, não se repetem dentro dele (pergunta 3) | Atributos da entidade `CUPONS_FISCAIS` |
 | Linha de item (código, descrição, qtd, vl. unitário, vl. total) | Se repete várias vezes no mesmo cupom, cada vez com valores diferentes (pergunta 1) | Sinaliza duas coisas distintas — veja o Passo 4 |
-| Descrição e valor unitário do produto | Continuariam existindo/fazendo sentido mesmo em outro cupom, outro dia (pergunta 2) | Atributos da entidade `PRODUTO`, independente do cupom |
-| Quantidade e valor total daquele item específico | É o resultado do encontro entre um `CUPOM_FISCAL` e um `PRODUTO` (pergunta 4) | Atributos da entidade associativa `ITEM_CUPOM` |
-| Nome do operador, número do caixa | Descreve quem realizou a venda (pergunta 3) — mas repare: poderia também virar entidade `OPERADOR` se o sistema precisar consultar todas as vendas de um operador ao longo do tempo | Depende da necessidade do negócio — comece como atributo simples do cupom; promova a entidade só se surgir a necessidade real (mesmo raciocínio da seção 6.5, para não repetir o erro comum de especializar/entidar sem necessidade) |
+| Descrição e valor unitário do produto | Continuariam existindo/fazendo sentido mesmo em outro cupom, outro dia (pergunta 2) | Atributos da entidade `PRODUTOS`, independente do cupom |
+| Quantidade e valor total daquele item específico | É o resultado do encontro entre um cupom fiscal e um produto (pergunta 4) | Atributos da entidade associativa `ITENS_CUPOM` |
+| Nome do operador, número do caixa | Descreve quem realizou a venda (pergunta 3) — mas repare: poderia também virar entidade `OPERADORES` se o sistema precisar consultar todas as vendas de um operador ao longo do tempo | Depende da necessidade do negócio — comece como atributo simples do cupom; promova a entidade só se surgir a necessidade real (mesmo raciocínio da seção 6.5, para não repetir o erro comum de especializar/entidar sem necessidade) |
 
 ### Passo 4 — Monte o modelo
 
-Juntando as conclusões do Passo 3, chegamos a três entidades: `CUPOM_FISCAL` (forte), `PRODUTO` (forte, independente) e `ITEM_CUPOM` (fraca/associativa, só existe pela combinação de um cupom com um produto).
+Juntando as conclusões do Passo 3, chegamos a três entidades: `CUPONS_FISCAIS` (forte), `PRODUTOS` (forte, independente) e `ITENS_CUPOM` (fraca/associativa, só existe pela combinação de um cupom com um produto).
 
 ```mermaid
 erDiagram
-    CUPOM_FISCAL {
+    CUPONS_FISCAIS {
         int id_cupom PK
         date data_emissao
         time hora_emissao
@@ -595,24 +595,24 @@ erDiagram
         string operador
         int caixa
     }
-    PRODUTO {
+    PRODUTOS {
         int id_produto PK
         string descricao
         decimal valor_unitario
     }
-    ITEM_CUPOM {
+    ITENS_CUPOM {
         int cupom_id FK
         int produto_id FK
         int quantidade
         decimal valor_total_item
     }
-    CUPOM_FISCAL ||--o{ ITEM_CUPOM : "contém"
-    PRODUTO ||--o{ ITEM_CUPOM : "aparece em"
+    CUPONS_FISCAIS ||--o{ ITENS_CUPOM : "contém"
+    PRODUTOS ||--o{ ITENS_CUPOM : "aparece em"
 ```
 
 > 📐 Os nomes `cupom_id` e `produto_id` já seguem a convenção oficial de nomenclatura de chaves estrangeiras da disciplina — formalizada com o nome de "Regra 6" na Aula 03.
 
-Note que resistimos à tentação de transformar `OPERADOR` automaticamente em entidade só porque ele tem um rótulo próprio no documento — é exatamente o Erro Comum 6.1 que vimos acima. A decisão de promovê-lo a entidade fica reservada para quando o negócio realmente precisar (por exemplo, um relatório de vendas por operador).
+Note que resistimos à tentação de transformar `OPERADORES` automaticamente em entidade só porque ele tem um rótulo próprio no documento — é exatamente o Erro Comum 6.1 que vimos acima. A decisão de promovê-lo a entidade fica reservada para quando o negócio realmente precisar (por exemplo, um relatório de vendas por operador).
 
 > 💡 **Pratique em casa:** pegue qualquer outro documento real (um boleto, uma nota fiscal de serviço, um formulário de matrícula) e refaça os quatro passos. É o mesmo raciocínio, sempre.
 
@@ -621,7 +621,7 @@ Note que resistimos à tentação de transformar `OPERADOR` automaticamente em e
 ## 🃏 Flashcards de Revisão
 
 ??? question "Qual a diferença entre entidade forte e entidade fraca?"
-    Entidade forte existe de forma independente (ex: `CLIENTE`). Entidade fraca só existe em função de outra entidade (ex: `DEPENDENTE` só faz sentido se houver um `FUNCIONARIO`).
+    Entidade forte existe de forma independente (ex: `CLIENTES`). Entidade fraca só existe em função de outra entidade (ex: `DEPENDENTES` só fazem sentido se houver `FUNCIONARIOS`).
 
 ??? question "Qual a diferença entre atributo simples e atributo composto?"
     Atributo simples não pode ser subdividido (ex: `cpf`). Atributo composto pode ser decomposto em partes com significado próprio (ex: `endereco` em `logradouro`, `numero`, `cidade`, `cep`).
@@ -653,12 +653,12 @@ Note que resistimos à tentação de transformar `OPERADOR` automaticamente em e
 
 <quiz>
 Qual das alternativas é um exemplo de entidade fraca?
-- [ ] CLIENTE, pois todo sistema precisa de clientes
-- [x] DEPENDENTE, pois só existe em função de um FUNCIONARIO
-- [ ] PRODUTO, pois tem muitos atributos
-- [ ] CATEGORIA, pois é usada para classificar produtos
+- [ ] CLIENTES, pois todo sistema precisa de clientes
+- [x] DEPENDENTES, pois só existe em função de FUNCIONARIOS
+- [ ] PRODUTOS, pois tem muitos atributos
+- [ ] CATEGORIAS, pois é usada para classificar produtos
 
-DEPENDENTE não existe sozinho: não faz sentido cadastrar um dependente sem um funcionário ao qual ele pertence. Isso é a marca registrada de uma entidade fraca.
+DEPENDENTES não existem sozinhos: não faz sentido cadastrar um dependente sem um funcionário ao qual ele pertence. Isso é a marca registrada de uma entidade fraca.
 </quiz>
 
 <quiz>
@@ -672,7 +672,7 @@ O atributo "telefone" de uma pessoa, que pode ter vários números cadastrados, 
 </quiz>
 
 <quiz>
-Em uma especialização de VEICULO em CARRO, MOTO e CAMINHAO, onde todo veículo cadastrado é obrigatoriamente um dos três tipos e nunca mais de um ao mesmo tempo, essa especialização é: (selecione todas as corretas)
+Em uma especialização de VEICULOS em CARROS, MOTOS e CAMINHOES, onde todo veículo cadastrado é obrigatoriamente um dos três tipos e nunca mais de um ao mesmo tempo, essa especialização é: (selecione todas as corretas)
 - [x] Total
 - [ ] Parcial
 - [x] Disjunta
@@ -682,23 +682,23 @@ Em uma especialização de VEICULO em CARRO, MOTO e CAMINHAO, onde todo veículo
 </quiz>
 
 <quiz>
-Ao modelar um sistema de matrículas escolares, qual é o erro descrito na seção "Erros Comuns" ao se criar uma entidade MATRICULA totalmente solta, sem ligá-la como o encontro entre ALUNO e CURSO?
+Ao modelar um sistema de matrículas escolares, qual é o erro descrito na seção "Erros Comuns" ao se criar uma entidade MATRICULAS totalmente solta, sem ligá-la como o encontro entre ALUNOS e CURSOS?
 - [ ] Esquecer de identificar uma entidade fraca
 - [x] Confundir relacionamento com entidade
 - [ ] Usar especialização sem necessidade
 - [ ] Modelar atributo multivalorado como campo único
 
-MATRICULA representa o encontro entre ALUNO e CURSO — é um relacionamento (que pode virar entidade associativa se tiver atributos próprios), não uma terceira entidade solta e independente das outras duas.
+MATRICULAS representa o encontro entre ALUNOS e CURSOS — é um relacionamento (que pode virar entidade associativa se tiver atributos próprios), não uma terceira entidade solta e independente das outras duas.
 </quiz>
 
 <quiz>
-No exemplo do cupom fiscal, por que "quantidade" e "valor total do item" são atributos da entidade associativa ITEM_CUPOM, e não da entidade PRODUTO?
+No exemplo do cupom fiscal, por que "quantidade" e "valor total do item" são atributos da entidade associativa ITENS_CUPOM, e não da entidade PRODUTOS?
 - [ ] Porque todo atributo numérico deve ficar em uma entidade associativa
-- [x] Porque são o resultado do encontro entre um CUPOM_FISCAL específico e um PRODUTO específico, não uma característica fixa do produto
-- [ ] Porque PRODUTO já tem atributos demais
-- [ ] Porque CUPOM_FISCAL não pode ter atributos numéricos
+- [x] Porque são o resultado do encontro entre um cupom fiscal específico e um produto específico, não uma característica fixa do produto
+- [ ] Porque PRODUTOS já têm atributos demais
+- [ ] Porque CUPONS_FISCAIS não podem ter atributos numéricos
 
-A quantidade comprada e o valor total daquele item só existem na combinação de um cupom com um produto — o mesmo PRODUTO pode aparecer em outro cupom com quantidade e valor diferentes. Isso é exatamente o papel de uma entidade associativa.
+A quantidade comprada e o valor total daquele item só existem na combinação de um cupom com um produto — o mesmo produto pode aparecer em outro cupom com quantidade e valor diferentes. Isso é exatamente o papel de uma entidade associativa.
 </quiz>
 
 ---
@@ -755,16 +755,16 @@ O modelo abaixo foi proposto por um colega para um sistema de pedidos de restaur
 
 ```mermaid
 erDiagram
-    PEDIDO { }
-    MESA { }
-    NUMERO_MESA {
+    PEDIDOS { }
+    MESAS { }
+    NUMEROS_MESA {
         int valor
     }
-    MESA ||--|| NUMERO_MESA : "tem"
-    PEDIDO ||--|| MESA : "ocupa"
+    MESAS ||--|| NUMEROS_MESA : "tem"
+    PEDIDOS ||--|| MESAS : "ocupa"
 ```
 
-*Dica: `NUMERO_MESA` foi modelado como uma entidade separada, ligada a `MESA` por um relacionamento 1-para-1. Ela tem vida própria, ou só descreve `MESA`?*
+*Dica: `NUMEROS_MESA` foi modelado como uma entidade separada, ligada a `MESAS` por um relacionamento 1-para-1. Ela tem vida própria, ou só descreve `MESAS`?*
 
 ---
 

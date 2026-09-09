@@ -105,8 +105,8 @@ negócio apresentados, você deve produzir um diagrama em
 
     ```dbml
     Table nome_da_tabela {
-      id_nome_da_tabela BIGINT UNSIGNED [pk, increment]
-      alguma_coluna     VARCHAR(255)    [not null]
+      id_nome_da_tabela BIGINT UNSIGNED [PK, INCREMENT]
+      alguma_coluna     VARCHAR(255)    [NOT NULL]
 
       Note: 'observações sobre a tabela, se precisar'
     }
@@ -126,24 +126,24 @@ negócio apresentados, você deve produzir um diagrama em
     }
 
     Table pedidos {
-      status status_pedido [not null, default: 'pendente']
+      status status_pedido [NOT NULL, DEFAULT: 'pendente']
     }
     ```
 
 4. Para **chave primária composta** (o padrão de tabela intermediária N:M da
    [Aula 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)), marque
-   `[pk]` nas duas colunas envolvidas — o dbdiagram.io entende que a chave é a
+   `[PK]` nas duas colunas envolvidas — o dbdiagram.io entende que a chave é a
    combinação das duas.
 5. Para restrições `UNIQUE` que envolvem mais de uma coluna, use um bloco `Indexes`
    dentro da tabela:
 
     ```dbml
     Table avaliacoes {
-      usuario_id BIGINT UNSIGNED [not null]
-      produto_id BIGINT UNSIGNED [not null]
+      usuario_id BIGINT UNSIGNED [NOT NULL]
+      produto_id BIGINT UNSIGNED [NOT NULL]
 
       Indexes {
-        (usuario_id, produto_id) [unique]
+        (usuario_id, produto_id) [UNIQUE]
       }
     }
     ```
@@ -269,47 +269,47 @@ Enum forma_pagamento_enum {
 
 // Regra 4 (plural) + Regra 9 (campos de log em toda tabela)
 Table clientes {
-  id_cliente     BIGINT UNSIGNED [pk, increment, note: 'Regra 5 — PK = id_ + tabela no singular']
-  nome           VARCHAR(255)    [not null]
-  cpf            CHAR(11)        [not null, unique, note: 'Regra 8 — tamanho fixo, só dígitos']
-  email          VARCHAR(255)    [not null, unique]
-  senha_hash     VARCHAR(255)    [not null]
-  tipo_usuario   tipo_usuario_enum [not null, default: 'usuario', note: 'gestão de acesso obrigatória — nível básico']
-  criado_em      DATETIME        [not null, default: `CURRENT_TIMESTAMP`, note: 'Regra 9']
-  atualizado_em  DATETIME        [not null, note: 'Regra 9 — ON UPDATE CURRENT_TIMESTAMP no DDL real']
+  id_cliente     BIGINT UNSIGNED [PK, INCREMENT, note: 'Regra 5 — PK = id_ + tabela no singular']
+  nome           VARCHAR(255)    [NOT NULL]
+  cpf            CHAR(11)        [NOT NULL, UNIQUE, note: 'Regra 8 — tamanho fixo, só dígitos']
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario', note: 'gestão de acesso obrigatória — nível básico']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`, note: 'Regra 9']
+  atualizado_em  DATETIME        [NOT NULL, note: 'Regra 9 — ON UPDATE CURRENT_TIMESTAMP no DDL real']
   deletado_em    DATETIME        [note: 'Regra 9 — NULL até o soft delete']
 }
 
 Table produtos {
-  id_produto      BIGINT UNSIGNED [pk, increment]
-  descricao       VARCHAR(255)    [not null]
-  valor_unitario  DECIMAL(10,2)   [not null, note: 'Regra 8 — DECIMAL para dinheiro, nunca FLOAT/DOUBLE']
-  criado_em       DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em   DATETIME        [not null]
+  id_produto      BIGINT UNSIGNED [PK, INCREMENT]
+  descricao       VARCHAR(255)    [NOT NULL]
+  valor_unitario  DECIMAL(10,2)   [NOT NULL, note: 'Regra 8 — DECIMAL para dinheiro, nunca FLOAT/DOUBLE']
+  criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME        [NOT NULL]
   deletado_em     DATETIME
 }
 
 Table cupons_fiscais {
-  id_cupom_fiscal  BIGINT UNSIGNED   [pk, increment]
-  cliente_id       BIGINT UNSIGNED   [not null, note: 'Regra 6 — FK = tabela_singular + _id']
-  numero_cupom     VARCHAR(20)       [not null, unique]
-  data_emissao     DATETIME          [not null, default: `CURRENT_TIMESTAMP`]
-  forma_pagamento  forma_pagamento_enum [not null]
-  valor_total      DECIMAL(10,2)     [not null, note: 'derivado da soma dos itens — recalculado, não editado à mão']
-  criado_em        DATETIME          [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em    DATETIME          [not null]
+  id_cupom_fiscal  BIGINT UNSIGNED   [PK, INCREMENT]
+  cliente_id       BIGINT UNSIGNED   [NOT NULL, note: 'Regra 6 — FK = tabela_singular + _id']
+  numero_cupom     VARCHAR(20)       [NOT NULL, UNIQUE]
+  data_emissao     DATETIME          [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  forma_pagamento  forma_pagamento_enum [NOT NULL]
+  valor_total      DECIMAL(10,2)     [NOT NULL, note: 'derivado da soma dos itens — recalculado, não editado à mão']
+  criado_em        DATETIME          [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME          [NOT NULL]
   deletado_em      DATETIME
 }
 
 // Relacionamento N:M entre cupons_fiscais e produtos (Aula 03, 4.2):
 // PK composta pelas duas FKs, sem PK substituta própria.
 Table itens_cupom {
-  cupom_fiscal_id  BIGINT UNSIGNED [pk, not null]
-  produto_id       BIGINT UNSIGNED [pk, not null]
-  quantidade       INT UNSIGNED    [not null]
-  valor_unitario   DECIMAL(10,2)   [not null, note: 'snapshot do preço na venda']
-  criado_em        DATETIME        [not null, default: `CURRENT_TIMESTAMP`]
-  atualizado_em    DATETIME        [not null]
+  cupom_fiscal_id  BIGINT UNSIGNED [PK, NOT NULL]
+  produto_id       BIGINT UNSIGNED [PK, NOT NULL]
+  quantidade       INT UNSIGNED    [NOT NULL]
+  valor_unitario   DECIMAL(10,2)   [NOT NULL, note: 'snapshot do preço na venda']
+  criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME        [NOT NULL]
   deletado_em      DATETIME
 }
 

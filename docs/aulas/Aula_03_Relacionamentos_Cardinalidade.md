@@ -32,7 +32,7 @@ flowchart LR
     ROOT --> T1
     subgraph T1["🔑 Chave Primária (PK)"]
         direction TB
-        T1A["Declaração: [pk, increment]"]
+        T1A["Declaração: [PK, INCREMENT]"]
         T1B["Tipo: BIGINT UNSIGNED"]
     end
 
@@ -121,22 +121,22 @@ Uma **chave primária (PK — Primary Key)** é a coluna (ou conjunto de colunas
 
 ### 1.1 Como declarar uma PK
 
-Em DBML (a linguagem do dbdiagram.io, que você vai usar o curso inteiro), a PK é marcada com o atributo `[pk]` na coluna:
+Em DBML (a linguagem do dbdiagram.io, que você vai usar o curso inteiro), a PK é marcada com o atributo `[PK]` na coluna:
 
 ```dbml
 Table produtos {
-  id_produto BIGINT UNSIGNED [pk, increment]
+  id_produto BIGINT UNSIGNED [PK, INCREMENT]
   descricao  VARCHAR(255)
 }
 ```
 
-`increment` diz que o valor é gerado automaticamente pelo banco, incrementando a cada nova linha (1, 2, 3...) — você nunca escolhe ou informa esse valor manualmente. Isso é o que chamamos de **chave substituta** (surrogate key): um identificador artificial, sem significado no mundo real, criado só para o banco distinguir as linhas.
+`INCREMENT` diz que o valor é gerado automaticamente pelo banco, incrementando a cada nova linha (1, 2, 3...) — você nunca escolhe ou informa esse valor manualmente. Isso é o que chamamos de **chave substituta** (surrogate key): um identificador artificial, sem significado no mundo real, criado só para o banco distinguir as linhas.
 
 > 💡 **Adiantando:** em SQL de verdade (Aula 06 — SQL DDL), a mesma ideia se escreve `id_produto BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT`. A sintaxe muda, o conceito é idêntico — você já sai desta aula sabendo o que essa linha de SQL vai significar.
 
 ### 1.2 O tipo de uma PK
 
-**Convenção desta disciplina: toda PK substituta usa o tipo `BIGINT UNSIGNED` com `increment`.** É o padrão que você vai ver em toda tabela, em todo exemplo, a partir de agora — não porque `BIGINT` seja "o tipo certo" universalmente (dimensionar tipo por tipo é assunto da Aula 06), mas porque adotar um único padrão para toda PK evita ter que decidir, tabela por tabela, "será que `INT` é grande o suficiente?". `BIGINT UNSIGNED` comporta até ~18,4 quintilhões de linhas — nunca vai faltar.
+**Convenção desta disciplina: toda PK substituta usa o tipo `BIGINT UNSIGNED` com `INCREMENT`.** É o padrão que você vai ver em toda tabela, em todo exemplo, a partir de agora — não porque `BIGINT` seja "o tipo certo" universalmente (dimensionar tipo por tipo é assunto da Aula 06), mas porque adotar um único padrão para toda PK evita ter que decidir, tabela por tabela, "será que `INT` é grande o suficiente?". `BIGINT UNSIGNED` comporta até ~18,4 quintilhões de linhas — nunca vai faltar.
 
 Existe uma exceção deliberada: quando a entidade já tem um identificador único **do mundo real** (uma **chave natural**, como o código de barras de um produto), ele pode ser usado como PK diretamente, com o tipo que fizer sentido para ele (`VARCHAR`, por exemplo) — você vai ver esse caso na Seção 9 (o produto na leitora do caixa).
 
@@ -152,17 +152,17 @@ Uma **chave estrangeira (FK — Foreign Key)** é a coluna que materializa um re
 
 ### 2.1 Como declarar uma FK
 
-Em DBML, a FK é uma coluna comum — sem `[pk]` — mais uma linha `Ref` que declara explicitamente a relação:
+Em DBML, a FK é uma coluna comum — sem `[PK]` — mais uma linha `Ref` que declara explicitamente a relação:
 
 ```dbml
 Table produtos {
-  id_produto BIGINT UNSIGNED [pk, increment]
+  id_produto BIGINT UNSIGNED [PK, INCREMENT]
   descricao  VARCHAR(255)
 }
 
 Table itens_pedido {
-  id_item_pedido BIGINT UNSIGNED [pk, increment]
-  produto_id     BIGINT UNSIGNED [not null]
+  id_item_pedido BIGINT UNSIGNED [PK, INCREMENT]
+  produto_id     BIGINT UNSIGNED [NOT NULL]
 }
 
 Ref: itens_pedido.produto_id > produtos.id_produto
@@ -198,7 +198,7 @@ Antes de ver o primeiro relacionamento, conheça de uma vez as **9 regras oficia
 | **1 — snake_case** | Nomes de colunas sempre com underline entre palavras, nunca `camelCase` | `data_nascimento`, não `DataNascimento` |
 | **2 — minúsculas** | Nomes criados por você (atributos, entidades quando viram tabelas) sempre em letras minúsculas | `produtos`, `valor_unitario` |
 | **3 — palavras reservadas em maiúsculas** | Comandos e tipos SQL/DBML ficam em maiúsculas — só o que você nomeia fica minúsculo (Regra 2) | `BIGINT UNSIGNED`, `NOT NULL`, `PRIMARY KEY` |
-| **4 — Entidade vs. Tabela** | No MER conceitual, entidade é singular e maiúscula (`CLIENTE`); quando vira tabela real, o nome muda para plural e minúsculo (`clientes`) | `CLIENTE` (conceitual) → `clientes` (tabela) |
+| **4 — Entidade vs. Tabela** | Entidade e tabela são sempre nomeadas no plural; no MER conceitual, o nome fica em maiúsculas (`CLIENTES`), e quando vira tabela real, muda só para minúsculas (`clientes`) | `CLIENTES` (conceitual) → `clientes` (tabela) |
 | **5 — PK: `id_` + tabela no singular** | Toda chave primária segue este padrão, sem exceção de nome | `id_funcionario`, `id_produto`, `id_cliente` |
 | **6 — FK: tabela no singular + `_id`** | A ordem inverte em relação à PK — repare bem nisso | `departamento_id`, `categoria_id`, `produto_id` |
 | **7 — FK pelo papel semântico** | Quando a FK referencia uma tabela cuja entidade pode ter papéis diferentes, o nome usa o papel, não a tabela | `supervisor_id`, não `funcionario_id` |
@@ -213,13 +213,13 @@ Antes de ver o primeiro relacionamento, conheça de uma vez as **9 regras oficia
 
 ## 4. O que são Relacionamentos?
 
-Entidades raramente existem de forma isolada. No mundo real, elas interagem: um `CLIENTE` realiza `PEDIDOS`, um `ALUNO` se matricula em `DISCIPLINAS`, um `FUNCIONÁRIO` trabalha em um `DEPARTAMENTO`. Essas interações entre entidades são chamadas de **relacionamentos**.
+Entidades raramente existem de forma isolada. No mundo real, elas interagem: `CLIENTES` realizam `PEDIDOS`, `ALUNOS` se matriculam em `DISCIPLINAS`, `FUNCIONARIOS` trabalham em `DEPARTAMENTOS`. Essas interações entre entidades são chamadas de **relacionamentos**.
 
 ![Relacionamento entre entidades](../imgs/Aula_03_img_01.png)
 
-Um relacionamento é representado no DER por um losango conectado às entidades participantes. Assim como as entidades podem ter atributos, os relacionamentos também podem — e isso é um ponto que muitos estudantes não percebem de imediato. Pense num relacionamento `ALUNO` **se matricula em** `DISCIPLINA`: a `data_matricula` não pertence ao aluno nem à disciplina em si, mas sim ao evento da matrícula — ou seja, é um **atributo do relacionamento**.
+Um relacionamento é representado no DER por um losango conectado às entidades participantes. Assim como as entidades podem ter atributos, os relacionamentos também podem — e isso é um ponto que muitos estudantes não percebem de imediato. Pense num relacionamento `ALUNOS` **se matricula em** `DISCIPLINAS`: a `data_matricula` não pertence ao aluno nem à disciplina em si, mas sim ao evento da matrícula — ou seja, é um **atributo do relacionamento**.
 
-> 📐 **Sobre os nomes das entidades nos diagramas:** você vai notar que, nos diagramas desta aula (e das anteriores), as entidades aparecem em **maiúsculas e no singular** — `CLIENTE`, `PEDIDO`, `FUNCIONARIO`. Essa é a convenção clássica de modelagem conceitual (Peter Chen): uma entidade representa "um tipo de coisa", então usamos o singular. Você já viu, nas Seções 1 a 3, que quando essas entidades viram **tabelas de verdade** no banco de dados, o nome muda para **plural e minúsculo** (`clientes`, `pedidos`, `funcionarios`) — é a Regra 4. Não é inconsistência: são dois momentos diferentes da modelagem, cada um com sua convenção — e ambas vão valer a partir de agora, para toda a disciplina.
+> 📐 **Sobre os nomes das entidades nos diagramas:** você vai notar que, nos diagramas desta aula (e das anteriores), as entidades aparecem em **maiúsculas e no plural** — `CLIENTES`, `PEDIDOS`, `FUNCIONARIOS` — representando o conjunto de todas as ocorrências daquele tipo, não "um exemplar" isolado. É a **Regra 4**. Quando essas entidades viram **tabelas de verdade** no banco de dados (Seções 1 a 3), o plural se mantém — só o que muda é a caixa: de maiúsculas para **minúsculas** (`clientes`, `pedidos`, `funcionarios`). Um único critério, sem exceção, do primeiro diagrama conceitual até a tabela final: entidade e tabela são sempre nomeadas no plural.
 
 ---
 
@@ -249,21 +249,21 @@ Ocorre quando a resposta ao "pode ter mais de um?" é **não** nos dois sentidos
 
 ```mermaid
 erDiagram
-    FUNCIONARIO {
+    FUNCIONARIOS {
         int id_funcionario PK
         string nome
     }
-    CRACHA {
+    CRACHAS {
         int id_cracha PK
         string numero_serie
         int funcionario_id FK
     }
-    FUNCIONARIO ||--|| CRACHA : "possui"
+    FUNCIONARIOS ||--|| CRACHAS : "possui"
 ```
 
 Perguntas-chave: *"Um funcionário pode ter mais de um crachá?"* → Não. *"Um crachá pode pertencer a mais de um funcionário?"* → Não. Logo, 1:1.
 
-> 📐 **Relembrando as Regras 5 e 6 (Seção 3):** a chave primária de `FUNCIONARIO` se chama `id_funcionario`, seguindo a Regra 5 (`id_` + tabela no singular). A chave estrangeira em `CRACHA` se chama `funcionario_id`, seguindo a Regra 6 — repare que a ordem inverte: a FK termina em `_id`, a PK começa com `id_`. É um erro comum nomear a FK igual à PK que ela referencia, mas são papéis diferentes, e nomes diferentes deixam isso claro à primeira vista.
+> 📐 **Relembrando as Regras 5 e 6 (Seção 3):** a chave primária de `FUNCIONARIOS` se chama `id_funcionario`, seguindo a Regra 5 (`id_` + tabela no singular). A chave estrangeira em `CRACHAS` se chama `funcionario_id`, seguindo a Regra 6 — repare que a ordem inverte: a FK termina em `_id`, a PK começa com `id_`. É um erro comum nomear a FK igual à PK que ela referencia, mas são papéis diferentes, e nomes diferentes deixam isso claro à primeira vista.
 
 **🔎 Veja este diagrama no dbdiagram.io:**
 
@@ -271,12 +271,12 @@ Além do Mermaid (que você acabou de ver acima), você também pode desenhar e 
 
 ```dbml
 Table funcionarios {
-  id_funcionario BIGINT UNSIGNED [pk, increment]
+  id_funcionario BIGINT UNSIGNED [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
 Table crachas {
-  id_cracha BIGINT UNSIGNED [pk, increment]
+  id_cracha BIGINT UNSIGNED [PK, INCREMENT]
   funcionario_id BIGINT UNSIGNED
   numero_serie VARCHAR(50)
 }
@@ -284,9 +284,9 @@ Table crachas {
 Ref: crachas.funcionario_id > funcionarios.id_funcionario
 ```
 
-A sintaxe é simples: `Table nome_da_tabela { ... }` declara uma tabela; cada linha dentro dela é `nome_da_coluna tipo`, e `[pk]` marca a chave primária — exatamente como você viu nas Seções 1 e 2. Não precisa decorar mais nada por enquanto — só isso já é suficiente para o próximo exemplo.
+A sintaxe é simples: `Table nome_da_tabela { ... }` declara uma tabela; cada linha dentro dela é `nome_da_coluna tipo`, e `[PK]` marca a chave primária — exatamente como você viu nas Seções 1 e 2. Não precisa decorar mais nada por enquanto — só isso já é suficiente para o próximo exemplo.
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgZnVuY2lvbmFyaW9zIHsKICBpZF9mdW5jaW9uYXJpbyBCSUdJTlQgVU5TSUdORUQgW3BrLCBpbmNyZW1lbnRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgY3JhY2hhcyB7CiAgaWRfY3JhY2hhIEJJR0lOVCBVTlNJR05FRCBbcGssIGluY3JlbWVudF0KICBmdW5jaW9uYXJpb19pZCBCSUdJTlQgVU5TSUdORUQKICBudW1lcm9fc2VyaWUgVkFSQ0hBUig1MCkKfQoKUmVmOiBjcmFjaGFzLmZ1bmNpb25hcmlvX2lkID4gZnVuY2lvbmFyaW9zLmlkX2Z1bmNpb25hcmlvCg%3D%3D)** — clique para ver o mesmo modelo renderizado por outra ferramenta. Documentação oficial da linguagem: [dbml.dbdiagram.io/docs](https://dbml.dbdiagram.io/docs/).
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgZnVuY2lvbmFyaW9zIHsKICBpZF9mdW5jaW9uYXJpbyBCSUdJTlQgVU5TSUdORUQgW1BLLCBJTkNSRU1FTlRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgY3JhY2hhcyB7CiAgaWRfY3JhY2hhIEJJR0lOVCBVTlNJR05FRCBbUEssIElOQ1JFTUVOVF0KICBmdW5jaW9uYXJpb19pZCBCSUdJTlQgVU5TSUdORUQKICBudW1lcm9fc2VyaWUgVkFSQ0hBUig1MCkKfQoKUmVmOiBjcmFjaGFzLmZ1bmNpb25hcmlvX2lkID4gZnVuY2lvbmFyaW9zLmlkX2Z1bmNpb25hcmlvCg%3D%3D)** — clique para ver o mesmo modelo renderizado por outra ferramenta. Documentação oficial da linguagem: [dbml.dbdiagram.io/docs](https://dbml.dbdiagram.io/docs/).
 
 **Outros exemplos de 1:1:**
 
@@ -295,21 +295,21 @@ A sintaxe é simples: `Table nome_da_tabela { ... }` declara uma tabela; cada li
 
 ```mermaid
 erDiagram
-    PESSOA {
+    PESSOAS {
         int id_pessoa PK
         string nome
         string cpf
     }
-    CNH {
+    CNHS {
         int id_cnh PK
         string numero_registro
         date data_validade
         int pessoa_id FK
     }
-    PESSOA |o--|| CNH : "possui"
+    PESSOAS |o--|| CNHS : "possui"
 ```
 
-> 📌 **Dica de projeto:** em relacionamentos 1:1, a FK geralmente vai para a entidade com participação **parcial** — a que "depende" conceitualmente da outra. Aqui, `pessoa_id` vai em `CNH` porque a CNH depende da pessoa, não o contrário.
+> 📌 **Dica de projeto:** em relacionamentos 1:1, a FK geralmente vai para a entidade com participação **parcial** — a que "depende" conceitualmente da outra. Aqui, `pessoa_id` vai em `CNHS` porque a CNH depende da pessoa, não o contrário.
 
 ---
 
@@ -321,26 +321,26 @@ erDiagram
 
 ```mermaid
 erDiagram
-    DEPARTAMENTO {
+    DEPARTAMENTOS {
         int id_departamento PK
         string nome
         string localizacao
     }
-    FUNCIONARIO {
+    FUNCIONARIOS {
         int id_funcionario PK
         string nome
         float salario
         int departamento_id FK
     }
-    DEPARTAMENTO ||--o{ FUNCIONARIO : "contém"
+    DEPARTAMENTOS ||--o{ FUNCIONARIOS : "contém"
 ```
 
-Perguntas aplicadas: *"Um departamento pode ter mais de um funcionário?"* → Sim (lado N). *"Um funcionário pode pertencer a mais de um departamento?"* → Não (lado 1). Logo, 1:N, com o N do lado de `FUNCIONARIO` — e é exatamente por isso que `departamento_id` (a FK) fica na tabela `FUNCIONARIO`, não o contrário. Guarde essa observação: ela é a regra geral que a Seção 7 vai formalizar.
+Perguntas aplicadas: *"Um departamento pode ter mais de um funcionário?"* → Sim (lado N). *"Um funcionário pode pertencer a mais de um departamento?"* → Não (lado 1). Logo, 1:N, com o N do lado de `FUNCIONARIOS` — e é exatamente por isso que `departamento_id` (a FK) fica na tabela `FUNCIONARIOS`, não o contrário. Guarde essa observação: ela é a regra geral que a Seção 7 vai formalizar.
 
 **Outros exemplos de 1:N:**
 
-- **Categoria e Produtos** — uma categoria pode conter muitos produtos; cada produto pertence a exatamente uma categoria (`PRODUTO.categoria_id FK`).
-- **Pedido e Nota Fiscal** — um pedido pode gerar várias notas fiscais (entregas parceladas, por exemplo); cada nota fiscal pertence a exatamente um pedido (`NOTA_FISCAL.pedido_id FK`). Esse exemplo é útil porque mostra que, mesmo onde intuitivamente esperaríamos 1:1 (um pedido, uma nota), a regra de negócio pode exigir 1:N — **a cardinalidade sempre vem da regra de negócio, nunca da suposição.**
+- **Categoria e Produtos** — uma categoria pode conter muitos produtos; cada produto pertence a exatamente uma categoria (`PRODUTOS.categoria_id FK`).
+- **Pedido e Nota Fiscal** — um pedido pode gerar várias notas fiscais (entregas parceladas, por exemplo); cada nota fiscal pertence a exatamente um pedido (`NOTAS_FISCAIS.pedido_id FK`). Esse exemplo é útil porque mostra que, mesmo onde intuitivamente esperaríamos 1:1 (um pedido, uma nota), a regra de negócio pode exigir 1:N — **a cardinalidade sempre vem da regra de negócio, nunca da suposição.**
 
 ---
 
@@ -352,38 +352,38 @@ A resposta a "pode ter mais de um?" é **sim** nos dois sentidos. Mapeado para o
 
 ```mermaid
 erDiagram
-    ALUNO {
+    ALUNOS {
         int id_aluno PK
         string nome
         string ra
     }
-    DISCIPLINA {
+    DISCIPLINAS {
         int id_disciplina PK
         string nome
         int carga_horaria
     }
-    MATRICULA {
+    MATRICULAS {
         int aluno_id FK
         int disciplina_id FK
         float nota
         date data_matricula
     }
-    ALUNO ||--o{ MATRICULA : "realiza"
-    DISCIPLINA ||--o{ MATRICULA : "recebe"
+    ALUNOS ||--o{ MATRICULAS : "realiza"
+    DISCIPLINAS ||--o{ MATRICULAS : "recebe"
 ```
 
-Note que o N:M original entre `ALUNO` e `DISCIPLINA` foi decomposto em **dois** relacionamentos 1:N através de `MATRICULA` — e cada um deles segue exatamente a mesma regra de FK que você acabou de ver na Seção 5.2.
+Note que o N:M original entre `ALUNOS` e `DISCIPLINAS` foi decomposto em **dois** relacionamentos 1:N através de `MATRICULAS` — e cada um deles segue exatamente a mesma regra de FK que você acabou de ver na Seção 5.2.
 
 **🔎 Veja este diagrama no dbdiagram.io:**
 
 ```dbml
 Table alunos {
-  id_aluno BIGINT UNSIGNED [pk, increment]
+  id_aluno BIGINT UNSIGNED [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
 Table disciplinas {
-  id_disciplina BIGINT UNSIGNED [pk, increment]
+  id_disciplina BIGINT UNSIGNED [PK, INCREMENT]
   nome VARCHAR(255)
 }
 
@@ -399,7 +399,7 @@ Ref: matriculas.disciplina_id > disciplinas.id_disciplina
 
 Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela associativa. É assim que todo N:M vira DBML: uma tabela no meio, duas setas saindo dela.
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgYWx1bm9zIHsKICBpZF9hbHVubyBCSUdJTlQgVU5TSUdORUQgW3BrLCBpbmNyZW1lbnRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgZGlzY2lwbGluYXMgewogIGlkX2Rpc2NpcGxpbmEgQklHSU5UIFVOU0lHTkVEIFtwaywgaW5jcmVtZW50XQogIG5vbWUgVkFSQ0hBUigyNTUpCn0KClRhYmxlIG1hdHJpY3VsYXMgewogIGFsdW5vX2lkIEJJR0lOVCBVTlNJR05FRAogIGRpc2NpcGxpbmFfaWQgQklHSU5UIFVOU0lHTkVECiAgbm90YSBERUNJTUFMKDQsMikKfQoKUmVmOiBtYXRyaWN1bGFzLmFsdW5vX2lkID4gYWx1bm9zLmlkX2FsdW5vClJlZjogbWF0cmljdWxhcy5kaXNjaXBsaW5hX2lkID4gZGlzY2lwbGluYXMuaWRfZGlzY2lwbGluYQo%3D)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgYWx1bm9zIHsKICBpZF9hbHVubyBCSUdJTlQgVU5TSUdORUQgW1BLLCBJTkNSRU1FTlRdCiAgbm9tZSBWQVJDSEFSKDI1NSkKfQoKVGFibGUgZGlzY2lwbGluYXMgewogIGlkX2Rpc2NpcGxpbmEgQklHSU5UIFVOU0lHTkVEIFtQSywgSU5DUkVNRU5UXQogIG5vbWUgVkFSQ0hBUigyNTUpCn0KClRhYmxlIG1hdHJpY3VsYXMgewogIGFsdW5vX2lkIEJJR0lOVCBVTlNJR05FRAogIGRpc2NpcGxpbmFfaWQgQklHSU5UIFVOU0lHTkVECiAgbm90YSBERUNJTUFMKDQsMikKfQoKUmVmOiBtYXRyaWN1bGFzLmFsdW5vX2lkID4gYWx1bm9zLmlkX2FsdW5vClJlZjogbWF0cmljdWxhcy5kaXNjaXBsaW5hX2lkID4gZGlzY2lwbGluYXMuaWRfZGlzY2lwbGluYQo%3D)**
 
 **Outros exemplos de N:M:**
 
@@ -408,10 +408,10 @@ Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela
 
 !!! example "🔍 Checkpoint 1 — Cardinalidade: plataforma de streaming de música"
     Uma plataforma de streaming de música tem as seguintes regras de negócio: (a)
-    um `USUARIO` pode criar várias `PLAYLIST`, e cada playlist pertence a exatamente
-    um usuário; (b) uma `PLAYLIST` pode conter várias `MUSICA`, e uma música pode
-    estar em várias playlists diferentes; (c) um `USUARIO` tem exatamente uma
-    `ASSINATURA` ativa por vez, e uma assinatura pertence a exatamente um usuário.
+    `USUARIOS` podem criar várias `PLAYLISTS`, e cada playlist pertence a exatamente
+    um usuário; (b) `PLAYLISTS` podem conter várias `MUSICAS`, e uma música pode
+    estar em várias playlists diferentes; (c) `USUARIOS` têm exatamente uma
+    assinatura (`ASSINATURAS`) ativa por vez, e uma assinatura pertence a exatamente um usuário.
     Para cada uma das três relações (a, b, c), aplique as perguntas-chave da Seção 5
     e identifique o tipo de cardinalidade (1:1, 1:N ou N:M), justificando.
 
@@ -428,10 +428,10 @@ Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela
 Proposta por Elmasri e Navathe — autores do livro-texto desta disciplina —, escreve explicitamente o par **(mínimo, máximo)** ao lado de cada entidade, **próximo à entidade que está sendo caracterizada**.
 
 ```
-CLIENTE  (0,N)————————(1,1)  PEDIDO
+CLIENTES  (0,N)————————(1,1)  PEDIDOS
 ```
 
-Leitura: o par **(1,1)**, perto de PEDIDO, descreve o PEDIDO em relação ao CLIENTE — cada pedido pertence a no mínimo 1 e no máximo 1 cliente. O par **(0,N)**, perto de CLIENTE, descreve o CLIENTE em relação ao PEDIDO — cada cliente tem no mínimo 0 e no máximo N pedidos.
+Leitura: o par **(1,1)**, perto de PEDIDOS, descreve o PEDIDOS em relação ao CLIENTES — cada pedido pertence a no mínimo 1 e no máximo 1 cliente. O par **(0,N)**, perto de CLIENTES, descreve o CLIENTES em relação ao PEDIDOS — cada cliente tem no mínimo 0 e no máximo N pedidos.
 
 ### 6.2 Notação Crow's Foot (Pé de Galinha)
 
@@ -449,21 +449,21 @@ Leitura: o par **(1,1)**, perto de PEDIDO, descreve o PEDIDO em relação ao CLI
 
 ### 6.3 O Segredo da Posição — a maior dificuldade da disciplina
 
-Se você perguntar a qualquer professor de banco de dados qual conceito mais confunde os alunos, a resposta quase sempre é a mesma: **cardinalidade**. O motivo tem uma causa bem específica: na notação Crow's Foot, o símbolo que indica a cardinalidade de uma entidade fica do lado **oposto** a ela — a cardinalidade de `ALUNO` é anotada perto de `DISCIPLINA`, e vice-versa. Isso contraria o instinto de associar o número ao objeto mais próximo.
+Se você perguntar a qualquer professor de banco de dados qual conceito mais confunde os alunos, a resposta quase sempre é a mesma: **cardinalidade**. O motivo tem uma causa bem específica: na notação Crow's Foot, o símbolo que indica a cardinalidade de uma entidade fica do lado **oposto** a ela — a cardinalidade de `ALUNOS` é anotada perto de `DISCIPLINAS`, e vice-versa. Isso contraria o instinto de associar o número ao objeto mais próximo.
 
 ```
          você lê daqui ──────────────────────────────────► para cá
 
-CLIENTE  ──────────────────────────────────────────────── PEDIDO
+CLIENTES  ──────────────────────────────────────────────── PEDIDOS
          O{                                          ||
          ▲                                           ▲
          │                                           │
          Este símbolo está                    Este símbolo está
-         próximo a CLIENTE,                   próximo a PEDIDO,
-         mas descreve PEDIDO                  mas descreve CLIENTE
+         próximo a CLIENTES,                  próximo a PEDIDOS,
+         mas descreve PEDIDOS                 mas descreve CLIENTES
 ```
 
-**Como ler corretamente, passo a passo:** (1) coloque o dedo sobre `CLIENTE`; (2) deslize o olhar pela linha até o símbolo que está do **lado de CLIENTE** (início da linha); (3) esse símbolo descreve quantos `PEDIDOS` um `CLIENTE` pode ter — no exemplo, `O{` = zero ou muitos. (4) Agora vá até o símbolo no **lado de PEDIDO** (final da linha); (5) esse símbolo descreve quantos `CLIENTES` um `PEDIDO` pode ter — no exemplo, `||` = exatamente um.
+**Como ler corretamente, passo a passo:** (1) coloque o dedo sobre `CLIENTES`; (2) deslize o olhar pela linha até o símbolo que está do **lado de CLIENTES** (início da linha); (3) esse símbolo descreve quantos `PEDIDOS` um cliente pode ter — no exemplo, `O{` = zero ou muitos. (4) Agora vá até o símbolo no **lado de PEDIDOS** (final da linha); (5) esse símbolo descreve quantos `CLIENTES` um pedido pode ter — no exemplo, `||` = exatamente um.
 
 > 🔑 **A regra de ouro:** o símbolo próximo à entidade A descreve a entidade B, e vice-versa. Sempre leia o símbolo do lado *oposto* à entidade que você está descrevendo. Quando esta regra estiver automatizada no seu raciocínio, a notação Crow's Foot se torna completamente intuitiva.
 
@@ -477,14 +477,14 @@ CLIENTE  ───────────────────────�
 | Um ou muitos | (1,N) | `\|{` |
 
 !!! example "🔍 Checkpoint 2 — Notações: locadora de veículos"
-    A relação entre `FILIAL` e `VEICULO` de uma locadora é descrita assim em
-    Crow's Foot: `FILIAL ────O{─────||──── VEICULO` (o símbolo `O{` fica do lado de
-    `FILIAL`, e o símbolo `||` fica do lado de `VEICULO`). Aplicando a "regra de
-    ouro" da Seção 6.3: (a) o símbolo `O{`, perto de `FILIAL`, descreve qual das
-    duas entidades, e o que ele significa? (b) o símbolo `||`, perto de `VEICULO`,
+    A relação entre `FILIAIS` e `VEICULOS` de uma locadora é descrita assim em
+    Crow's Foot: `FILIAIS ────O{─────||──── VEICULOS` (o símbolo `O{` fica do lado de
+    `FILIAIS`, e o símbolo `||` fica do lado de `VEICULOS`). Aplicando a "regra de
+    ouro" da Seção 6.3: (a) o símbolo `O{`, perto de `FILIAIS`, descreve qual das
+    duas entidades, e o que ele significa? (b) o símbolo `||`, perto de `VEICULOS`,
     descreve qual das duas entidades, e o que ele significa? (c) escreva essa mesma
-    cardinalidade na notação Min-Max, no formato `FILIAL (min,max) ———— (min,max)
-    VEICULO`.
+    cardinalidade na notação Min-Max, no formato `FILIAIS (min,max) ———— (min,max)
+    VEICULOS`.
 
     🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
@@ -500,15 +500,15 @@ Você já sabe **o que é** uma PK e uma FK, como declará-las e suas restriçõ
 
 Relembrando o exemplo da Seção 5.2:
 
-1. `DEPARTAMENTO` (lado 1) ganha sua PK normalmente: `id_departamento`.
-2. `FUNCIONARIO` (lado N) ganha uma coluna extra — a FK `departamento_id` — que nada mais é do que **uma cópia do tipo da PK de `DEPARTAMENTO`**, funcionando como um "ponteiro": cada linha de `FUNCIONARIO` aponta para exatamente uma linha de `DEPARTAMENTO`.
+1. `DEPARTAMENTOS` (lado 1) ganha sua PK normalmente: `id_departamento`.
+2. `FUNCIONARIOS` (lado N) ganha uma coluna extra — a FK `departamento_id` — que nada mais é do que **uma cópia do tipo da PK de `DEPARTAMENTOS`**, funcionando como um "ponteiro": cada linha de `FUNCIONARIOS` aponta para exatamente uma linha de `DEPARTAMENTOS`.
 3. É essa coluna extra que fisicamente materializa a linha do losango no diagrama — o relacionamento "vira" uma coluna real.
 
-Por que a FK não pode ir no lado 1? Porque `DEPARTAMENTO` pode se relacionar com **vários** funcionários — se a FK estivesse lá, cada departamento só conseguiria guardar a referência de **um único** funcionário, o que contradiria a própria cardinalidade N.
+Por que a FK não pode ir no lado 1? Porque `DEPARTAMENTOS` pode se relacionar com **vários** funcionários — se a FK estivesse lá, cada departamento só conseguiria guardar a referência de **um único** funcionário, o que contradiria a própria cardinalidade N.
 
 ### 7.2 A regra do N:M — por que sempre nasce uma tabela nova
 
-Um relacionamento N:M não pode ser representado com uma FK simples, porque **nenhum dos dois lados** consegue guardar múltiplas referências em uma única coluna. A solução é criar uma **terceira tabela** — a entidade associativa (`MATRICULA`, `ITEM_CUPOM`, `AUTORIA`...) — que tem **duas FKs**, uma para cada tabela original, seguindo exatamente a regra 7.1 duas vezes: `MATRICULA.aluno_id` aponta para o lado 1 de `ALUNO`, e `MATRICULA.disciplina_id` aponta para o lado 1 de `DISCIPLINA`. O N:M "desaparece" e vira dois 1:N.
+Um relacionamento N:M não pode ser representado com uma FK simples, porque **nenhum dos dois lados** consegue guardar múltiplas referências em uma única coluna. A solução é criar uma **terceira tabela** — a entidade associativa (`MATRICULAS`, `ITENS_CUPOM`, `AUTORIA`...) — que tem **duas FKs**, uma para cada tabela original, seguindo exatamente a regra 7.1 duas vezes: `MATRICULAS.aluno_id` aponta para o lado 1 de `ALUNOS`, e `MATRICULAS.disciplina_id` aponta para o lado 1 de `DISCIPLINAS`. O N:M "desaparece" e vira dois 1:N.
 
 ### 7.3 A regra do 1:1 — a exceção que depende do contexto
 
@@ -523,14 +523,14 @@ Como vimos na Seção 5.1, a FK geralmente vai para o lado de participação **p
 | 1:1 | No lado de participação **parcial** (o "dependente") |
 
 !!! example "🔍 Checkpoint 3 — De cardinalidade a PK/FK: sistema de manutenção industrial"
-    Uma fábrica tem as entidades `MAQUINA` e `ORDEM_SERVICO`: uma máquina pode gerar
+    Uma fábrica tem as entidades `MAQUINAS` e `ORDENS_SERVICO`: uma máquina pode gerar
     várias ordens de serviço ao longo do tempo, mas cada ordem de serviço se refere
-    a exatamente uma máquina. Além disso, uma `ORDEM_SERVICO` pode envolver vários
-    `TECNICO`, e um técnico pode atuar em várias ordens de serviço diferentes.
-    (a) Identifique a cardinalidade entre `MAQUINA` e `ORDEM_SERVICO`, e diga em
+    a exatamente uma máquina. Além disso, uma ordem de serviço (`ORDENS_SERVICO`) pode envolver vários
+    técnicos (`TECNICOS`), e um técnico pode atuar em várias ordens de serviço diferentes.
+    (a) Identifique a cardinalidade entre `MAQUINAS` e `ORDENS_SERVICO`, e diga em
     qual das duas tabelas a chave estrangeira deve ficar, com o nome que ela deve
-    ter (siga a Regra 6). (b) Identifique a cardinalidade entre `ORDEM_SERVICO` e
-    `TECNICO`, e explique por que nenhuma FK simples resolve essa relação — proponha
+    ter (siga a Regra 6). (b) Identifique a cardinalidade entre `ORDENS_SERVICO` e
+    `TECNICOS`, e explique por que nenhuma FK simples resolve essa relação — proponha
     o nome da tabela associativa e suas duas FKs.
 
     🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
@@ -539,7 +539,7 @@ Como vimos na Seção 5.1, a FK geralmente vai para o lado de participação **p
 
 ## 8. De Generalização/Especialização para Tabelas {: #generalizacao-especializacao-tabelas }
 
-Na [Aula 02, Seção 4](Aula_02_Modelagem_Entidades.md#4-generalizacao-e-especializacao), você aprendeu a modelar hierarquias como `VEICULO` → `CARRO`/`MOTO`/`CAMINHAO`: uma superclasse com os atributos comuns, e subclasses com os atributos exclusivos de cada tipo. Isso resolve o problema **no nível conceitual**. Mas, assim como toda entidade e todo relacionamento, essa hierarquia também precisa virar tabelas de verdade — e aqui, diferente do 1:N e do N:M, existe mais de uma forma de fazer isso, com tradeoffs bem diferentes.
+Na [Aula 02, Seção 4](Aula_02_Modelagem_Entidades.md#4-generalizacao-e-especializacao), você aprendeu a modelar hierarquias como `VEICULOS` → `CARROS`/`MOTOS`/`CAMINHOES`: uma superclasse com os atributos comuns, e subclasses com os atributos exclusivos de cada tipo. Isso resolve o problema **no nível conceitual**. Mas, assim como toda entidade e todo relacionamento, essa hierarquia também precisa virar tabelas de verdade — e aqui, diferente do 1:N e do N:M, existe mais de uma forma de fazer isso, com tradeoffs bem diferentes.
 
 ### 8.1 Três Estratégias Possíveis
 
@@ -608,7 +608,7 @@ Nenhuma coluna fica órfã: `carros` só existe para veículos que são carros, 
 
 ```dbml
 Table veiculos {
-  id_veiculo BIGINT UNSIGNED [pk, increment]
+  id_veiculo BIGINT UNSIGNED [PK, INCREMENT]
   placa VARCHAR(10)
   ano_fabricacao INT UNSIGNED
   cor VARCHAR(50)
@@ -616,13 +616,13 @@ Table veiculos {
 }
 
 Table carros {
-  id_veiculo BIGINT UNSIGNED [pk]
+  id_veiculo BIGINT UNSIGNED [PK]
   numero_portas TINYINT UNSIGNED
   tipo_cambio VARCHAR(20)
 }
 
 Table motos {
-  id_veiculo BIGINT UNSIGNED [pk]
+  id_veiculo BIGINT UNSIGNED [PK]
   cilindradas INT UNSIGNED
   tipo_guidao VARCHAR(20)
 }
@@ -631,15 +631,15 @@ Ref: carros.id_veiculo > veiculos.id_veiculo
 Ref: motos.id_veiculo > veiculos.id_veiculo
 ```
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgdmVpY3Vsb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtwaywgaW5jcmVtZW50XQogIHBsYWNhIFZBUkNIQVIoMTApCiAgYW5vX2ZhYnJpY2FjYW8gSU5UIFVOU0lHTkVECiAgY29yIFZBUkNIQVIoNTApCiAgcHJlY28gREVDSU1BTCgxMCwyKQp9CgpUYWJsZSBjYXJyb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtwa10KICBudW1lcm9fcG9ydGFzIFRJTllJTlQgVU5TSUdORUQKICB0aXBvX2NhbWJpbyBWQVJDSEFSKDIwKQp9CgpUYWJsZSBtb3RvcyB7CiAgaWRfdmVpY3VsbyBCSUdJTlQgVU5TSUdORUQgW3BrXQogIGNpbGluZHJhZGFzIElOVCBVTlNJR05FRAogIHRpcG9fZ3VpZGFvIFZBUkNIQVIoMjApCn0KClJlZjogY2Fycm9zLmlkX3ZlaWN1bG8gPiB2ZWljdWxvcy5pZF92ZWljdWxvClJlZjogbW90b3MuaWRfdmVpY3VsbyA%2BIHZlaWN1bG9zLmlkX3ZlaWN1bG8K)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgdmVpY3Vsb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtQSywgSU5DUkVNRU5UXQogIHBsYWNhIFZBUkNIQVIoMTApCiAgYW5vX2ZhYnJpY2FjYW8gSU5UIFVOU0lHTkVECiAgY29yIFZBUkNIQVIoNTApCiAgcHJlY28gREVDSU1BTCgxMCwyKQp9CgpUYWJsZSBjYXJyb3MgewogIGlkX3ZlaWN1bG8gQklHSU5UIFVOU0lHTkVEIFtQS10KICBudW1lcm9fcG9ydGFzIFRJTllJTlQgVU5TSUdORUQKICB0aXBvX2NhbWJpbyBWQVJDSEFSKDIwKQp9CgpUYWJsZSBtb3RvcyB7CiAgaWRfdmVpY3VsbyBCSUdJTlQgVU5TSUdORUQgW1BLXQogIGNpbGluZHJhZGFzIElOVCBVTlNJR05FRAogIHRpcG9fZ3VpZGFvIFZBUkNIQVIoMjApCn0KClJlZjogY2Fycm9zLmlkX3ZlaWN1bG8gPiB2ZWljdWxvcy5pZF92ZWljdWxvClJlZjogbW90b3MuaWRfdmVpY3VsbyA%2BIHZlaWN1bG9zLmlkX3ZlaWN1bG8K)**
 
 ### 8.3 E quando a especialização é com sobreposição?
 
-Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**, uma instância pode pertencer a mais de uma subclasse ao mesmo tempo — como `MEDICO` que também é `FUNCIONARIO`. Na Estratégia 2, isso não muda a estrutura das tabelas: `pessoas` continua sendo a superclasse, e simplesmente **existe uma linha com o mesmo `id_pessoa` tanto em `medicos` quanto em `funcionarios`**. Nenhuma tabela nova é necessária só por causa da sobreposição — o que muda é apenas que, para essa pessoa específica, duas FKs diferentes (em tabelas diferentes) apontam de volta para a mesma linha de `pessoas`.
+Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**, uma instância pode pertencer a mais de uma subclasse ao mesmo tempo — como um médico que também é funcionário (`MEDICOS`/`FUNCIONARIOS`). Na Estratégia 2, isso não muda a estrutura das tabelas: `pessoas` continua sendo a superclasse, e simplesmente **existe uma linha com o mesmo `id_pessoa` tanto em `medicos` quanto em `funcionarios`**. Nenhuma tabela nova é necessária só por causa da sobreposição — o que muda é apenas que, para essa pessoa específica, duas FKs diferentes (em tabelas diferentes) apontam de volta para a mesma linha de `pessoas`.
 
 !!! example "🔍 Checkpoint 4 — De Herança a Tabelas: sistema de conteúdo de uma escola online"
-    Uma escola online tem `CONTEUDO` como superclasse, especializada em `VIDEO_AULA`
-    (com `duracao_minutos` e `url_video`) e `MATERIAL_PDF` (com `numero_paginas` e
+    Uma escola online tem `CONTEUDOS` como superclasse, especializada em `VIDEO_AULAS`
+    (com `duracao_minutos` e `url_video`) e `MATERIAL_PDFS` (com `numero_paginas` e
     `url_arquivo`) — todo conteúdo obrigatoriamente é um dos dois tipos, nunca os
     dois ao mesmo tempo (especialização total e disjunta, Aula 02 Seção 4.3). Os
     atributos comuns a qualquer conteúdo são `titulo` e `data_publicacao`.
@@ -655,53 +655,53 @@ Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**
 
 Vamos aplicar tudo o que vimos até aqui num evento que você já viveu centenas de vezes: passar um produto na leitora do caixa de um supermercado.
 
-Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá na [Aula 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPOM_FISCAL`, `PRODUTO` e `ITEM_CUPOM`. Agora, com cardinalidade, PK/FK e mapeamento de herança, dá pra fechar esse modelo por completo.
+Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá na [Aula 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPONS_FISCAIS`, `PRODUTOS` e `ITENS_CUPOM`. Agora, com cardinalidade, PK/FK e mapeamento de herança, dá pra fechar esse modelo por completo.
 
 **O que acontece, passo a passo, quando o produto passa na leitora:**
 
-1. A leitora óptica lê o **código de barras** impresso na embalagem. Esse código (o EAN/GTIN do produto) é, na prática, a **chave primária** da entidade `PRODUTO` no banco de dados da loja — cada produto tem um código único, e é assim que o sistema o identifica sem ambiguidade.
-2. O sistema usa esse código para **buscar** o produto já cadastrado — ele não digita o nome nem o preço de novo a cada venda; ele só guarda a **referência** (a FK) para o produto que já existe na tabela `PRODUTO`.
-3. Essa leitura vira uma nova linha na tabela `ITEM_CUPOM` — a entidade associativa entre `CUPOM_FISCAL` (o cupom sendo emitido naquele momento) e `PRODUTO` (o item lido).
+1. A leitora óptica lê o **código de barras** impresso na embalagem. Esse código (o EAN/GTIN do produto) é, na prática, a **chave primária** da entidade `PRODUTOS` no banco de dados da loja — cada produto tem um código único, e é assim que o sistema o identifica sem ambiguidade.
+2. O sistema usa esse código para **buscar** o produto já cadastrado — ele não digita o nome nem o preço de novo a cada venda; ele só guarda a **referência** (a FK) para o produto que já existe na tabela `PRODUTOS`.
+3. Essa leitura vira uma nova linha na tabela `ITENS_CUPOM` — a entidade associativa entre `CUPONS_FISCAIS` (o cupom sendo emitido naquele momento) e `PRODUTOS` (o item lido).
 4. Quando você recebe o cupom impresso, o sistema já reuniu, de várias tabelas diferentes, o nome e o preço de cada produto lido — uma operação chamada **JOIN**, que você vai estudar em detalhe numa aula futura. Por enquanto, basta entender que é a FK que torna esse reencontro de informações possível.
 
 ```mermaid
 erDiagram
-    CUPOM_FISCAL {
+    CUPONS_FISCAIS {
         int id_cupom PK
         date data_emissao
         time hora_emissao
         float valor_total
     }
-    PRODUTO {
+    PRODUTOS {
         string codigo_barras PK
         string descricao
         float valor_unitario
     }
-    ITEM_CUPOM {
+    ITENS_CUPOM {
         int cupom_id FK
         string produto_id FK
         int quantidade
         float valor_total_item
     }
-    CUPOM_FISCAL ||--o{ ITEM_CUPOM : "contém"
-    PRODUTO ||--o{ ITEM_CUPOM : "aparece em"
+    CUPONS_FISCAIS ||--o{ ITENS_CUPOM : "contém"
+    PRODUTOS ||--o{ ITENS_CUPOM : "aparece em"
 ```
 
-Perceba a cardinalidade aplicada: um `CUPOM_FISCAL` contém **zero ou muitos** `ITEM_CUPOM` (não existe cupom com zero itens na prática, mas na modelagem tratamos a criação do cupom e a leitura dos itens como dois passos); um `PRODUTO` aparece em **zero ou muitos** itens ao longo do tempo (um produto novo, recém-cadastrado, ainda pode não ter sido vendido nenhuma vez). É um N:M clássico entre `CUPOM_FISCAL` e `PRODUTO`, resolvido pela mesma regra da Seção 7.2.
+Perceba a cardinalidade aplicada: `CUPONS_FISCAIS` contém **zero ou muitos** `ITENS_CUPOM` (não existe cupom com zero itens na prática, mas na modelagem tratamos a criação do cupom e a leitura dos itens como dois passos); `PRODUTOS` aparece em **zero ou muitos** itens ao longo do tempo (um produto novo, recém-cadastrado, ainda pode não ter sido vendido nenhuma vez). É um N:M clássico entre `CUPONS_FISCAIS` e `PRODUTOS`, resolvido pela mesma regra da Seção 7.2.
 
-> 📐 **Nota sobre a PK de `PRODUTO`:** aqui a chave primária não é um número sequencial (`id_produto`), é o próprio **código de barras** (`codigo_barras`) — um identificador que já existe no mundo real, fora do banco. Isso é perfeitamente válido: nem toda PK precisa ser um número auto-incrementado: ela só precisa ser única e não-nula. E note que a FK em `ITEM_CUPOM` continua se chamando `produto_id`, seguindo a Regra 6 — mesmo o valor sendo um código de barras, o nome da FK segue o padrão da tabela referenciada (`produtos` → `produto_id`), não o nome literal da coluna referenciada.
+> 📐 **Nota sobre a PK de `PRODUTOS`:** aqui a chave primária não é um número sequencial (`id_produto`), é o próprio **código de barras** (`codigo_barras`) — um identificador que já existe no mundo real, fora do banco. Isso é perfeitamente válido: nem toda PK precisa ser um número auto-incrementado: ela só precisa ser única e não-nula. E note que a FK em `ITENS_CUPOM` continua se chamando `produto_id`, seguindo a Regra 6 — mesmo o valor sendo um código de barras, o nome da FK segue o padrão da tabela referenciada (`produtos` → `produto_id`), não o nome literal da coluna referenciada.
 
 **🔎 Veja o modelo completo no dbdiagram.io:**
 
 ```dbml
 Table cupons_fiscais {
-  id_cupom BIGINT UNSIGNED [pk, increment]
+  id_cupom BIGINT UNSIGNED [PK, INCREMENT]
   data_emissao DATE
   valor_total DECIMAL(10,2)
 }
 
 Table produtos {
-  codigo_barras VARCHAR(14) [pk]
+  codigo_barras VARCHAR(14) [PK]
   descricao VARCHAR(255)
   valor_unitario DECIMAL(10,2)
 }
@@ -717,7 +717,7 @@ Ref: itens_cupom.cupom_id > cupons_fiscais.id_cupom
 Ref: itens_cupom.produto_id > produtos.codigo_barras
 ```
 
-➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgY3Vwb25zX2Zpc2NhaXMgewogIGlkX2N1cG9tIEJJR0lOVCBVTlNJR05FRCBbcGssIGluY3JlbWVudF0KICBkYXRhX2VtaXNzYW8gREFURQogIHZhbG9yX3RvdGFsIERFQ0lNQUwoMTAsMikKfQoKVGFibGUgcHJvZHV0b3MgewogIGNvZGlnb19iYXJyYXMgVkFSQ0hBUigxNCkgW3BrXQogIGRlc2NyaWNhbyBWQVJDSEFSKDI1NSkKICB2YWxvcl91bml0YXJpbyBERUNJTUFMKDEwLDIpCn0KClRhYmxlIGl0ZW5zX2N1cG9tIHsKICBjdXBvbV9pZCBCSUdJTlQgVU5TSUdORUQKICBwcm9kdXRvX2lkIFZBUkNIQVIoMTQpCiAgcXVhbnRpZGFkZSBJTlQgVU5TSUdORUQKICB2YWxvcl90b3RhbF9pdGVtIERFQ0lNQUwoMTAsMikKfQoKUmVmOiBpdGVuc19jdXBvbS5jdXBvbV9pZCA%2BIGN1cG9uc19maXNjYWlzLmlkX2N1cG9tClJlZjogaXRlbnNfY3Vwb20ucHJvZHV0b19pZCA%2BIHByb2R1dG9zLmNvZGlnb19iYXJyYXMK)**
+➡️ **[Abrir e explorar este diagrama no dbdiagram.io](https://dbdiagram.io/embed?c=VGFibGUgY3Vwb25zX2Zpc2NhaXMgewogIGlkX2N1cG9tIEJJR0lOVCBVTlNJR05FRCBbUEssIElOQ1JFTUVOVF0KICBkYXRhX2VtaXNzYW8gREFURQogIHZhbG9yX3RvdGFsIERFQ0lNQUwoMTAsMikKfQoKVGFibGUgcHJvZHV0b3MgewogIGNvZGlnb19iYXJyYXMgVkFSQ0hBUigxNCkgW1BLXQogIGRlc2NyaWNhbyBWQVJDSEFSKDI1NSkKICB2YWxvcl91bml0YXJpbyBERUNJTUFMKDEwLDIpCn0KClRhYmxlIGl0ZW5zX2N1cG9tIHsKICBjdXBvbV9pZCBCSUdJTlQgVU5TSUdORUQKICBwcm9kdXRvX2lkIFZBUkNIQVIoMTQpCiAgcXVhbnRpZGFkZSBJTlQgVU5TSUdORUQKICB2YWxvcl90b3RhbF9pdGVtIERFQ0lNQUwoMTAsMikKfQoKUmVmOiBpdGVuc19jdXBvbS5jdXBvbV9pZCA%2BIGN1cG9uc19maXNjYWlzLmlkX2N1cG9tClJlZjogaXRlbnNfY3Vwb20ucHJvZHV0b19pZCA%2BIHByb2R1dG9zLmNvZGlnb19iYXJyYXMK)**
 
 ---
 
@@ -727,18 +727,18 @@ Além da cardinalidade máxima, precisamos indicar se a **participação** de um
 
 ![Participação total e parcial](../imgs/Aula_03_img_02.png)
 
-A **participação total** (mínimo = 1) significa que toda instância da entidade *deve* obrigatoriamente participar do relacionamento — não pode existir uma instância "solta". Exemplo: todo `PEDIDO` obrigatoriamente pertence a um `CLIENTE`.
+A **participação total** (mínimo = 1) significa que toda instância da entidade *deve* obrigatoriamente participar do relacionamento — não pode existir uma instância "solta". Exemplo: todo pedido obrigatoriamente pertence a um cliente (`PEDIDOS`/`CLIENTES`).
 
-A **participação parcial** (mínimo = 0) significa que a entidade *pode* existir sem participar do relacionamento. Exemplo: nem todo `CLIENTE` precisa ter feito um pedido.
+A **participação parcial** (mínimo = 0) significa que a entidade *pode* existir sem participar do relacionamento. Exemplo: nem todo cliente precisa ter feito um pedido.
 
-Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido sem informar o cliente, o banco deve rejeitar essa operação — isso é o que a participação total de `PEDIDO` representa em termos de restrições de integridade referencial (a FK `cliente_id` não pode ser nula).
+Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido sem informar o cliente, o banco deve rejeitar essa operação — isso é o que a participação total de `PEDIDOS` representa em termos de restrições de integridade referencial (a FK `cliente_id` não pode ser nula).
 
 !!! example "🔍 Checkpoint 5 — Participação: sistema de biblioteca com reservas"
-    Em uma biblioteca: (a) toda `RESERVA` obrigatoriamente está vinculada a um
-    `LIVRO` e a um `MEMBRO` — não existe reserva "solta"; (b) nem todo `LIVRO` do
-    acervo precisa ter sido reservado alguma vez; (c) nem todo `MEMBRO` cadastrado
-    precisa ter feito alguma reserva. Para cada uma das três entidades (`RESERVA`,
-    `LIVRO`, `MEMBRO`) em relação ao relacionamento de reserva, classifique a
+    Em uma biblioteca: (a) toda reserva (`RESERVAS`) obrigatoriamente está vinculada a um
+    livro e a um membro (`LIVROS`, `MEMBROS`) — não existe reserva "solta"; (b) nem todo livro do
+    acervo precisa ter sido reservado alguma vez; (c) nem todo membro cadastrado
+    precisa ter feito alguma reserva. Para cada uma das três entidades (`RESERVAS`,
+    `LIVROS`, `MEMBROS`) em relação ao relacionamento de reserva, classifique a
     participação como **total** ou **parcial**, justificando com base no mínimo de
     cada uma.
 
@@ -748,19 +748,19 @@ Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido s
 
 ## 11. Auto-Relacionamento
 
-Um auto-relacionamento ocorre quando uma entidade se relaciona **consigo mesma**. O exemplo clássico é a hierarquia de funcionários: um `FUNCIONÁRIO` pode ser supervisor de outros funcionários, e cada funcionário tem (ou não) um supervisor — que também é um funcionário.
+Um auto-relacionamento ocorre quando uma entidade se relaciona **consigo mesma**. O exemplo clássico é a hierarquia de funcionários: um funcionário pode ser supervisor de outros funcionários, e cada funcionário tem (ou não) um supervisor — que também é um funcionário.
 
 ```mermaid
 erDiagram
-    FUNCIONARIO {
+    FUNCIONARIOS {
         int id_funcionario PK
         string nome
         int supervisor_id FK
     }
-    FUNCIONARIO ||--o{ FUNCIONARIO : "supervisiona"
+    FUNCIONARIOS ||--o{ FUNCIONARIOS : "supervisiona"
 ```
 
-> 📐 **Convenção de nomenclatura (Regra 7 — FK pelo papel semântico):** aqui está o caso mais claro para entender essa regra. A FK **não** se chama `funcionario_id` — se chamasse, seria impossível saber, só pelo nome da coluna, se ela representa "o funcionário" ou "o supervisor dele" (afinal, ambos são registros da mesma tabela `FUNCIONARIO`). Por isso, quando uma FK referencia uma tabela cuja entidade pode exercer **papéis diferentes** dentro do relacionamento, a Regra 7 manda usar o **papel** no nome, não o nome da tabela: `supervisor_id`. O padrão de nomenclatura continua o mesmo (termina em `_id`), só que a palavra antes do `_id` comunica a função, não a origem.
+> 📐 **Convenção de nomenclatura (Regra 7 — FK pelo papel semântico):** aqui está o caso mais claro para entender essa regra. A FK **não** se chama `funcionario_id` — se chamasse, seria impossível saber, só pelo nome da coluna, se ela representa "o funcionário" ou "o supervisor dele" (afinal, ambos são registros da mesma tabela `FUNCIONARIOS`). Por isso, quando uma FK referencia uma tabela cuja entidade pode exercer **papéis diferentes** dentro do relacionamento, a Regra 7 manda usar o **papel** no nome, não o nome da tabela: `supervisor_id`. O padrão de nomenclatura continua o mesmo (termina em `_id`), só que a palavra antes do `_id` comunica a função, não a origem.
 
 ---
 
@@ -768,20 +768,20 @@ erDiagram
 
 Quando três entidades participam de um único relacionamento, temos um **relacionamento ternário**. São mais complexos e devem ser usados apenas quando o negócio realmente exige que as três entidades sejam analisadas em conjunto para definir a ocorrência.
 
-**Exemplo:** um `MÉDICO` prescreve um `MEDICAMENTO` para um `PACIENTE`. A combinação das três entidades define a prescrição — não faz sentido registrar "médico prescreve medicamento" sem saber para qual paciente.
+**Exemplo:** um médico prescreve um medicamento para um paciente (`MEDICOS`/`MEDICAMENTOS`/`PACIENTES`). A combinação das três entidades define a prescrição — não faz sentido registrar "médico prescreve medicamento" sem saber para qual paciente.
 
 ```mermaid
 erDiagram
-    MEDICO }o--o{ MEDICAMENTO : "prescreve para"
-    MEDICAMENTO }o--o{ PACIENTE : "prescrito a"
-    MEDICO }o--o{ PACIENTE : "atende"
+    MEDICOS }o--o{ MEDICAMENTOS : "prescreve para"
+    MEDICAMENTOS }o--o{ PACIENTES : "prescrito a"
+    MEDICOS }o--o{ PACIENTES : "atende"
 ```
 
 !!! example "🔍 Checkpoint 6 — Auto-relacionamento e Ternário: rede social e e-commerce"
-    Analise as duas situações a seguir. **(a)** Em uma rede social, um `USUARIO`
-    pode seguir vários outros `USUARIO`, e um `USUARIO` pode ser seguido por vários
-    outros — a entidade se relaciona com ela mesma. **(b)** Em um marketplace, um
-    `VENDEDOR` oferece um `PRODUTO` sob uma `CONDICAO_COMERCIAL` específica (à
+    Analise as duas situações a seguir. **(a)** Em uma rede social, `USUARIOS`
+    podem seguir vários outros `USUARIOS`, e um usuário pode ser seguido por vários
+    outros — a entidade se relaciona com ela mesma. **(b)** Em um marketplace, `VENDEDORES`
+    oferecem `PRODUTOS` sob uma condição comercial específica (`CONDICOES_COMERCIAIS`) (à
     vista, parcelado em 3x, ou assinatura mensal) — a combinação das três definições
     define exatamente qual oferta está disponível; não faz sentido falar de
     "vendedor oferece produto" sem saber sob qual condição. Para cada situação,
@@ -800,23 +800,23 @@ Três exemplos guiados, do jeito que você vai precisar resolver em prova: com o
 
 ```mermaid
 erDiagram
-    EDITORA {
+    EDITORAS {
         int id_editora PK
         string nome
         string cnpj
     }
-    LIVRO {
+    LIVROS {
         int id_livro PK
         string titulo
         float preco
         int editora_id FK
     }
-    EDITORA ||--o{ LIVRO : "publica"
+    EDITORAS ||--o{ LIVROS : "publica"
 ```
 
-*a) Uma editora pode existir sem ter publicado nenhum livro?* Sim — o símbolo `O{` próximo a `EDITORA` (descrevendo `LIVRO`) começa com círculo, mínimo 0.
-*b) Um livro pode existir sem estar vinculado a uma editora?* Não — o símbolo `||` próximo a `LIVRO` (descrevendo `EDITORA`) começa com barra dupla, mínimo 1.
-*c) Cardinalidade em Min-Max:* `EDITORA (0,N) ———— (1,1) LIVRO`.
+*a) Uma editora pode existir sem ter publicado nenhum livro?* Sim — o símbolo `O{` próximo a `EDITORAS` (descrevendo `LIVROS`) começa com círculo, mínimo 0.
+*b) Um livro pode existir sem estar vinculado a uma editora?* Não — o símbolo `||` próximo a `LIVROS` (descrevendo `EDITORAS`) começa com barra dupla, mínimo 1.
+*c) Cardinalidade em Min-Max:* `EDITORAS (0,N) ———— (1,1) LIVROS`.
 
 **Exemplo 2 — Construção a partir de Regras de Negócio:**
 
@@ -824,35 +824,35 @@ erDiagram
 
 ```mermaid
 erDiagram
-    PROFESSOR {
+    PROFESSORES {
         int id_professor PK
         string nome
         string titulacao
     }
-    ALUNO {
+    ALUNOS {
         int id_aluno PK
         string nome
         string matricula
         int professor_id FK
     }
-    PROFESSOR |o--o{ ALUNO : "orienta"
+    PROFESSORES |o--o{ ALUNOS : "orienta"
 ```
 
-Raciocínio: um professor pode ter zero ou muitos orientandos (`O{`). Um aluno pode ter zero ou um orientador — nunca dois, porque a regra diz "exatamente um orientador", mas permite que ainda não tenha sido escolhido (`O|`). Min-Max: `PROFESSOR (0,N) ———— (0,1) ALUNO`.
+Raciocínio: um professor pode ter zero ou muitos orientandos (`O{`). Um aluno pode ter zero ou um orientador — nunca dois, porque a regra diz "exatamente um orientador", mas permite que ainda não tenha sido escolhido (`O|`). Min-Max: `PROFESSORES (0,N) ———— (0,1) ALUNOS`.
 
 **Exemplo 3 — Identifique o Tipo:**
 
 Para cada situação, identifique 1:1, 1:N ou N:M:
 
-*a) "Um produto pode estar em vários carrinhos de compra; um carrinho pode conter vários produtos; cada produto em um carrinho tem uma quantidade."* → **N:M** — entidade associativa `ITEM_CARRINHO`, com `carrinho_id FK`, `produto_id FK` e `quantidade`.
+*a) "Um produto pode estar em vários carrinhos de compra; um carrinho pode conter vários produtos; cada produto em um carrinho tem uma quantidade."* → **N:M** — entidade associativa `ITENS_CARRINHO`, com `carrinho_id FK`, `produto_id FK` e `quantidade`.
 *b) "Um contrato de trabalho pertence a exatamente um funcionário, e um funcionário tem exatamente um contrato ativo."* → **1:1**, participação total dos dois lados.
-*c) "Uma turma tem muitos alunos. Um aluno está em apenas uma turma por vez."* → **1:N** — `TURMA (1)` para `ALUNO (N)`; a FK `turma_id` vai em `ALUNO`.
+*c) "Uma turma tem muitos alunos. Um aluno está em apenas uma turma por vez."* → **1:N** — `TURMAS (1)` para `ALUNOS (N)`; a FK `turma_id` vai em `ALUNOS`.
 
 ---
 
 ## 14. Armadilhas Clássicas
 
-**Armadilha 1 — Inverter os símbolos:** colocar o pé de galinha no lado errado é o erro mais comum. Lembre-se: o pé de galinha fica do lado da entidade que aparece **em quantidade**. Se muitos `ALUNOS` pertencem a uma `TURMA`, o pé de galinha fica do lado de `ALUNO`.
+**Armadilha 1 — Inverter os símbolos:** colocar o pé de galinha no lado errado é o erro mais comum. Lembre-se: o pé de galinha fica do lado da entidade que aparece **em quantidade**. Se muitos `ALUNOS` pertencem a uma `TURMAS`, o pé de galinha fica do lado de `ALUNOS`.
 
 **Armadilha 2 — Confundir participação com cardinalidade máxima:** a participação (total/parcial) vem do **mínimo**, não do máximo. Um relacionamento pode ser 1:N com participação parcial (mínimo 0 de um lado) — e isso é perfeitamente válido.
 
@@ -871,7 +871,7 @@ Para cada situação, identifique 1:1, 1:N ou N:M:
 ## 🃏 Flashcards de Revisão
 
 ??? question "Qual o tipo padrão de uma PK nesta disciplina, e qual a exceção?"
-    `BIGINT UNSIGNED` com `increment` (chave substituta). A exceção é a chave natural — um identificador que já existe no mundo real (ex.: código de barras), que pode usar o tipo que fizer sentido para ele, como `VARCHAR`.
+    `BIGINT UNSIGNED` com `INCREMENT` (chave substituta). A exceção é a chave natural — um identificador que já existe no mundo real (ex.: código de barras), que pode usar o tipo que fizer sentido para ele, como `VARCHAR`.
 
 ??? question "Por que a FK precisa ter o mesmo tipo da PK que ela referencia?"
     Porque o banco compara os valores da FK com os da PK para checar se a linha referenciada existe — essa comparação exige tipos compatíveis. Se a PK é `BIGINT UNSIGNED`, a FK também precisa ser.
@@ -898,7 +898,7 @@ Para cada situação, identifique 1:1, 1:N ou N:M:
     Participação total (mínimo 1): toda instância da entidade obrigatoriamente participa do relacionamento. Participação parcial (mínimo 0): a entidade pode existir sem participar.
 
 ??? question "O que é um auto-relacionamento? Dê um exemplo."
-    É quando uma entidade se relaciona com ela mesma. Exemplo: FUNCIONARIO supervisiona FUNCIONARIO (hierarquia de supervisão).
+    É quando uma entidade se relaciona com ela mesma. Exemplo: FUNCIONARIOS supervisiona FUNCIONARIOS (hierarquia de supervisão).
 
 ??? question "Como se nomeia a PK de uma tabela `pedidos`? E a FK em `itens_pedidos` que referencia `produtos`?"
     PK de `pedidos`: `id_pedido` (Regra 5). FK em `itens_pedidos` para `produtos`: `produto_id` (Regra 6) — repare que a ordem das palavras inverte entre PK e FK.
@@ -914,7 +914,7 @@ Para cada situação, identifique 1:1, 1:N ou N:M:
 ## ✅ Quiz de Fixação
 
 <quiz>
-Em DBML, `produtos.id_produto BIGINT UNSIGNED [pk, increment]` e, em outra tabela, `pedido_id BIGINT UNSIGNED` com `Ref: itens.pedido_id > pedidos.id_pedido`. Por que `pedido_id` também precisa ser `BIGINT UNSIGNED`?
+Em DBML, `produtos.id_produto BIGINT UNSIGNED [PK, INCREMENT]` e, em outra tabela, `pedido_id BIGINT UNSIGNED` com `Ref: itens.pedido_id > pedidos.id_pedido`. Por que `pedido_id` também precisa ser `BIGINT UNSIGNED`?
 - [ ] Por estética — poderia ser qualquer tipo, contanto que o nome siga a Regra 6
 - [x] Porque a FK precisa ter o mesmo tipo da PK que referencia, para o banco poder comparar os valores e checar a integridade referencial
 - [ ] Porque toda coluna numérica do banco precisa ser BIGINT UNSIGNED
@@ -930,27 +930,27 @@ Uma editora publica muitos livros; cada livro pertence a exatamente uma editora.
 - [ ] N:M
 - [ ] Ternário
 
-A resposta a "uma editora pode ter mais de um livro?" é sim; a resposta a "um livro pode ter mais de uma editora?" é não. Isso é 1:N, com o N do lado de LIVRO.
+A resposta a "uma editora pode ter mais de um livro?" é sim; a resposta a "um livro pode ter mais de uma editora?" é não. Isso é 1:N, com o N do lado de LIVROS.
 </quiz>
 
 <quiz>
-Na notação Crow's Foot, entre CLIENTE e PEDIDO, o símbolo `||` aparece próximo a PEDIDO. O que isso significa?
+Na notação Crow's Foot, entre CLIENTES e PEDIDOS, o símbolo `||` aparece próximo a PEDIDOS. O que isso significa?
 - [ ] Um pedido pode ter vários clientes
 - [x] Cada pedido pertence a exatamente um cliente
 - [ ] Um cliente só pode ter um pedido
 - [ ] A participação do cliente é opcional
 
-O símbolo perto de PEDIDO descreve CLIENTE (regra da posição oposta): `||` significa "exatamente um". Logo, cada pedido está associado a exatamente um cliente.
+O símbolo perto de PEDIDOS descreve CLIENTES (regra da posição oposta): `||` significa "exatamente um". Logo, cada pedido está associado a exatamente um cliente.
 </quiz>
 
 <quiz>
-Em um relacionamento 1:N entre CATEGORIA (1) e PRODUTO (N), onde deve ficar a chave estrangeira?
-- [ ] Em CATEGORIA, chamada categoria_id
-- [x] Em PRODUTO, chamada categoria_id
-- [ ] Em PRODUTO, chamada id_categoria
+Em um relacionamento 1:N entre CATEGORIAS (1) e PRODUTOS (N), onde deve ficar a chave estrangeira?
+- [ ] Em CATEGORIAS, chamada categoria_id
+- [x] Em PRODUTOS, chamada categoria_id
+- [ ] Em PRODUTOS, chamada id_categoria
 - [ ] Em uma tabela associativa nova
 
-A FK sempre vai no lado N (PRODUTO), e segue a Regra 6 de nomenclatura: nome da tabela referenciada no singular + "_id" → categoria_id.
+A FK sempre vai no lado N (PRODUTOS), e segue a Regra 6 de nomenclatura: nome da tabela referenciada no singular + "_id" → categoria_id.
 </quiz>
 
 <quiz>
@@ -958,23 +958,23 @@ Quais destas afirmações sobre relacionamentos N:M são verdadeiras? (selecione
 - [x] Sempre exigem uma tabela associativa no modelo lógico
 - [x] A tabela associativa costuma ter duas chaves estrangeiras
 - [ ] Podem ser implementados com uma única FK, como no 1:N
-- [x] A entidade associativa pode ter atributos próprios, como MATRICULA ou CONSULTA
+- [x] A entidade associativa pode ter atributos próprios, como MATRICULAS ou CONSULTA
 
 N:M nunca vira uma FK simples — sempre precisa de uma tabela nova com FKs para as duas entidades originais, e essa tabela pode (e frequentemente deve) carregar atributos próprios do relacionamento.
 </quiz>
 
 <quiz>
-Uma FK chamada supervisor_id, dentro da própria tabela FUNCIONARIO, é um exemplo de qual convenção?
+Uma FK chamada supervisor_id, dentro da própria tabela FUNCIONARIOS, é um exemplo de qual convenção?
 - [ ] Regra 5 — nomenclatura de PK
 - [ ] Regra 4 — entidade vs. tabela
 - [x] Regra 7 — FK pelo papel semântico
 - [ ] Nenhuma convenção — é um erro
 
-Como a FK referencia a própria tabela FUNCIONARIO (auto-relacionamento), usar "funcionario_id" seria ambíguo. A Regra 7 resolve isso nomeando a FK pelo papel que ela representa no relacionamento — nesse caso, "supervisor".
+Como a FK referencia a própria tabela FUNCIONARIOS (auto-relacionamento), usar "funcionario_id" seria ambíguo. A Regra 7 resolve isso nomeando a FK pelo papel que ela representa no relacionamento — nesse caso, "supervisor".
 </quiz>
 
 <quiz>
-No exemplo do cupom fiscal, por que o código de barras pode ser a chave primária de PRODUTO, mesmo não sendo um número sequencial gerado pelo banco?
+No exemplo do cupom fiscal, por que o código de barras pode ser a chave primária de PRODUTOS, mesmo não sendo um número sequencial gerado pelo banco?
 - [ ] Toda PK precisa ser sequencial — esse exemplo está incorreto
 - [x] Uma PK só precisa ser única e não-nula; um identificador do mundo real pode cumprir esse papel
 - [ ] Só pode ser PK porque também é usado como FK em outra tabela
@@ -984,7 +984,7 @@ Chave primária não precisa ser um número gerado automaticamente — qualquer 
 </quiz>
 
 <quiz>
-Uma hierarquia CONTEUDO → VIDEO_AULA / MATERIAL_PDF foi mapeada seguindo a Estratégia 2. Qual afirmação está correta?
+Uma hierarquia CONTEUDOS → VIDEO_AULAS / MATERIAL_PDFS foi mapeada seguindo a Estratégia 2. Qual afirmação está correta?
 - [ ] video_aulas e material_pdfs ganham um novo id_ autoincrementado, sem relação com conteudos
 - [x] video_aulas.id_conteudo e material_pdfs.id_conteudo são, ao mesmo tempo, PK da subclasse e FK para conteudos
 - [ ] Todos os atributos, comuns e exclusivos, ficam numa única tabela conteudos
@@ -1003,18 +1003,18 @@ Para cada exercício, identifique a cardinalidade (com o método das perguntas-c
 
 ```mermaid
 erDiagram
-    FORNECEDOR {
+    FORNECEDORES {
         int id_fornecedor PK
         string nome
         string cnpj
     }
-    PRODUTO {
+    PRODUTOS {
         int id_produto PK
         string nome
         float preco
         int fornecedor_id FK
     }
-    FORNECEDOR ||--o{ PRODUTO : "fornece"
+    FORNECEDORES ||--o{ PRODUTOS : "fornece"
 ```
 
 a) Um fornecedor pode existir sem fornecer nenhum produto? Justifique pelo símbolo.
@@ -1055,7 +1055,7 @@ Dadas as tabelas abaixo (já no plural, seguindo a Regra 4), escreva o nome corr
 
 *"Toda vez que um aluno passa a carteirinha na catraca de uma academia, o sistema registra o acesso: data, hora e qual catraca (entrada ou saída) foi usada. Cada aluno tem uma carteirinha com um número único, que funciona como identificador do aluno dentro da academia. Um aluno pode ter muitos acessos registrados ao longo do tempo."*
 
-Siga o mesmo raciocínio da Seção 9 (cupom fiscal): identifique as entidades, escolha a chave primária de `ALUNO` com base no enunciado, modele a cardinalidade entre `ALUNO` e `ACESSO`, e nomeie a FK corretamente.
+Siga o mesmo raciocínio da Seção 9 (cupom fiscal): identifique as entidades, escolha a chave primária de `ALUNOS` com base no enunciado, modele a cardinalidade entre `ALUNOS` e `ACESSOS`, e nomeie a FK corretamente.
 
 ---
 
