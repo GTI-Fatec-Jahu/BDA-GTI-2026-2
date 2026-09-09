@@ -10,4 +10,4 @@ Todas as atividades avaliativas do semestre, com seus enunciados completos. Cliq
 ---
 
 !!! info "Esta página é atualizada a cada nova atividade"
-    Conforme novas atividades e avaliações forem adicionadas em `docs/atividades/`, uma linha é incluída nesta tabela — veja o pipeline em [`CLAUDE.md`](https://github.com/GTI-Fatec-Jahu/BDA-GTI-2026-2/blob/main/CLAUDE.md).
+    Conforme novas atividades e avaliações forem adicionadas em `docs/atividades/`, uma linha é incluída nesta tabela.
