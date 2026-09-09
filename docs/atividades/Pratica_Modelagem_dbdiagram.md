@@ -38,23 +38,39 @@ Repare no que a tela **não deixa claro**, mesmo depois de toda essa riqueza vis
 
 - Um Pokémon pode ter até **dois tipos ao mesmo tempo** — isso é um atributo
   multivalorado, ou uma tabela associativa `N:M` entre `POKEMONS` e `TIPOS`? A tela não
-  responde; você teria que decidir sozinho, sem saber se a decisão está certa.
+  responde; você teria que decidir sozinho, sem saber se a decisão está certa. É como
+  decidir se o "sabor" de uma pizza fica escrito numa listinha dentro da própria ficha
+  do pedido, ou se vira uma tabela separada de `SABORES` que qualquer pizza da casa
+  pode usar — a fachada da pizzaria não te conta qual das duas o sistema deles usa por
+  trás.
 - A cadeia evolutiva (Pichu → Pikachu → Raichu) é um **auto-relacionamento** — a mesma
-  ideia de `FUNCIONARIO` supervisionando `FUNCIONARIO` que vimos na Aula 03. Mas a FK
-  se chamaria `evolui_de_id`? E se um Pokémon puder evoluir para **mais de uma** forma
-  (como Eevee, que evolui para vários), isso muda a cardinalidade — e nada na tela
-  avisa que esse caso especial existe até você esbarrar nele.
+  ideia de `FUNCIONARIO` supervisionando `FUNCIONARIO` que vimos na Aula 03, só que
+  aqui é um Pokémon "vindo de" outro Pokémon, como uma árvore genealógica de família
+  escrita numa caderneta, em que cada nome aponta pro nome de quem veio antes, mas
+  todos moram na mesma tabela `pessoas`. Mas a FK se chamaria `evolui_de_id`? E se um
+  Pokémon puder evoluir para **mais de uma** forma (como Eevee, que evolui para
+  vários), isso muda a cardinalidade — e nada na tela avisa que esse caso especial
+  existe até você esbarrar nele.
 - O Gigantamax tem estatísticas **próprias**, mas "é" o mesmo Pokémon — isso é
   generalização/especialização (Aula 02, Seção 4), ou só uma variação de um mesmo
-  registro? De novo: a UI não documenta a regra de negócio, só mostra o resultado final
-  já decidido por outra equipe, em outro contexto, para outro propósito.
+  registro? É como perguntar se uma Kombi virada food truck ainda é "o mesmo veículo"
+  com equipamento extra, ou se virou outro cadastro — o Detran trata como o mesmo
+  veículo com uma ficha adicional, que é exatamente a lógica de
+  generalização/especialização. De novo: a UI não documenta a regra de negócio, só
+  mostra o resultado final já decidido por outra equipe, em outro contexto, para outro
+  propósito.
 - **Habilidades** têm descrição própria e se repetem entre Pokémon diferentes (ex.:
   "Eletricidade Estática" aparece em vários) — se você simplesmente copiar o texto da
   tela para dentro de cada linha de Pokémon, está duplicando a mesma informação em
   várias linhas, o que já é sinal de que falta uma tabela própria para `HABILIDADES`.
+  É o mesmo problema de datilografar o endereço completo do cliente em cada nota
+  fiscal, em vez de guardar uma vez só e só referenciar: se o nome da rua mudar, você
+  caça e corrige em dezenas de linhas em vez de uma.
 - A tela não revela **nada** sobre usuários: existe alguém logado favoritando Pokémon?
   Existe histórico de busca? Múltiplos idiomas por descrição? Você não tem como saber
-  — e adivinhar errado agora custa uma migração de banco em produção depois.
+  — é como julgar o caixa de um mercado só pela vitrine, sem ver o estoque, o caderno
+  de fiado ou quem tem a chave do cofre — e adivinhar errado agora custa uma migração
+  de banco em produção depois.
 
 !!! tip "A moral do aquecimento"
     Reverse-engineer uma interface pronta parece "mais rápido" que ler um documento de
@@ -158,7 +174,12 @@ negócio apresentados, você deve produzir um diagrama em
 
 Estes são **todos** os tipos usados nos gabaritos desta atividade — use apenas o que
 está aqui, escolhendo o mais adequado ao dado, nunca o que "parece mais simples"
-(Regra 8, formalizada na Aula 06 — SQL DDL, mas já anunciada na Aula 03).
+(Regra 8, formalizada na Aula 06 — SQL DDL, mas já anunciada na Aula 03). Pense nos
+tipos numéricos como caixotes de feira de tamanhos diferentes: o caixote pequeno
+(`TINYINT`) não dá conta de uma safra inteira de laranja, mas também não faz sentido
+chamar o caminhão graneleiro (`BIGINT`) só pra carregar a nota de 1 a 5 de uma
+avaliação — o trabalho é escolher o caixote do tamanho certo pro que vai guardar
+dentro.
 
 > 💡 **Adiantando conteúdo:** os tipos SQL exatos (`ENUM`, `DECIMAL`, tamanhos de
 > `VARCHAR`...) e o padrão de campos de log (`criado_em`/`atualizado_em`/`deletado_em`,
@@ -229,7 +250,14 @@ FK)`.
   `papeis`, uma tabela `permissoes`, e duas tabelas de junção N:M —
   `usuarios_papeis` (um usuário pode ter vários papéis) e `papeis_permissoes` (um papel
   agrupa várias permissões). Isso é generalização de comportamento, não de dados: em
-  vez de decidir o acesso "no código", o próprio banco guarda a regra.
+  vez de decidir o acesso "no código", o próprio banco guarda a regra. Pense no molho
+  de chaves de um síndico de prédio: cada chave (permissão) abre um tipo de porta
+  (portaria, elevador, salão de festas), e um chaveiro pronto (papel) reúne um conjunto
+  de chaves pra entregar direto pra um cargo — zelador, porteiro, síndico. Uma mesma
+  pessoa pode ficar com mais de um chaveiro ao mesmo tempo (o zelador que também cobre
+  a portaria num plantão), e se surgir um cargo novo amanhã, dá pra montar um chaveiro
+  novo sem trocar fechadura nenhuma — exatamente como ajustar permissões sem alterar
+  código.
 
 ---
 
@@ -334,31 +362,36 @@ Repare em três decisões que valem para **todos** os exercícios a seguir:
 
 ---
 
-## 📋 Os 6 Exercícios
+## 📋 Os 7 Exercícios
 
-Dificuldade progressiva: dois fáceis, dois intermediários, dois avançados. Todos usam
+Dificuldade progressiva: dois fáceis, três intermediários, dois avançados. Todos usam
 cenários de 2026 — nenhum é biblioteca, escola ou aluno/nota.
 
-### 🟢 Exercício 1 (Fácil) — RachaFácil: divisão de contas entre amigos
+### 🟢 Exercício 1 (Fácil) — AgendaPet: agendamento de serviços para o pet
 
-O **RachaFácil** é um app que ajuda grupos de amigos a dividir despesas em viagens,
-repúblicas ou saídas, sem precisar de planilha. Requisitos de negócio:
+O **AgendaPet** ajuda donos de cachorro e gato a marcar banho, tosa e vacina numa
+petshop de bairro — é a mesma função que, na vida real, alguém faz a caneta na
+agendinha de espiral pendurada perto do caixa. Requisitos de negócio:
 
-- O sistema permite cadastro de usuários com autenticação por e-mail e senha.
-- Usuários podem criar **grupos** (ex.: "Viagem para Bonito", "Apê 402") e convidar
-  outros usuários cadastrados para participar. Um usuário pode participar de vários
-  grupos, e um grupo tem vários membros.
-- Dentro de um grupo, qualquer membro pode registrar uma **despesa** (ex.: jantar,
-  corrida de aplicativo, mercado), informando quem pagou, o valor total e a data.
-- Cada despesa deve ser dividida entre um **subconjunto** dos membros do grupo — nem
-  sempre todos os membros participam de todas as despesas — e o sistema guarda quanto
-  cada participante deve daquela despesa específica.
-- O saldo de cada membro dentro de um grupo (quanto deve ou tem a receber) é sempre
-  **calculado** a partir das despesas registradas — pense bem em que tipo de atributo
-  isso é, e se ele deveria ser armazenado (releia a Aula 02, Seção 3.1 — Atributo
-  Derivado).
-- Gestão de acesso no nível básico: `administrador` (gerencia a plataforma, pode
-  desativar contas) e `usuario` (uso normal do app).
+- O sistema permite cadastro de usuários (donos de pet) com autenticação por e-mail e
+  senha.
+- Cada usuário cadastra um ou mais **pets** (nome, espécie, raça, data de nascimento),
+  sempre vinculados a ele — é a mesma ideia de `cupons_fiscais` vinculado a um
+  `cliente` no Exemplo Completo acima, só que aqui quem "recebe o serviço" é o pet, não
+  quem paga.
+- A petshop mantém um **catálogo de serviços** (ex.: "Banho", "Tosa Higiênica", "Vacina
+  V10"), com nome, preço-base e duração em minutos — um catálogo único, usado por
+  todos os agendamentos, do mesmo jeito que o catálogo de `produtos` do Exemplo
+  Completo é usado por todos os cupons.
+- O dono agenda um horário para um de seus pets, escolhendo **um ou mais serviços**
+  daquele catálogo para o mesmo horário (ex.: banho + tosa juntos nem sempre são
+  encaixados no mesmo dia, mas quando são, entram no mesmo agendamento).
+- Cada serviço dentro de um agendamento guarda o **preço cobrado naquele momento** —
+  releia o comentário 1 do Exemplo Completo (Cupom Fiscal): o preço do catálogo pode
+  subir depois, mas o que já foi agendado não muda junto, do mesmo jeito que o preço
+  de uma etiqueta antiga na gaveta não muda quando o produto reajusta na prateleira.
+- Gestão de acesso no nível básico: `administrador` (mantém o catálogo de serviços) e
+  `usuario` (cadastra pets e agenda horários).
 
 ### 🟢 Exercício 2 (Fácil) — TreinoZen: gestão de treinos e rotina fitness
 
@@ -370,10 +403,13 @@ Requisitos de negócio:
   Tríceps"), sempre vinculadas a ele.
 - Uma rotina de treino é composta por vários **exercícios**, em uma **ordem
   específica**, cada um com número de séries, repetições e carga (peso) planejados
-  para aquela rotina.
+  para aquela rotina — como a lista de compras da feira, em que você anota o que pegar
+  em qual banca primeiro pra não ter que voltar.
 - O mesmo exercício (ex.: "Supino Reto") pode aparecer em várias rotinas diferentes,
   inclusive de usuários diferentes — a plataforma mantém um **catálogo único** de
-  exercícios, com grupo muscular e instruções de execução.
+  exercícios, com grupo muscular e instruções de execução. É como a prateleira de
+  temperos do mercado: o mesmo pacote de orégano entra em receitas de gente diferente,
+  sem precisar duplicar o pote pra cada receita.
 - Toda vez que o usuário efetivamente realiza um treino, o app registra essa
   **execução**: data/hora, duração em minutos e uma nota de esforço percebido (1 a
   10).
@@ -392,12 +428,19 @@ podcasts e audiolivros. Requisitos de negócio:
   publicação — mas **só** episódios de podcast têm número do episódio e indicação de
   transcrição disponível; **só** capítulos de audiolivro têm número do capítulo e
   narrador. Um podcast agrupa vários episódios; um audiolivro agrupa vários capítulos.
+  É como a diferença entre o programa de rádio (agrupa vários episódios) e o audiobook
+  (agrupa vários capítulos): os dois são "áudio pra ouvir", mas cada um tem uma ficha
+  técnica própria — isso é generalização/especialização (Aula 02, Seção 4 / Aula 03,
+  Seção 8).
 - Usuários podem criar **playlists pessoais** que misturam episódios de podcast e
   capítulos de audiolivro, em qualquer ordem escolhida por eles.
 - A plataforma funciona por assinatura: existem **planos** (ex.: "Básico", "Premium")
   com preço mensal e limite de downloads offline. Um usuário assina um plano por vez,
   mas o sistema precisa manter o **histórico** de todos os planos que aquele usuário já
-  assinou, com data de início e de término (nula se ainda estiver ativo).
+  assinou, com data de início e de término (nula se ainda estiver ativo). Pense no
+  plano de internet de casa: hoje você pode estar no "Premium", mas a operadora guarda
+  no cadastro todos os planos que você já teve, com a data de cada troca — é a mesma
+  lógica aqui.
 - Gestão de acesso no nível básico: `administrador` (cadastra podcasts, audiolivros e
   planos) e `usuario` (assina planos e ouve conteúdo).
 
@@ -410,7 +453,9 @@ da viagem. Requisitos de negócio:
   faz login.
 - Uma pessoa pode ser **motorista** (com CNH e dados do veículo), **passageira** (sem
   dados extras), **as duas coisas ao mesmo tempo**, ou **nenhuma delas ainda** — só se
-  cadastrou e não assumiu nenhum papel na plataforma.
+  cadastrou e não assumiu nenhum papel na plataforma. É como um morador de condomínio
+  que também é síndico: a mesma pessoa acumulando um papel a mais — nem todo morador é
+  síndico, mas todo síndico também é morador.
 - Um motorista pode oferecer várias **caronas**, cada uma com origem, destino, data e
   hora de saída, número de vagas disponíveis e valor por vaga.
 - Um passageiro pode reservar vaga em várias caronas diferentes, e uma carona pode ter
@@ -418,11 +463,49 @@ da viagem. Requisitos de negócio:
   `cancelada`, `concluída`).
 - Depois de concluída uma carona, **tanto o motorista quanto o passageiro** podem
   avaliar um ao outro (nota de 1 a 5 e comentário) — o sistema precisa distinguir com
-  clareza **quem avaliou quem** nessa troca mútua.
+  clareza **quem avaliou quem** nessa troca mútua. Pense no motorista e no passageiro
+  de um app de transporte avaliando um ao outro depois da mesma corrida: são duas
+  notas independentes, cada uma com seu "quem avaliou" e seu "quem foi avaliado"
+  (Regra 7 de nomenclatura).
 - Gestão de acesso no nível básico: `administrador` (modera denúncias, pode suspender
   contas) e `usuario` (usa a plataforma como motorista e/ou passageiro).
 
-### 🔴 Exercício 5 (Avançado) — PlayHub: marketplace de jogos digitais
+### 🟡 Exercício 5 (Intermediário) — RachaConta: divisão de contas entre amigos
+
+O **RachaConta** é um app que ajuda grupos de amigos a dividir despesas em viagens,
+repúblicas ou saídas, sem precisar de planilha.
+
+!!! note "Por que este exercício é intermediário, não fácil"
+    Ele reúne, no mesmo cenário, duas tabelas associativas N:M diferentes (grupo↔membro
+    e despesa↔participante) **e** um raciocínio sobre atributo derivado — três ideias
+    distintas empilhadas de uma vez. Se ainda não se sente confortável com N:M com
+    atributo próprio, resolva primeiro os Exercícios 1 e 2 (Fáceis), que usam essa
+    mesma ideia isolada, uma de cada vez.
+
+Requisitos de negócio:
+
+- O sistema permite cadastro de usuários com autenticação por e-mail e senha.
+- Usuários podem criar **grupos** (ex.: "Viagem para Bonito", "Apê 402") e convidar
+  outros usuários cadastrados para participar. Um usuário pode participar de vários
+  grupos, e um grupo tem vários membros.
+- Dentro de um grupo, qualquer membro pode registrar uma **despesa** (ex.: jantar,
+  corrida de aplicativo, mercado), informando quem pagou, o valor total e a data.
+- Cada despesa deve ser dividida entre um **subconjunto** dos membros do grupo — nem
+  sempre todos os membros participam de todas as despesas. É como dividir a conta do
+  rodízio de pizza de domingo: nem todo mundo pediu sobremesa, então a divisão daquele
+  item não é sempre entre o grupo inteiro, só entre quem participou dele — e o sistema
+  guarda quanto cada participante deve daquela despesa específica.
+- O saldo de cada membro dentro de um grupo (quanto deve ou tem a receber) é sempre
+  **calculado** a partir das despesas registradas. Ninguém escreve "quanto o Fulano
+  deve" numa lousa fixa na parede da república — isso ficaria desatualizado a cada
+  despesa nova. É como a conta de um bar: ninguém anota o total no meio da noite, ele
+  é somado no fim a partir de cada pedido lançado. Pense se o saldo deveria ser uma
+  coluna guardada, ou algo calculado na hora a partir das despesas (releia a Aula 02,
+  Seção 3.1 — Atributo Derivado).
+- Gestão de acesso no nível básico: `administrador` (gerencia a plataforma, pode
+  desativar contas) e `usuario` (uso normal do app).
+
+### 🔴 Exercício 6 (Avançado) — PlayHub: marketplace de jogos digitais
 
 A **PlayHub** é um marketplace de jogos digitais (pense em Steam ou Epic Games Store),
 com biblioteca de jogos, conquistas e avaliações. Requisitos de negócio:
@@ -447,9 +530,11 @@ com biblioteca de jogos, conquistas e avaliações. Requisitos de negócio:
   `jogador` (usuário comum, compra e joga). **Um mesmo usuário pode acumular mais de
   um papel** (ex.: alguém do estúdio que também joga na própria plataforma), e cada
   papel tem um conjunto específico de permissões que precisa poder ser
-  criado/ajustado **sem alterar código-fonte**.
+  criado/ajustado **sem alterar código-fonte** — a mesma lógica do molho de chaves do
+  síndico (analogia na seção de Convenções acima): cada permissão é uma chave, cada
+  papel é um chaveiro pronto.
 
-### 🔴 Exercício 6 (Avançado) — TrampoJá: marketplace de prestadores de serviço
+### 🔴 Exercício 7 (Avançado) — TrampoJá: marketplace de prestadores de serviço
 
 A **TrampoJá** conecta clientes que precisam de um serviço a prestadores autônomos que
 o oferecem — típico app de *gig economy* de serviços (elétrica residencial, design
@@ -473,7 +558,8 @@ gráfico, aulas particulares etc.). Requisitos de negócio:
   (modera denúncias e avaliações, sem acesso a dados financeiros), `cliente` e
   `prestador` (papéis de uso comum — **um mesmo usuário pode acumular `cliente` e
   `prestador` simultaneamente**). As permissões de cada papel precisam poder ser
-  reconfiguradas pela equipe da plataforma **sem alterar código**.
+  reconfiguradas pela equipe da plataforma **sem alterar código** — de novo, o molho de
+  chaves do síndico: cada papel é um chaveiro que agrupa um conjunto de permissões.
 
 ---
 

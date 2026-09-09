@@ -18,22 +18,22 @@ decisões de modelagem mais importantes.
 
 ---
 
-## Exercício 1 — RachaFácil {: #exercicio-1 }
+## Exercício 1 — AgendaPet {: #exercicio-1 }
 
-**Entidades identificadas:** `USUARIOS`, `GRUPOS`, `MEMBROS_GRUPO` (associativa),
-`DESPESAS`, `PARTICIPANTES_DESPESA` (associativa). Sem generalização — não há
-necessidade, todos os usuários compartilham o mesmo conjunto de atributos.
+**Entidades identificadas:** `USUARIOS`, `PETS` (1:N a partir de `USUARIOS`),
+`SERVICOS` (catálogo), `AGENDAMENTOS` (1:N a partir de `PETS`),
+`ITENS_AGENDAMENTO` (associativa, com atributo próprio do relacionamento). Sem
+generalização — não há necessidade neste exercício.
 
 **Modelo Lógico:**
 
 ```
 USUARIOS (id_usuario PK, nome, email UNIQUE, senha_hash, tipo_usuario)
-GRUPOS (id_grupo PK, nome, criador_id FK -> USUARIOS)
-MEMBROS_GRUPO (grupo_id PK FK -> GRUPOS, usuario_id PK FK -> USUARIOS, entrou_em)
-DESPESAS (id_despesa PK, grupo_id FK -> GRUPOS, pagador_id FK -> USUARIOS,
-          descricao, valor_total, data_despesa)
-PARTICIPANTES_DESPESA (despesa_id PK FK -> DESPESAS, usuario_id PK FK -> USUARIOS,
-                        valor_devido)
+PETS (id_pet PK, usuario_id FK -> USUARIOS, nome, especie, raca, data_nascimento)
+SERVICOS (id_servico PK, nome UNIQUE, preco_base, duracao_minutos)
+AGENDAMENTOS (id_agendamento PK, pet_id FK -> PETS, data_hora)
+ITENS_AGENDAMENTO (agendamento_id PK FK -> AGENDAMENTOS, servico_id PK FK -> SERVICOS,
+                    preco_cobrado)
 ```
 
 ```dbml
@@ -53,66 +53,65 @@ Table usuarios {
   deletado_em    DATETIME
 }
 
-Table grupos {
-  id_grupo       BIGINT UNSIGNED [PK, INCREMENT]
-  criador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "criador", não "usuario_id"']
-  nome           VARCHAR(255)    [NOT NULL]
-  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [NOT NULL]
-  deletado_em    DATETIME
+Table pets {
+  id_pet           BIGINT UNSIGNED [PK, INCREMENT]
+  usuario_id       BIGINT UNSIGNED [NOT NULL]
+  nome             VARCHAR(100)    [NOT NULL]
+  especie          VARCHAR(50)     [NOT NULL, note: "ex.: 'cachorro', 'gato'"]
+  raca             VARCHAR(100)
+  data_nascimento  DATE
+  criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME        [NOT NULL]
+  deletado_em      DATETIME
 }
 
-// N:M usuarios <-> grupos — PK composta (Aula 03, 4.2)
-Table membros_grupo {
-  grupo_id       BIGINT UNSIGNED [PK, NOT NULL]
-  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
-  entrou_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
-  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [NOT NULL]
-  deletado_em    DATETIME
+Table servicos {
+  id_servico       BIGINT UNSIGNED [PK, INCREMENT]
+  nome             VARCHAR(100)    [NOT NULL, UNIQUE]
+  preco_base       DECIMAL(8,2)    [NOT NULL]
+  duracao_minutos  SMALLINT UNSIGNED [NOT NULL]
+  criado_em        DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em    DATETIME        [NOT NULL]
+  deletado_em      DATETIME
 }
 
-Table despesas {
-  id_despesa     BIGINT UNSIGNED [PK, INCREMENT]
-  grupo_id       BIGINT UNSIGNED [NOT NULL]
-  pagador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "pagador"']
-  descricao      VARCHAR(255)    [NOT NULL]
-  valor_total    DECIMAL(10,2)   [NOT NULL]
-  data_despesa   DATE            [NOT NULL]
-  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [NOT NULL]
-  deletado_em    DATETIME
+Table agendamentos {
+  id_agendamento  BIGINT UNSIGNED [PK, INCREMENT]
+  pet_id          BIGINT UNSIGNED [NOT NULL]
+  data_hora       DATETIME        [NOT NULL]
+  criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME        [NOT NULL]
+  deletado_em     DATETIME
 }
 
-// N:M despesas <-> usuarios, com o atributo do próprio relacionamento (valor_devido)
-Table participantes_despesa {
-  despesa_id     BIGINT UNSIGNED [PK, NOT NULL]
-  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
-  valor_devido   DECIMAL(10,2)   [NOT NULL]
-  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
-  atualizado_em  DATETIME        [NOT NULL]
-  deletado_em    DATETIME
+// N:M agendamentos <-> servicos, com o atributo do próprio relacionamento (preco_cobrado)
+Table itens_agendamento {
+  agendamento_id  BIGINT UNSIGNED [PK, NOT NULL]
+  servico_id      BIGINT UNSIGNED [PK, NOT NULL]
+  preco_cobrado   DECIMAL(8,2)    [NOT NULL, note: 'snapshot do preço no momento do agendamento']
+  criado_em       DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em   DATETIME        [NOT NULL]
+  deletado_em     DATETIME
 }
 
-Ref fk_grupo_criador:        grupos.criador_id               > usuarios.id_usuario
-Ref fk_membro_grupo:         membros_grupo.grupo_id          > grupos.id_grupo
-Ref fk_membro_usuario:       membros_grupo.usuario_id        > usuarios.id_usuario
-Ref fk_despesa_grupo:        despesas.grupo_id               > grupos.id_grupo
-Ref fk_despesa_pagador:      despesas.pagador_id             > usuarios.id_usuario
-Ref fk_participante_despesa: participantes_despesa.despesa_id > despesas.id_despesa
-Ref fk_participante_usuario: participantes_despesa.usuario_id > usuarios.id_usuario
+Ref fk_pet_usuario:       pets.usuario_id                  > usuarios.id_usuario
+Ref fk_agendamento_pet:   agendamentos.pet_id              > pets.id_pet
+Ref fk_item_agendamento:  itens_agendamento.agendamento_id > agendamentos.id_agendamento
+Ref fk_item_servico:      itens_agendamento.servico_id     > servicos.id_servico
 ```
 
 **Comentários:**
 
-- O **saldo** de cada membro (quem deve para quem) nunca é armazenado — é um atributo
-  **derivado**, calculado a partir da soma de `PARTICIPANTES_DESPESA.valor_devido`
-  contra o que cada um pagou em `DESPESAS.pagador_id`. Armazená-lo diretamente
-  duplicaria informação e criaria risco de inconsistência a cada nova despesa — o
-  mesmo raciocínio de `idade` vs. `data_nascimento` da Aula 02, Seção 3.1.
-- `criador_id` e `pagador_id` são dois exemplos da **Regra 7**: ambos referenciam
-  `usuarios`, mas em papéis diferentes, então usam o nome do papel — nunca
-  `usuario_id` genérico, que seria ambíguo.
+- `preco_cobrado` em `ITENS_AGENDAMENTO` segue o mesmo padrão "snapshot histórico" do
+  Exemplo Completo (Cupom Fiscal): o preço em `SERVICOS.preco_base` pode subir depois,
+  mas o valor já agendado não muda retroativamente.
+- `ITENS_AGENDAMENTO` não tem PK própria — a chave é a combinação
+  `(agendamento_id, servico_id)`, seguindo o padrão de tabela intermediária N:M
+  (Aula 03, Seção 7.2), o mesmo usado em `itens_treino` no Exercício 2.
+- `AGENDAMENTOS` é 1:N a partir de `PETS`, não de `USUARIOS` diretamente — quem recebe
+  o serviço é o pet; o dono é alcançado navegando por
+  `agendamentos.pet_id → pets.usuario_id`, sem precisar repetir `usuario_id` em
+  `AGENDAMENTOS`.
 
 ---
 
@@ -512,7 +511,111 @@ Ref fk_avaliacao_avaliado:   avaliacoes.avaliado_id         > pessoas.id_pessoa
 
 ---
 
-## Exercício 5 — PlayHub {: #exercicio-5 }
+## Exercício 5 — RachaConta {: #exercicio-5 }
+
+**Entidades identificadas:** `USUARIOS`, `GRUPOS`, `MEMBROS_GRUPO` (associativa),
+`DESPESAS`, `PARTICIPANTES_DESPESA` (associativa). Sem generalização — não há
+necessidade, todos os usuários compartilham o mesmo conjunto de atributos. Nível
+intermediário porque combina **duas** associativas N:M diferentes com o raciocínio
+de atributo derivado no mesmo exercício.
+
+**Modelo Lógico:**
+
+```
+USUARIOS (id_usuario PK, nome, email UNIQUE, senha_hash, tipo_usuario)
+GRUPOS (id_grupo PK, nome, criador_id FK -> USUARIOS)
+MEMBROS_GRUPO (grupo_id PK FK -> GRUPOS, usuario_id PK FK -> USUARIOS, entrou_em)
+DESPESAS (id_despesa PK, grupo_id FK -> GRUPOS, pagador_id FK -> USUARIOS,
+          descricao, valor_total, data_despesa)
+PARTICIPANTES_DESPESA (despesa_id PK FK -> DESPESAS, usuario_id PK FK -> USUARIOS,
+                        valor_devido)
+```
+
+```dbml
+Enum tipo_usuario_enum {
+  administrador
+  usuario
+}
+
+Table usuarios {
+  id_usuario     BIGINT UNSIGNED [PK, INCREMENT]
+  nome           VARCHAR(255)    [NOT NULL]
+  email          VARCHAR(255)    [NOT NULL, UNIQUE]
+  senha_hash     VARCHAR(255)    [NOT NULL]
+  tipo_usuario   tipo_usuario_enum [NOT NULL, DEFAULT: 'usuario']
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
+  deletado_em    DATETIME
+}
+
+Table grupos {
+  id_grupo       BIGINT UNSIGNED [PK, INCREMENT]
+  criador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "criador", não "usuario_id"']
+  nome           VARCHAR(255)    [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
+  deletado_em    DATETIME
+}
+
+// N:M usuarios <-> grupos — PK composta (Aula 03, 4.2)
+Table membros_grupo {
+  grupo_id       BIGINT UNSIGNED [PK, NOT NULL]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  entrou_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
+  deletado_em    DATETIME
+}
+
+Table despesas {
+  id_despesa     BIGINT UNSIGNED [PK, INCREMENT]
+  grupo_id       BIGINT UNSIGNED [NOT NULL]
+  pagador_id     BIGINT UNSIGNED [NOT NULL, note: 'Regra 7 — papel "pagador"']
+  descricao      VARCHAR(255)    [NOT NULL]
+  valor_total    DECIMAL(10,2)   [NOT NULL]
+  data_despesa   DATE            [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
+  deletado_em    DATETIME
+}
+
+// N:M despesas <-> usuarios, com o atributo do próprio relacionamento (valor_devido)
+Table participantes_despesa {
+  despesa_id     BIGINT UNSIGNED [PK, NOT NULL]
+  usuario_id     BIGINT UNSIGNED [PK, NOT NULL]
+  valor_devido   DECIMAL(10,2)   [NOT NULL]
+  criado_em      DATETIME        [NOT NULL, DEFAULT: `CURRENT_TIMESTAMP`]
+  atualizado_em  DATETIME        [NOT NULL]
+  deletado_em    DATETIME
+}
+
+Ref fk_grupo_criador:        grupos.criador_id               > usuarios.id_usuario
+Ref fk_membro_grupo:         membros_grupo.grupo_id          > grupos.id_grupo
+Ref fk_membro_usuario:       membros_grupo.usuario_id        > usuarios.id_usuario
+Ref fk_despesa_grupo:        despesas.grupo_id               > grupos.id_grupo
+Ref fk_despesa_pagador:      despesas.pagador_id             > usuarios.id_usuario
+Ref fk_participante_despesa: participantes_despesa.despesa_id > despesas.id_despesa
+Ref fk_participante_usuario: participantes_despesa.usuario_id > usuarios.id_usuario
+```
+
+**Comentários:**
+
+- O **saldo** de cada membro (quem deve para quem) nunca é armazenado — é um atributo
+  **derivado**, calculado a partir da soma de `PARTICIPANTES_DESPESA.valor_devido`
+  contra o que cada um pagou em `DESPESAS.pagador_id`. Armazená-lo diretamente
+  duplicaria informação e criaria risco de inconsistência a cada nova despesa — o
+  mesmo raciocínio de `idade` vs. `data_nascimento` da Aula 02, Seção 3.1.
+- `criador_id` e `pagador_id` são dois exemplos da **Regra 7**: ambos referenciam
+  `usuarios`, mas em papéis diferentes, então usam o nome do papel — nunca
+  `usuario_id` genérico, que seria ambíguo.
+- `MEMBROS_GRUPO` e `PARTICIPANTES_DESPESA` são duas associativas N:M **separadas** —
+  não dá pra fundir as duas numa só, porque respondem perguntas diferentes: uma
+  resolve "quem está no grupo", a outra resolve "quem participa desta despesa
+  específica" (um subconjunto dos membros do grupo, não todos).
+
+---
+
+## Exercício 6 — PlayHub {: #exercicio-6 }
 
 **Entidades identificadas:** `USUARIOS`, `PAPEIS`, `PERMISSOES`, `PAPEIS_PERMISSOES` e
 `USUARIOS_PAPEIS` (associativas — RBAC completo), `DESENVOLVEDORAS`, `PRODUTOS`
@@ -711,7 +814,7 @@ Ref fk_avaliacao_produto:  avaliacoes.produto_id                > produtos.id_pr
 
 ---
 
-## Exercício 6 — TrampoJá {: #exercicio-6 }
+## Exercício 7 — TrampoJá {: #exercicio-7 }
 
 **Entidades identificadas:** `USUARIOS`, `PAPEIS`, `PERMISSOES`, `PAPEIS_PERMISSOES` e
 `USUARIOS_PAPEIS` (RBAC completo), `CATEGORIAS_SERVICO`, `PERFIS_PRESTADOR`
@@ -927,7 +1030,7 @@ Ref fk_avaliacao_avaliado:  avaliacoes.avaliado_id                > usuarios.id_
   com `CONTRATOS.status`.
 - `PAGAMENTOS` é 1:N a partir de `CONTRATOS` (não 1:1) exatamente para suportar
   parcelamento — cada linha é uma parcela, com seu próprio `status`.
-- Assim como no Exercício 5, `USUARIOS` não tem coluna de tipo — todo o controle de
+- Assim como no Exercício 6, `USUARIOS` não tem coluna de tipo — todo o controle de
   acesso é resolvido por `USUARIOS_PAPEIS` + `PAPEIS_PERMISSOES`, permitindo que um
   mesmo usuário acumule `cliente` e `prestador` sem nenhuma mudança de schema.
 
