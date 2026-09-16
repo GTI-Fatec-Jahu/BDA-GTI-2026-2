@@ -72,9 +72,9 @@ A nota final é calculada pela fórmula:
 | 01 | [Introdução a Banco de Dados](aulas/Aula_01_Introducao_BD.md) | Sistemas de Arquivos vs. SGBD; Dados, Informação e Conhecimento; Arquitetura de SGBD | ✅ Disponível |
 | 02 | [Modelagem Conceitual: Entidades](aulas/Aula_02_Modelagem_Entidades.md) | Modelo Entidade-Relacionamento (MER), Entidades e Atributos | ✅ Disponível |
 | 03 | [Relacionamentos e Cardinalidade](aulas/Aula_03_Relacionamentos_Cardinalidade.md) | Cardinalidade, Modelo Lógico Relacional completo — Chaves Primárias (PK), Estrangeiras (FK) e mapeamento de generalização/especialização | ✅ Disponível |
-| 04 | Normalização de Dados | Formas Normais (1FN, 2FN e 3FN) | 🔒 Em breve |
+| 04 | [Normalização de Dados](aulas/Aula_04_Normalizacao.md) | Formas Normais (1FN, 2FN e 3FN) | ✅ Disponível |
 | 05 | ✏️ Atividade Avaliativa: Modelagem | Oficina prática de modelagem completa | 🔒 Em breve |
-| 06 | SQL: Linguagem de Definição (DDL) | Comandos DDL (CREATE) e Tipos de Dados | 🔒 Em breve |
+| 06 | [SQL: Linguagem de Definição (DDL)](aulas/Aula_06_SQL_DDL.md) | Comandos DDL (CREATE) e Tipos de Dados | ✅ Disponível |
 | 07 | Restrições de Integridade | Constraints (PK, FK, UNIQUE, NOT NULL) | 🔒 Em breve |
 | 08 | 📝 Avaliação P1 | Todo o conteúdo de Modelagem e DDL | 🔒 Em breve |
 

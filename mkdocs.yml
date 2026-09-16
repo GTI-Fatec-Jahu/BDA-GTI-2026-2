@@ -78,6 +78,8 @@ nav:
       - aulas/Aula_01_Introducao_BD.md
       - aulas/Aula_02_Modelagem_Entidades.md
       - aulas/Aula_03_Relacionamentos_Cardinalidade.md
+      - aulas/Aula_04_Normalizacao.md
+      - aulas/Aula_06_SQL_DDL.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md

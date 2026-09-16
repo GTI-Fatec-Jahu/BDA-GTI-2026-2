@@ -1090,7 +1090,7 @@ Para praticar tudo isso de uma vez, com um cenário maior e a ferramenta [dbdiag
 
 ## 🔗 Navegação
 
-⬅️ [Aula 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ 🔒 Aula 04 — Normalização de Dados — em breve.
+⬅️ [Aula 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ [Aula 04 — Normalização de Dados](Aula_04_Normalizacao.md)
 
 ---
 
