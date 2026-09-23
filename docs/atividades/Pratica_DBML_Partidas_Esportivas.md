@@ -118,6 +118,23 @@ Requisitos de negócio:
 
 ---
 
+## 🔑 Gabarito
+
+!!! warning "⚠️ Só consulte depois de tentar"
+    O gabarito é para conferência **depois** de você tentar resolver a atividade por
+    conta própria — as 4 perguntas e o diagrama. Consultar antes de terminar tira de
+    você o esforço de lembrar e raciocinar sozinho, que é exatamente o que treina a
+    recuperação ativa do conteúdo, e reduz o benefício deste estudo para a P1. Ler a
+    resposta pronta engana: parece que você entendeu, mas só quando estiver sozinho na
+    prova, sem ela, é que aparece o que realmente ficou. É como decorar o gabarito do
+    simulado da autoescola — você sai achando que sabe, e só descobre que não sabia na
+    hora do exame.
+
+🔑 [Abrir o Gabarito — Prática DBML: Partidas Esportivas](Gabarito_Pratica_DBML_Partidas_Esportivas.md) —
+tente resolver antes de conferir.
+
+---
+
 ⬅️ [Voltar para Atividades e Avaliações](index.md)
 
 ---
