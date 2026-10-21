@@ -3,7 +3,7 @@ GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
 mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_02_Modelagem_Entidades.md.
 -->
 
-# Gabarito — Aula 02 — Modelagem Conceitual: Entidades e Atributos
+# Gabarito — Tópico 02 — Modelagem Conceitual: Entidades e Atributos
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -257,7 +257,7 @@ erDiagram
 
 ## 🔗 Voltar
 
-⬅️ [Aula 02 — Modelagem Conceitual: Entidades e Atributos](Aula_02_Modelagem_Entidades.md)
+⬅️ [Tópico 02 — Modelagem Conceitual: Entidades e Atributos](Aula_02_Modelagem_Entidades.md)
 
 ---
 

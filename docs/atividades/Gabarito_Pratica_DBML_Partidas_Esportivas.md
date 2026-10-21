@@ -4,7 +4,7 @@ mkdocs.yml de propósito. É acessível só pelo link no final de
 Pratica_DBML_Partidas_Esportivas.md.
 -->
 
-# Gabarito — Prática DBML: Partidas Esportivas (Aulas 01 a 03)
+# Gabarito — Prática DBML: Partidas Esportivas (Tópicos 01 a 03)
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -19,12 +19,12 @@ Pratica_DBML_Partidas_Esportivas.md.
 
 ## Parte 1 — Respostas das 4 Perguntas de Revisão
 
-### 1. (Aula 01) SGBD x arquivos comuns
+### 1. (Tópico 01) SGBD x arquivos comuns
 
 Um SGBD centraliza o armazenamento e o acesso aos dados através de um único sistema,
 em vez de deixá-los espalhados em arquivos soltos (planilhas, `.txt`, arquivos
 binários próprios de cada programa). Isso resolve problemas estruturais dos sistemas
-de arquivos convencionais (Aula 01, Seção 2):
+de arquivos convencionais (Tópico 01, Seção 2):
 
 - **Redundância de dados** — sem SGBD, a mesma informação acaba copiada em vários
   arquivos; o SGBD guarda o dado uma única vez, compartilhado entre quem precisa dele.
@@ -41,11 +41,11 @@ de arquivos convencionais (Aula 01, Seção 2):
 
 Basta citar duas dessas vantagens com exemplo próprio para a resposta valer.
 
-### 2. (Aula 02) Atributo derivado
+### 2. (Tópico 02) Atributo derivado
 
 Um **atributo derivado** é aquele cujo valor pode ser calculado a partir de outro(s)
 atributo(s) já existente(s) — na notação do MER ele é representado com elipse
-tracejada (Aula 02, Seção 3.1). O exemplo dado em aula é `idade`, derivada de
+tracejada (Tópico 02, Seção 3.1). O exemplo dado em aula é `idade`, derivada de
 `data_nascimento`.
 
 Qualquer exemplo análogo vale, ex.: `valor_total` de um carrinho de compras (derivado
@@ -64,9 +64,9 @@ e, mesmo assim, com uma rotina garantindo que ele nunca fique fora de sincronia 
 dado de origem (como `valor_total` em `cupons_fiscais` no Exemplo Completo da Prática
 anterior).
 
-### 3. (Aula 02) Quando usar generalização/especialização
+### 3. (Tópico 02) Quando usar generalização/especialização
 
-Se justifica (Aula 02, Seção 4.5) quando o enunciado sinaliza claramente que:
+Se justifica (Tópico 02, Seção 4.5) quando o enunciado sinaliza claramente que:
 
 - existem dois ou mais **tipos** de uma mesma entidade ("existem dois tipos de X...");
 - todo registro de um tipo **também é** o outro, com campos adicionais próprios
@@ -80,9 +80,9 @@ alguns registros não justifica, sozinho, criar uma hierarquia de subclasses int
 Antes de especializar, a checagem prática é: "esses sinais realmente estão escritos no
 enunciado, ou eu estou inventando uma distinção que não muda a estrutura de dados?".
 
-### 4. (Aula 03) Em qual tabela vai a FK e como a cardinalidade decide
+### 4. (Tópico 03) Em qual tabela vai a FK e como a cardinalidade decide
 
-Quem decide é a **cardinalidade** do relacionamento (Aula 03, Seção 7). A FK é uma
+Quem decide é a **cardinalidade** do relacionamento (Tópico 03, Seção 7). A FK é uma
 coluna que guarda o valor da PK de outra tabela — um "ponteiro" —, então ela só cabe
 no lado onde **cada linha aponta para uma única linha do outro lado**:
 
@@ -142,7 +142,7 @@ Table modalidades {
   deletado_em         DATETIME
 }
 
-// O endereço é atributo COMPOSTO (Aula 02, Seção 3.1), decomposto em colunas.
+// O endereço é atributo COMPOSTO (Tópico 02, Seção 3.1), decomposto em colunas.
 // A validação "não pode existir dois locais no mesmo endereço" vira um UNIQUE
 // sobre a COMBINAÇÃO das colunas do endereço (Indexes), não sobre uma só.
 Table locais {
@@ -163,7 +163,7 @@ Table locais {
 }
 
 // vagas_disponiveis NÃO é coluna desta tabela — é atributo derivado
-// (Aula 02, Seção 3.1): total_vagas - COUNT(inscricoes.status = 'confirmada')
+// (Tópico 02, Seção 3.1): total_vagas - COUNT(inscricoes.status = 'confirmada')
 // para esta partida. Diferente de valor_total no Exemplo Completo (Cupom
 // Fiscal), aqui optamos por NÃO armazenar, já que recalcular é barato e
 // evita o risco de o número ficar fora de sincronia com as inscrições.
@@ -179,7 +179,7 @@ Table partidas {
   deletado_em     DATETIME
 }
 
-// Relacionamento N:M entre usuarios e partidas (Aula 03, Seção 7.2):
+// Relacionamento N:M entre usuarios e partidas (Tópico 03, Seção 7.2):
 // PK composta pelas duas FKs, sem PK substituta própria.
 Table inscricoes {
   partida_id     "BIGINT UNSIGNED"     [PK, NOT NULL]
@@ -268,7 +268,7 @@ teria dado errado no sistema funcionando de verdade.
   faltam 2" teria que ser copiada de uma tabela para a outra — e qualquer consulta
   "todas as partidas de sábado" precisaria olhar nas duas.
 - **Reflita:** o que muda, **nos dados guardados**, entre os dois casos? Se a resposta
-  for "nada", lembre da Aula 02, Seção 6.5: não crie estrutura sem necessidade real.
+  for "nada", lembre do Tópico 02, Seção 6.5: não crie estrutura sem necessidade real.
   Uma tela diferente no aplicativo não obriga uma tabela diferente no banco.
 
 ### 3. O local como texto solto dentro de `partidas`
@@ -280,7 +280,7 @@ teria dado errado no sistema funcionando de verdade.
   diferentes: não dá para validar endereço, reaproveitar o cadastro nem juntar as
   avaliações de um mesmo local.
 - **Reflita:** o local tem "vida própria" (endereço, avaliações) ou só descreve a
-  partida? É a mesma pergunta do erro "atributo virou entidade" (Aula 02, Seção 6.1),
+  partida? É a mesma pergunta do erro "atributo virou entidade" (Tópico 02, Seção 6.1),
   só que ao contrário: aqui a entidade foi tratada como se fosse um atributo.
 
 ### 4. Endereço sem validação de duplicidade — ou com `UNIQUE` no lugar errado
@@ -302,7 +302,7 @@ teria dado errado no sistema funcionando de verdade.
 - **O erro:** `endereco VARCHAR(255)` com `UNIQUE`, em vez de colunas separadas.
 - **Exemplo do problema:** valida a duplicidade, mas quando alguém pedir "mostre só as
   quadras do bairro Jardim Novo", não há como filtrar sem vasculhar texto. Lembre do
-  atributo **composto** da Aula 02, Seção 3.1: um dado que se divide em partes com
+  atributo **composto** do Tópico 02, Seção 3.1: um dado que se divide em partes com
   significado próprio (rua, bairro, cidade) costuma ser decomposto quando o sistema
   precisa consultar por uma dessas partes.
 - **Reflita:** o sistema precisaria buscar por bairro ou por cidade? Sua escolha
@@ -350,7 +350,7 @@ teria dado errado no sistema funcionando de verdade.
   que você também declare `UNIQUE(partida_id, usuario_id)`. Sem essa restrição, o
   mesmo usuário poderia se inscrever duas vezes na mesma partida, ocupando duas vagas.
   Mesmo com ela, o padrão que a disciplina adota para tabelas de junção N:M é a PK
-  composta (Aula 03, Seção 7.2).
+  composta (Tópico 03, Seção 7.2).
 - **Reflita:** por que uma tabela que nasce de um N:M já tem, nas suas duas FKs, tudo
   o que precisa para identificar cada linha?
 

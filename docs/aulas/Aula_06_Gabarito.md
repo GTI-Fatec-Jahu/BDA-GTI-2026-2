@@ -3,7 +3,7 @@ GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
 mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_06_SQL_DDL.md.
 -->
 
-# Gabarito — Aula 06 — SQL: Linguagem de Definição de Dados (DDL)
+# Gabarito — Tópico 05 — SQL: Linguagem de Definição de Dados (DDL)
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -132,7 +132,7 @@ Repare no `CHECK` do item (c): `peso IS NULL OR peso > 0` permite que a coluna c
 
 ## 🔗 Voltar
 
-⬅️ [Aula 06 — SQL: Linguagem de Definição de Dados (DDL)](Aula_06_SQL_DDL.md)
+⬅️ [Tópico 05 — SQL: Linguagem de Definição de Dados (DDL)](Aula_06_SQL_DDL.md)
 
 ---
 

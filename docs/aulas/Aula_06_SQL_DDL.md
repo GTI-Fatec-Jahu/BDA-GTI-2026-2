@@ -1,4 +1,4 @@
-# Aula 06 — SQL: Linguagem de Definição de Dados (DDL)
+# Tópico 05 — SQL: Linguagem de Definição de Dados (DDL)
 
 **Disciplina:** Banco de Dados e Aplicações (IBD951)  
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  
@@ -144,7 +144,7 @@ CREATE TABLE vendas (
 );
 ```
 
-> 📐 **Retomando a Aula 03:** as Regras 1 a 7 já apareceram por completo lá — aqui elas voltam porque agora, pela primeira vez, você vai realmente **executar** SQL de verdade, não só desenhar diagramas. As Regras 8 (tipo e tamanho adequados) e 9 (campos de log) — só citadas na Aula 03 — ganham corpo total nesta aula: a Regra 8 na Seção 5 (Tipos de Dados) e a Regra 9 em todo `CREATE TABLE` a partir da Seção 6, com as colunas `criado_em`, `atualizado_em` e `deletado_em`.
+> 📐 **Retomando o Tópico 03:** as Regras 1 a 7 já apareceram por completo lá — aqui elas voltam porque agora, pela primeira vez, você vai realmente **executar** SQL de verdade, não só desenhar diagramas. As Regras 8 (tipo e tamanho adequados) e 9 (campos de log) — só citadas no Tópico 03 — ganham corpo total nesta aula: a Regra 8 na Seção 5 (Tipos de Dados) e a Regra 9 em todo `CREATE TABLE` a partir da Seção 6, com as colunas `criado_em`, `atualizado_em` e `deletado_em`.
 
 ---
 
@@ -563,7 +563,7 @@ CREATE TABLE IF NOT EXISTS itens_pedidos (
 );
 ```
 
-> 💡 **Por que armazenar `preco_unitario` na tabela de itens?** Porque o preço do produto pode mudar depois que o pedido foi feito. Se você consultasse o preço atual da tabela `produtos`, o valor histórico do pedido mudaria retroativamente — um erro grave em qualquer sistema comercial. O `preco_unitario` é um *snapshot* (fotografia) do preço no momento da compra — o mesmo princípio de redundância intencional que você já viu na Aula 04, Seção 7.3.
+> 💡 **Por que armazenar `preco_unitario` na tabela de itens?** Porque o preço do produto pode mudar depois que o pedido foi feito. Se você consultasse o preço atual da tabela `produtos`, o valor histórico do pedido mudaria retroativamente — um erro grave em qualquer sistema comercial. O `preco_unitario` é um *snapshot* (fotografia) do preço no momento da compra — o mesmo princípio de redundância intencional que você já viu no Tópico 04, Seção 7.3.
 
 ---
 
@@ -638,7 +638,7 @@ observacoes  TEXT NULL,
 observacoes  TEXT,
 ```
 
-> 💡 **Sobre `NULL` em bancos de dados:** `NULL` não significa zero, string vazia ou falso — significa *ausência de valor* ou *valor desconhecido*. Isso tem implicações importantes: `NULL = NULL` é `FALSE` em SQL (use `IS NULL` ou `IS NOT NULL` para comparar). Colunas que permitem NULL aumentam a complexidade das queries, então use `NOT NULL` sempre que possível.
+> 💡 **Sobre `NULL` em bancos de dados:** `NULL` não significa zero, string vazia ou falso — significa *ausência de valor* ou *valor desconhecido*. Isso tem implicações importantes: `NULL = NULL` **não** dá verdadeiro: o resultado também é `NULL` (desconhecido), porque o banco não sabe dizer se dois valores desconhecidos são iguais — por isso, para comparar com `NULL`, use `IS NULL` ou `IS NOT NULL`. Colunas que permitem NULL aumentam a complexidade das queries, então use `NOT NULL` sempre que possível.
 
 ### 7.4 UNIQUE e CHECK
 
@@ -1019,7 +1019,7 @@ CREATE TABLE Produto (
     livros (N:M); um usuário pode ter múltiplos empréstimos; cada empréstimo é de um
     único livro e um único usuário.
 
-    🔑 Resolução no [Gabarito da Aula 06](Aula_06_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 05](Aula_06_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
 
 !!! example "🔍 Checkpoint 2 — ALTER TABLE: ajustando produtos"
     Dada a tabela `produtos` criada na Seção 6.4 desta aula, escreva os comandos
@@ -1029,7 +1029,7 @@ CREATE TABLE Produto (
     `peso > 0` sempre que ele não for `NULL` (afinal, um peso não informado ainda é
     válido, mas um peso zero ou negativo nunca é).
 
-    🔑 Resolução no [Gabarito da Aula 06](Aula_06_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 05](Aula_06_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
 ---
 
@@ -1111,7 +1111,7 @@ O MariaDB protege a integridade referencial: não permite dropar uma tabela "pai
 
 ## 📝 Resumo
 
-Nesta aula, você deu o primeiro passo prático de implementação: transformar o modelo lógico relacional (Aulas 03 e 04) em um banco de dados de verdade, usando a **DDL** — a subcategoria da SQL responsável por criar, alterar e remover estruturas. Aprendemos a criar um banco com `CREATE DATABASE`, sempre especificando `CHARACTER SET utf8mb4` e `COLLATE utf8mb4_unicode_ci` para suportar corretamente o português (e emojis). Vimos os principais tipos de dados — inteiros, `DECIMAL` para dinheiro (nunca `FLOAT`), `CHAR`/`VARCHAR` para texto, `DATE`/`DATETIME` para datas — e as armadilhas mais comuns de cada um. Praticamos `CREATE TABLE` com todas as constraints principais (`PRIMARY KEY`, `FOREIGN KEY` com `ON DELETE`/`ON UPDATE`, `UNIQUE`, `CHECK`, `NOT NULL`, `DEFAULT`) construindo um sistema de vendas completo, com tabelas associativas e FKs semânticas. Por fim, vimos como modificar (`ALTER TABLE`) e remover (`DROP`) estruturas já existentes, respeitando a ordem de dependência entre tabelas.
+Nesta aula, você deu o primeiro passo prático de implementação: transformar o modelo lógico relacional (Tópicos 03 e 04) em um banco de dados de verdade, usando a **DDL** — a subcategoria da SQL responsável por criar, alterar e remover estruturas. Aprendemos a criar um banco com `CREATE DATABASE`, sempre especificando `CHARACTER SET utf8mb4` e `COLLATE utf8mb4_unicode_ci` para suportar corretamente o português (e emojis). Vimos os principais tipos de dados — inteiros, `DECIMAL` para dinheiro (nunca `FLOAT`), `CHAR`/`VARCHAR` para texto, `DATE`/`DATETIME` para datas — e as armadilhas mais comuns de cada um. Praticamos `CREATE TABLE` com todas as constraints principais (`PRIMARY KEY`, `FOREIGN KEY` com `ON DELETE`/`ON UPDATE`, `UNIQUE`, `CHECK`, `NOT NULL`, `DEFAULT`) construindo um sistema de vendas completo, com tabelas associativas e FKs semânticas. Por fim, vimos como modificar (`ALTER TABLE`) e remover (`DROP`) estruturas já existentes, respeitando a ordem de dependência entre tabelas.
 
 ---
 
@@ -1121,9 +1121,8 @@ Nesta aula, você deu o primeiro passo prático de implementação: transformar 
     Você deixou de só desenhar bancos de dados no papel e começou a construí-los de
     verdade: seu primeiro `CREATE DATABASE`, suas primeiras tabelas com PK, FK,
     `UNIQUE` e `CHECK` nomeadas, e seu primeiro `ALTER TABLE` sem perder dado nenhum.
-    O modelo lógico que você projetou nas Aulas 03 e 04 agora tem paredes de
-    verdade. A próxima parada da Trilha do(a) Modelador(a) de Dados: proteger essas
-    paredes com as Restrições de Integridade.
+    O modelo lógico que você projetou nos Tópicos 03 e 04 agora tem paredes de
+    verdade.
 
 ---
 
@@ -1138,7 +1137,7 @@ Nesta aula, você deu o primeiro passo prático de implementação: transformar 
 
 ## 🔗 Navegação
 
-⬅️ [Aula 04 — Normalização de Dados](Aula_04_Normalizacao.md) · ➡️ 🔒 Aula 07 — Restrições de Integridade — em breve.
+⬅️ [Tópico 04 — Normalização de Dados](Aula_04_Normalizacao.md) · ➡️ [Tópico 06 — SQL: Linguagem de Manipulação de Dados (DML)](Topico_06_SQL_DML.md)
 
 ---
 

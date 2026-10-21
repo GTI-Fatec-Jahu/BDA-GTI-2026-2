@@ -3,14 +3,14 @@ GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
 mkdocs.yml de propósito. É acessível só pelo link no final de Aula_01_Introducao_BD.md.
 -->
 
-# Gabarito — Aula 01 — Introdução a Banco de Dados
+# Gabarito — Tópico 01 — Introdução a Banco de Dados
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
 **Fatec Jahu — 2º Semestre/2026**
 
 > ⚠️ Este gabarito é para conferência **depois** de você tentar resolver os
-> Checkpoints por conta própria na [Aula 01](Aula_01_Introducao_BD.md). Resolver
+> Checkpoints por conta própria no [Tópico 01](Aula_01_Introducao_BD.md). Resolver
 > antes de tentar reduz o benefício de treinar a recuperação ativa do conteúdo.
 
 ---
@@ -91,7 +91,7 @@ pesquisadas, evitando reler o disco a cada busca repetida.
 
 ---
 
-⬅️ [Voltar à Aula 01 — Introdução a Banco de Dados](./Aula_01_Introducao_BD.md)
+⬅️ [Voltar ao Tópico 01 — Introdução a Banco de Dados](./Aula_01_Introducao_BD.md)
 
 ---
 

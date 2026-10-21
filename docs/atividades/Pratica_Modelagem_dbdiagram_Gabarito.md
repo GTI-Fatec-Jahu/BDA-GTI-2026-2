@@ -12,7 +12,7 @@ em aula.
 > resolver os 6 exercícios sozinho antes de ler qualquer coisa abaixo.
 
 Para cada exercício: entidades identificadas, o Modelo Lógico em notação textual
-(`TABELA (coluna PK, coluna FK, ...)`, o mesmo padrão usado na Aula 03), o código DBML
+(`TABELA (coluna PK, coluna FK, ...)`, o mesmo padrão usado no Tópico 03), o código DBML
 pronto para colar em [dbdiagram.io](https://dbdiagram.io), e os comentários sobre as
 decisões de modelagem mais importantes.
 
@@ -107,7 +107,7 @@ Ref fk_item_servico:      itens_agendamento.servico_id     > servicos.id_servico
   mas o valor já agendado não muda retroativamente.
 - `ITENS_AGENDAMENTO` não tem PK própria — a chave é a combinação
   `(agendamento_id, servico_id)`, seguindo o padrão de tabela intermediária N:M
-  (Aula 03, Seção 7.2), o mesmo usado em `itens_treino` no Exercício 2.
+  (Tópico 03, Seção 7.2), o mesmo usado em `itens_treino` no Exercício 2.
 - `AGENDAMENTOS` é 1:N a partir de `PETS`, não de `USUARIOS` diretamente — quem recebe
   o serviço é o pet; o dono é alcançado navegando por
   `agendamentos.pet_id → pets.usuario_id`, sem precisar repetir `usuario_id` em
@@ -208,7 +208,7 @@ Ref fk_execucao_treino:   execucoes_treino.treino_id   > treinos.id_treino
 - `carga_kg`, `series` e `repeticoes` pertencem a `ITENS_TREINO`, não a `EXERCICIOS`
   nem a `TREINOS` isoladamente — são o resultado do **encontro** entre um treino
   específico e um exercício específico (mesma lógica do método das quatro perguntas,
-  Aula 02, Seção 7, Passo 2, pergunta 4).
+  Tópico 02, Seção 7, Passo 2, pergunta 4).
 - `ordem` como `TINYINT UNSIGNED` é suficiente porque nenhum treino terá centenas de
   exercícios — dimensionar pelo domínio real (Regra 8), não por hábito de sempre usar
   `INT`.
@@ -219,7 +219,7 @@ Ref fk_execucao_treino:   execucoes_treino.treino_id   > treinos.id_treino
 
 **Entidades identificadas:** `USUARIOS`, `PLANOS`, `ASSINATURAS` (histórico),
 `PODCASTS`, `AUDIOLIVROS`, `CONTEUDOS` (superclasse), `EPISODIOS_PODCAST` e
-`CAPITULOS_AUDIOLIVRO` (subclasses — Estratégia 2, Aula 03, Seção 8), `PLAYLISTS`,
+`CAPITULOS_AUDIOLIVRO` (subclasses — Estratégia 2, Tópico 03, Seção 8), `PLAYLISTS`,
 `ITENS_PLAYLIST` (associativa). Restrição da hierarquia: **Total Exclusiva** — todo
 conteúdo é episódio ou capítulo, nunca os dois, nunca nenhum.
 
@@ -300,7 +300,7 @@ Table audiolivros {
   deletado_em       DATETIME
 }
 
-// Superclasse (Estratégia 2 — Aula 03, Seção 8)
+// Superclasse (Estratégia 2 — Tópico 03, Seção 8)
 Table conteudos {
   id_conteudo       "BIGINT UNSIGNED" [PK, INCREMENT]
   titulo            VARCHAR(255)   [NOT NULL]
@@ -383,7 +383,7 @@ Ref fk_item_conteudo:       itens_playlist.conteudo_id         > conteudos.id_co
 ## Exercício 4 — CaronaViva {: #exercicio-4 }
 
 **Entidades identificadas:** `PESSOAS` (superclasse — e também a tabela de
-autenticação), `MOTORISTAS` e `PASSAGEIROS` (subclasses — Estratégia 2, Aula 03, Seção
+autenticação), `MOTORISTAS` e `PASSAGEIROS` (subclasses — Estratégia 2, Tópico 03, Seção
 8), `CARONAS`, `RESERVAS_CARONA` (associativa), `AVALIACOES`. Restrição da hierarquia:
 **Parcial Sobreposta** — uma pessoa pode não ser nenhum dos dois papéis ainda, ou ser
 os dois ao mesmo tempo.
@@ -506,7 +506,7 @@ Ref fk_avaliacao_avaliado:   avaliacoes.avaliado_id         > pessoas.id_pessoa
   é essa distinção que sustenta `RESERVAS_CARONA.passageiro_id` apontar para
   `PASSAGEIROS`, não direto para `PESSOAS`.
 - `avaliador_id` e `avaliado_id` resolvem a avaliação mútua sem ambiguidade — o mesmo
-  problema do auto-relacionamento `supervisor_id` da Aula 03, Seção 11, mas aqui via
+  problema do auto-relacionamento `supervisor_id` do Tópico 03, Seção 11, mas aqui via
   duas FKs numa tabela separada em vez de auto-relacionamento direto em `PESSOAS`.
 
 ---
@@ -557,7 +557,7 @@ Table grupos {
   deletado_em    DATETIME
 }
 
-// N:M usuarios <-> grupos — PK composta (Aula 03, 4.2)
+// N:M usuarios <-> grupos — PK composta (Tópico 03, 4.2)
 Table membros_grupo {
   grupo_id       "BIGINT UNSIGNED" [PK, NOT NULL]
   usuario_id     "BIGINT UNSIGNED" [PK, NOT NULL]
@@ -604,7 +604,7 @@ Ref fk_participante_usuario: participantes_despesa.usuario_id > usuarios.id_usua
   **derivado**, calculado a partir da soma de `PARTICIPANTES_DESPESA.valor_devido`
   contra o que cada um pagou em `DESPESAS.pagador_id`. Armazená-lo diretamente
   duplicaria informação e criaria risco de inconsistência a cada nova despesa — o
-  mesmo raciocínio de `idade` vs. `data_nascimento` da Aula 02, Seção 3.1.
+  mesmo raciocínio de `idade` vs. `data_nascimento` do Tópico 02, Seção 3.1.
 - `criador_id` e `pagador_id` são dois exemplos da **Regra 7**: ambos referenciam
   `usuarios`, mas em papéis diferentes, então usam o nome do papel — nunca
   `usuario_id` genérico, que seria ambíguo.
@@ -1017,13 +1017,13 @@ Ref fk_avaliacao_avaliado:  avaliacoes.avaliado_id                > usuarios.id_
 
 - `PERFIS_PRESTADOR` é uma especialização com **um único subtipo** — não há um par
   "exclusiva/sobreposta" para comparar, porque só existe uma subclasse. Isso ainda é
-  um caso legítimo de especialização parcial (Aula 02, Seção 4.3): nem todo `USUARIOS`
+  um caso legítimo de especialização parcial (Tópico 02, Seção 4.3): nem todo `USUARIOS`
   tem uma linha correspondente em `PERFIS_PRESTADOR`, só quem decidiu virar prestador.
   `SERVICOS_OFERTADOS.prestador_id` aponta para `PERFIS_PRESTADOR.id_usuario` — não
   dá para um usuário sem perfil de prestador anunciar um serviço, e essa regra fica
   garantida pela própria FK, sem precisar de validação na aplicação.
 - `CONTRATOS.proposta_id` é `UNIQUE` — é isso que transforma o 1:N natural (uma
-  proposta pode gerar um contrato) num 1:1 de fato (Aula 03, Seção 5.1): sem o
+  proposta pode gerar um contrato) num 1:1 de fato (Tópico 03, Seção 5.1): sem o
   `UNIQUE`, nada impediria duas linhas de `CONTRATOS` para a mesma proposta.
   `PROPOSTAS` continua guardando `status` — inclusive `'aceita'` — mesmo depois de
   virar contrato, porque é o próprio histórico da negociação, não um dado redundante

@@ -1,4 +1,4 @@
-# Prática — DBML: Partidas Esportivas (Aulas 01 a 03)
+# Prática — DBML: Partidas Esportivas (Tópicos 01 a 03)
 
 **Instituição:** Fatec Jahu — Centro Paula Souza
 **Curso:** Tecnologia em Gestão da Tecnologia da Informação
@@ -9,7 +9,7 @@
 
 !!! info "🧪 Atividade de treino — não vale nota"
     Esta atividade **não tem peso na média**. Ela existe para revisar o conteúdo das
-    [Aulas 01](../aulas/Aula_01_Introducao_BD.md), [02](../aulas/Aula_02_Modelagem_Entidades.md)
+    [Tópicos 01](../aulas/Aula_01_Introducao_BD.md), [02](../aulas/Aula_02_Modelagem_Entidades.md)
     e [03](../aulas/Aula_03_Relacionamentos_Cardinalidade.md) antes da **P1**. Traga sua
     tentativa — mesmo incompleta — para a aula: é matéria-prima para discussão, não algo
     para entregar "pronto".
@@ -34,25 +34,25 @@ já usados em aula e na [Prática — Modelagem com dbdiagram.io](Pratica_Modela
 — não vou repetir a lista aqui. Se tiver dúvida sobre alguma convenção específica (como
 nomear PK/FK, como declarar um `ENUM`, como montar uma tabela intermediária N:M...),
 volte para aquela página ou para a
-[Aula 03, seção de Convenções de Nomenclatura](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#convencoes-de-nomenclatura).
+[Tópico 03, seção de Convenções de Nomenclatura](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#convencoes-de-nomenclatura).
 
 ---
 
 ## ❓ Perguntas de Revisão — respondidas como comentário no arquivo
 
 Antes do diagrama, escreva no `.txt` a resposta de cada uma das 4 perguntas abaixo, uma
-por bloco de comentário `//`. Elas cobrem as Aulas 01 a 03 e revisam exatamente o tipo
+por bloco de comentário `//`. Elas cobrem os Tópicos 01 a 03 e revisam exatamente o tipo
 de raciocínio que cai na P1 — não é sobre o cenário de esportes, é teoria da aula.
 
-1. **(Aula 01)** Qual a diferença entre um SGBD (Sistema Gerenciador de Banco de Dados)
+1. **(Tópico 01)** Qual a diferença entre um SGBD (Sistema Gerenciador de Banco de Dados)
    e guardar os dados soltos em arquivos comuns (planilhas, arquivos de texto)? Cite
    pelo menos duas vantagens concretas de se usar um SGBD.
-2. **(Aula 02)** O que é um **atributo derivado**? Dê um exemplo diferente dos usados em
+2. **(Tópico 02)** O que é um **atributo derivado**? Dê um exemplo diferente dos usados em
    aula e explique por que, normalmente, ele não deveria virar uma coluna comum,
    editável à mão, no banco.
-3. **(Aula 02)** Em que situação usar **generalização/especialização** na modelagem se
+3. **(Tópico 02)** Em que situação usar **generalização/especialização** na modelagem se
    justifica, e em que situação isso é complexidade desnecessária?
-4. **(Aula 03)** Em um relacionamento entre duas tabelas, como saber em qual delas a
+4. **(Tópico 03)** Em um relacionamento entre duas tabelas, como saber em qual delas a
    **chave estrangeira (FK)** deve ser colocada? Explique como a **cardinalidade**
    (1:1, 1:N e N:M) define essa escolha. (Lembrete: a FK é a coluna que "aponta" para a
    chave primária de outra tabela — como o número da comanda anotado em cada item
@@ -69,7 +69,7 @@ mesmos oito de sempre, qualquer pessoa perto do ginásio da prefeitura ou da qua
 bairro pode entrar numa partida que ainda tem vaga sobrando.
 
 !!! note "Por que este exercício é intermediário, não fácil"
-    O ponto central aqui é reconhecer um **atributo derivado** (Aula 02, Seção 3.1 —
+    O ponto central aqui é reconhecer um **atributo derivado** (Tópico 02, Seção 3.1 —
     Tipos de Atributos): quantas vagas ainda restam numa partida não é um número que
     alguém digita e atualiza à mão — ele nasce de uma conta (total de vagas da partida
     menos as inscrições já confirmadas). Guardar esse número solto, sem recalculá-lo a

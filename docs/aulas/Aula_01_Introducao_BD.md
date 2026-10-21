@@ -1,4 +1,4 @@
-# Aula 01 — Introdução a Banco de Dados
+# Tópico 01 — Introdução a Banco de Dados
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -95,7 +95,7 @@ Ex: Padrão salarial da empresa"]
     sequência bruta de coordenadas, a distância exibida, o padrão identificado) como
     dado, informação ou conhecimento, justificando cada classificação.
 
-    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-1) — tente
+    🔑 Resolução no [Gabarito do Tópico 01](Aula_01_Gabarito.md#checkpoint-1) — tente
     resolver antes de conferir.
 
 ---
@@ -125,7 +125,7 @@ Por muitos anos, os dados foram armazenados em **sistemas de arquivos** convenci
     problemas listados na tabela desta seção, quais aparecem neste cenário e explique
     brevemente como um SGBD resolveria cada um.
 
-    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-2) — tente
+    🔑 Resolução no [Gabarito do Tópico 01](Aula_01_Gabarito.md#checkpoint-2) — tente
     resolver antes de conferir.
 
 ---
@@ -177,7 +177,7 @@ O **nível externo** é o que cada usuário enxerga — uma visão personalizada
     Associe cada uma das três situações (a, b, c) ao nível da arquitetura ANSI/SPARC
     (externo, conceitual ou interno) em que ela ocorre, justificando.
 
-    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-3) — tente
+    🔑 Resolução no [Gabarito do Tópico 01](Aula_01_Gabarito.md#checkpoint-3) — tente
     resolver antes de conferir.
 
 ---
@@ -199,20 +199,20 @@ Os principais componentes internos de um SGBD são o **processador de consultas*
     temporariamente em memória. Associe cada uma das quatro etapas (1 a 4) ao
     componente do SGBD responsável por ela.
 
-    🔑 Resolução no [Gabarito da Aula 01](Aula_01_Gabarito.md#checkpoint-4) — tente
+    🔑 Resolução no [Gabarito do Tópico 01](Aula_01_Gabarito.md#checkpoint-4) — tente
     resolver antes de conferir.
 
 ---
 
-> 📐 **Sobre convenções de nomenclatura:** a partir da Aula 02, quando começarmos a
+> 📐 **Sobre convenções de nomenclatura:** a partir do Tópico 02, quando começarmos a
 > modelar entidades e atributos de verdade, esta disciplina passa a seguir
 > convenções formais de nomenclatura — a primeira delas é a **Regra 1 (snake_case:**
 > palavras separadas por underline, nunca por espaço ou `camelCase`**)** e a **Regra
 > 2 (sempre minúsculas para nomes criados por você — tabelas, colunas, entidades)**.
 > Outras regras (nomenclatura de chave primária e estrangeira, tipos de dados,
 > constraints) chegam progressivamente ao longo do semestre — chave primária e
-> estrangeira já na Aula 03, tipos de dados exatos e constraints culminando na
-> Aula 06 — SQL DDL. Essas regras não são frescura estética: elas tornam o modelo e o código
+> estrangeira já no Tópico 03, tipos de dados exatos e constraints culminando na
+> Tópico 05 — SQL DDL. Essas regras não são frescura estética: elas tornam o modelo e o código
 > legíveis e previsíveis para qualquer pessoa da turma, inclusive você mesmo(a)
 > daqui a alguns meses.
 
@@ -313,9 +313,9 @@ Nesta aula aprendemos que dados são fatos brutos que se transformam em informa�
 
 ---
 
-## 🔗 Próxima Aula
+## 🔗 Próximo Tópico
 
-➡️ [Aula 02 — Modelagem Conceitual: Entidades e Atributos](Aula_02_Modelagem_Entidades.md)
+➡️ [Tópico 02 — Modelagem Conceitual: Entidades e Atributos](Aula_02_Modelagem_Entidades.md)
 
 ---
 

@@ -3,7 +3,7 @@ GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
 mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_04_Normalizacao.md.
 -->
 
-# Gabarito — Aula 04 — Normalização de Dados
+# Gabarito — Tópico 04 — Normalização de Dados
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -141,7 +141,7 @@ Tabela `itens_locacao` (PK composta `locacao_id, filme_id`, guardando a diária 
 
 ## 🔗 Voltar
 
-⬅️ [Aula 04 — Normalização de Dados](Aula_04_Normalizacao.md)
+⬅️ [Tópico 04 — Normalização de Dados](Aula_04_Normalizacao.md)
 
 ---
 

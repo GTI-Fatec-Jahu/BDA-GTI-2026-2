@@ -1,4 +1,4 @@
-# Prática — Modelagem com dbdiagram.io (Aulas 01 a 03)
+# Prática — Modelagem com dbdiagram.io (Tópicos 01 a 03)
 
 **Instituição:** Fatec Jahu — Centro Paula Souza
 **Curso:** Tecnologia em Gestão da Tecnologia da Informação
@@ -44,7 +44,7 @@ Repare no que a tela **não deixa claro**, mesmo depois de toda essa riqueza vis
   pode usar — a fachada da pizzaria não te conta qual das duas o sistema deles usa por
   trás.
 - A cadeia evolutiva (Pichu → Pikachu → Raichu) é um **auto-relacionamento** — a mesma
-  ideia de `FUNCIONARIO` supervisionando `FUNCIONARIO` que vimos na Aula 03, só que
+  ideia de `FUNCIONARIO` supervisionando `FUNCIONARIO` que vimos no Tópico 03, só que
   aqui é um Pokémon "vindo de" outro Pokémon, como uma árvore genealógica de família
   escrita numa caderneta, em que cada nome aponta pro nome de quem veio antes, mas
   todos moram na mesma tabela `pessoas`. Mas a FK se chamaria `evolui_de_id`? E se um
@@ -52,7 +52,7 @@ Repare no que a tela **não deixa claro**, mesmo depois de toda essa riqueza vis
   vários), isso muda a cardinalidade — e nada na tela avisa que esse caso especial
   existe até você esbarrar nele.
 - O Gigantamax tem estatísticas **próprias**, mas "é" o mesmo Pokémon — isso é
-  generalização/especialização (Aula 02, Seção 4), ou só uma variação de um mesmo
+  generalização/especialização (Tópico 02, Seção 4), ou só uma variação de um mesmo
   registro? É como perguntar se uma Kombi virada food truck ainda é "o mesmo veículo"
   com equipamento extra, ou se virou outro cadastro — o Detran trata como o mesmo
   veículo com uma ficha adicional, que é exatamente a lógica de
@@ -90,14 +90,14 @@ negócio apresentados, você deve produzir um diagrama em
 
 1. **Identifique entidades, atributos e chaves** (PK e FK) — decidindo, quando fizer
    sentido, se há generalização/especialização (nem todo exercício exige isso: releia a
-   [Aula 02, Seção 4.5](../aulas/Aula_02_Modelagem_Entidades.md) para saber quando ela
+   [Tópico 02, Seção 4.5](../aulas/Aula_02_Modelagem_Entidades.md) para saber quando ela
    se justifica e quando é complexidade desnecessária, e a
-   [Aula 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)
+   [Tópico 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)
    para como mapear a hierarquia em tabelas).
 2. **Aplique a tipificação de dados correta** e as **convenções de nomenclatura** desta
    disciplina — veja a tabela de tipos e o resumo de convenções logo abaixo.
 3. **Defina cardinalidade e participação** de cada relacionamento (1:1, 1:N, N:M —
-   [Aula 03, Seção 5](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)).
+   [Tópico 03, Seção 5](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)).
 4. **Modele a gestão de usuários e acessos** — item **obrigatório em todo exercício**.
    Nos dois exercícios fáceis, isso significa autenticação simples com um tipo básico
    (`administrador` / `usuario`). Nos dois avançados, significa um sistema de **papéis
@@ -107,7 +107,7 @@ negócio apresentados, você deve produzir um diagrama em
    atenção.
 
 > 📏 **Sobre normalização:** ainda não cobramos formalmente Formas Normais nesta
-> disciplina (isso é conteúdo da Aula 04). Não é preciso justificar 1FN/2FN/3FN nos
+> disciplina (isso é conteúdo do Tópico 04). Não é preciso justificar 1FN/2FN/3FN nos
 > seus diagramas — só evite redundância óbvia (ex.: não repita o mesmo dado em duas
 > tabelas sem motivo). Quando estudarmos Normalização, vale revisitar estes mesmos
 > exercícios com esse olhar novo.
@@ -147,7 +147,7 @@ negócio apresentados, você deve produzir um diagrama em
     ```
 
 4. Para **chave primária composta** (o padrão de tabela intermediária N:M da
-   [Aula 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)), marque
+   [Tópico 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)), marque
    `[PK]` nas duas colunas envolvidas — o dbdiagram.io entende que a chave é a
    combinação das duas.
 5. Para restrições `UNIQUE` que envolvem mais de uma coluna, use um bloco `Indexes`
@@ -174,7 +174,7 @@ negócio apresentados, você deve produzir um diagrama em
 
 Estes são **todos** os tipos usados nos gabaritos desta atividade — use apenas o que
 está aqui, escolhendo o mais adequado ao dado, nunca o que "parece mais simples"
-(Regra 8, formalizada na Aula 06 — SQL DDL, mas já anunciada na Aula 03). Pense nos
+(Regra 8, formalizada no Tópico 05 — SQL DDL, mas já anunciada no Tópico 03). Pense nos
 tipos numéricos como caixotes de feira de tamanhos diferentes: o caixote pequeno
 (`TINYINT`) não dá conta de uma safra inteira de laranja, mas também não faz sentido
 chamar o caminhão graneleiro (`BIGINT`) só pra carregar a nota de 1 a 5 de uma
@@ -183,9 +183,9 @@ dentro.
 
 > 💡 **Adiantando conteúdo:** os tipos SQL exatos (`ENUM`, `DECIMAL`, tamanhos de
 > `VARCHAR`...) e o padrão de campos de log (`criado_em`/`atualizado_em`/`deletado_em`,
-> Regra 9) só serão formalizados nas Aulas 06 e 07. Usá-los aqui é proposital — é uma
+> Regra 9) só serão formalizados no Tópico 05. Usá-los aqui é proposital — é uma
 > prática livre, não vale nota, e serve como preparo para quando chegarmos lá. Se
-> alguma escolha não fizer sentido ainda, tudo bem: guarde a dúvida para essas aulas.
+> alguma escolha não fizer sentido ainda, tudo bem: guarde a dúvida para esse tópico.
 
 | Tipo (dbdiagram.io / MariaDB) | Tamanho / faixa | Quando usar |
 |---|---|---|
@@ -225,7 +225,7 @@ dentro.
 ## 📐 Convenções Aplicadas nesta Atividade
 
 Recapitulando as **9 regras oficiais** de nomenclatura desta disciplina (detalhadas por
-completo na [Aula 03, seção de Convenções de Nomenclatura](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#convencoes-de-nomenclatura))
+completo no [Tópico 03, seção de Convenções de Nomenclatura](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#convencoes-de-nomenclatura))
 — todo diagrama entregue nesta atividade precisa aderir a todas elas:
 
 | # | Regra | Exemplo aplicado nesta atividade |
@@ -244,13 +244,13 @@ Além das 9 regras, dois padrões estruturais que você vai usar o tempo todo ne
 atividade:
 
 **Relacionamento N:M vira tabela intermediária com PK composta**
-([Aula 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)): as duas
+([Tópico 03, Seção 7.2](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)): as duas
 FKs, juntas, formam a chave primária — sem PK substituta própria — e os atributos que
 pertencem ao *relacionamento em si* (não a nenhuma das duas entidades) vivem nessa
 tabela. Exemplo: `itens_pedidos (pedido_id PK FK, produto_id PK FK, quantidade)`.
 
 **Generalização/especialização usa a Estratégia 2**
-([Aula 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)):
+([Tópico 03, Seção 8](../aulas/Aula_03_Relacionamentos_Cardinalidade.md#generalizacao-especializacao-tabelas)):
 uma tabela para a superclasse, e uma tabela por subclasse cuja PK é, ao mesmo tempo, FK
 única para a superclasse. Exemplo: `produtos (id_produto PK)` e `jogos (id_produto PK
 FK)`.
@@ -281,7 +281,7 @@ FK)`.
 
 ## 🧾 Exemplo Completo e Comentado — Cupom Fiscal
 
-O exemplo abaixo retoma o mesmo domínio da [Seção 9 da Aula 03](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)
+O exemplo abaixo retoma o mesmo domínio da [Seção 9 do Tópico 03](../aulas/Aula_03_Relacionamentos_Cardinalidade.md)
 (o produto na leitora do caixa), já no nível de **Modelo Lógico**, 100% aderente a
 todas as convenções acima. Use-o como referência de "isto está certo" antes de começar
 os exercícios — cole o bloco inteiro em [dbdiagram.io](https://dbdiagram.io) para ver o
@@ -297,7 +297,7 @@ também um usuário do sistema de autoatendimento, com um tipo básico de acesso
 ```dbml
 // ============================================================
 // EXEMPLO — Cupom Fiscal de Venda (mesmo domínio da Seção 6 da
-// Aula 03), já no Modelo Lógico, 100% aderente às 9 regras de
+// Tópico 03), já no Modelo Lógico, 100% aderente às 9 regras de
 // nomenclatura da disciplina.
 // ============================================================
 
@@ -347,7 +347,7 @@ Table cupons_fiscais {
   deletado_em      DATETIME
 }
 
-// Relacionamento N:M entre cupons_fiscais e produtos (Aula 03, 4.2):
+// Relacionamento N:M entre cupons_fiscais e produtos (Tópico 03, 4.2):
 // PK composta pelas duas FKs, sem PK substituta própria.
 Table itens_cupom {
   cupom_fiscal_id  "BIGINT UNSIGNED" [PK, NOT NULL]
@@ -448,7 +448,7 @@ podcasts e audiolivros. Requisitos de negócio:
   narrador. Um podcast agrupa vários episódios; um audiolivro agrupa vários capítulos.
   É como a diferença entre o programa de rádio (agrupa vários episódios) e o audiobook
   (agrupa vários capítulos): os dois são "áudio pra ouvir", mas cada um tem uma ficha
-  técnica própria — isso é generalização/especialização (Aula 02, Seção 4 / Aula 03,
+  técnica própria — isso é generalização/especialização (Tópico 02, Seção 4 / Tópico 03,
   Seção 8).
 - Usuários podem criar **playlists pessoais** que misturam episódios de podcast e
   capítulos de audiolivro, em qualquer ordem escolhida por eles.
@@ -518,7 +518,7 @@ Requisitos de negócio:
   deve" numa lousa fixa na parede da república — isso ficaria desatualizado a cada
   despesa nova. É como a conta de um bar: ninguém anota o total no meio da noite, ele
   é somado no fim a partir de cada pedido lançado. Pense se o saldo deveria ser uma
-  coluna guardada, ou algo calculado na hora a partir das despesas (releia a Aula 02,
+  coluna guardada, ou algo calculado na hora a partir das despesas (releia o Tópico 02,
   Seção 3.1 — Atributo Derivado).
 - Gestão de acesso no nível básico: `administrador` (gerencia a plataforma, pode
   desativar contas) e `usuario` (uso normal do app).

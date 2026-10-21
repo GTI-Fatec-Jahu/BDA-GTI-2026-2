@@ -62,12 +62,23 @@ mkdocs serve           # preview local em http://127.0.0.1:8000
 templates/
   AULA_TEMPLATE.md       # gabarito estrutural — fora de docs_dir, não entra no site
 docs/
-  index.md              # home do site — ementa, trilha, sumário de aulas
+  index.md              # home do site — ementa, trilha, sumário de tópicos
   aulas/
-    Aula_NN_Titulo.md    # uma aula por arquivo, adicionada progressivamente pelo professor
-  imgs/                  # imagens referenciadas pelas aulas (../imgs/arquivo.png)
+    Aula_NN_Titulo.md    # arquivos antigos (Tópicos 01–05); NN é o número do arquivo, não do tópico
+    Topico_NN_Titulo.md  # arquivos novos (Tópico 06 em diante); NN é o número do tópico
+    *_Gabarito.md        # gabarito de cada tópico, fora do nav
+  imgs/                  # imagens referenciadas pelos tópicos (../imgs/arquivo.png)
 mkdocs.yml               # nav é EXPLÍCITO — arquivo novo não aparece no site sozinho
 ```
+
+> **Terminologia — "Tópico", não "Aula".** O conteúdo não acompanha o número de aulas
+> presenciais (a turma avança no próprio ritmo), então o site chama cada unidade de
+> **Tópico NN**, e o sumário em `docs/index.md` lista só tópicos de conteúdo — atividades
+> e avaliações ficam na página `atividades/index.md`. Os nomes de arquivo antigos
+> continuam `Aula_NN_*` para não quebrar links, e **não batem com o número exibido**:
+> `Aula_06_SQL_DDL.md` é o **Tópico 05**. Em todo texto visível (título, navegação,
+> referências cruzadas, mensagem de commit) use "Tópico NN" com o número do **sumário**.
+> `docs/aulas/` e o comando `/nova-aula` mantêm o nome por compatibilidade.
 
 ---
 
@@ -140,27 +151,26 @@ conteúdo — ex. aulas que são só enunciado de prova não precisam de mapa me
    jornada do aluno é enquadrada como uma progressão de carreira em BD, do primeiro
    contato até o domínio prático. Cada bloco tem um arco, e cada aula um selo dentro
    dele — mantenha o tom técnico/profissional, nunca infantil.
-   - **Bloco 1 (Aulas 1–9) — "Trilha do(a) Modelador(a) de Dados"**: ex. Aula 1 → `🧭
-     Explorador(a) de Dados`, Aula 2 → `🗺️ Cartógrafo(a) de Entidades`, Aula 3 → `🔗
-     Mestre dos Relacionamentos`, Aula 4 → `🏛️ Arquiteto(a) Relacional`, Aula 5 → `🧹
-     Guardião(ã) da Normalização`, Aula 6 (T1) → `📐 Modelador(a) Certificado(a)`,
-     Aula 7 → `🛠️ Construtor(a) DDL`, Aula 8 → `🔒 Guardião(ã) da Integridade`,
-     Aula 9 (P1) → `🎖️ Veterano(a) do Bloco 1`.
-   - **Bloco 2 (Aulas 10–20) — "Trilha do(a) Consultor(a) SQL"**: nomes seguem o mesmo
-     espírito (ex. `🔍 Investigador(a) de Dados` para consultas, `🧩 Mestre dos Joins`
-     para as aulas de junção), culminando na Aula 20 com o selo final `🏆
-     Arquiteto(a) de Dados — IBD951`.
-   - Ao remodelar uma aula fora dessa lista de exemplos, escolha um nome de selo
+   - **Bloco 1 (Tópicos 01–05) — "Trilha do(a) Modelador(a) de Dados"**: Tópico 01 →
+     `🧭 Explorador(a) de Dados`, Tópico 02 → `🗺️ Cartógrafo(a) de Entidades`, Tópico 03
+     → `🔗 Mestre dos Relacionamentos`, Tópico 04 → `🧹 Guardião(ã) da Normalização`,
+     Tópico 05 → `🛠️ Construtor(a) DDL`.
+   - **Bloco 2 (Tópicos 06–13) — "Trilha do(a) Consultor(a) SQL"**: Tópico 06 → `✏️
+     Operador(a) de Dados`, Tópico 07 → `🔍 Investigador(a) de Dados`; os seguintes seguem
+     o mesmo espírito (ex. `🧩 Mestre dos Joins` para os tópicos de junção), culminando
+     no último tópico do sumário com o selo final `🏆 Arquiteto(a) de Dados — IBD951`.
+   - Ao remodelar um tópico fora dessa lista de exemplos, escolha um nome de selo
      consistente com o tema (progressão de carreira/habilidade em BD) em vez de
-     inventar temas novos a cada aula.
-9. 🔗 Navegação (aula anterior / próxima) — **só linke a próxima aula se o arquivo dela
-   já existir em `docs/aulas/`.** Como as aulas chegam progressivamente, a mais recente
-   deve mostrar `🔒 Aula NN+1 — em breve.` no lugar do link. Ao adicionar essa próxima
-   aula depois, volte na aula anterior e troque o placeholder pelo link real.
+     inventar temas novos a cada tópico.
+9. 🔗 Navegação (tópico anterior / próximo) — **só linke o próximo tópico se o arquivo
+   dele já existir em `docs/aulas/`.** Como os tópicos chegam progressivamente, o mais
+   recente deve mostrar `🔒 Tópico NN+1 — em breve.` no lugar do link. Ao adicionar esse
+   próximo tópico depois, volte no tópico anterior e troque o placeholder pelo link real.
 
 Depois de remodelar o conteúdo:
-- Atualize `docs/index.md`: mude o status da aula de 🔒 "Em breve" para ✅ "Disponível"
-  com link, no bloco correto do Sumário de Aulas e na trilha Mermaid.
+- Atualize `docs/index.md`: mude o status do tópico de 🔒 "Em breve" para ✅ "Disponível"
+  com link, no bloco correto do Sumário de Tópicos e na trilha Mermaid. Atividades e
+  avaliações **não** entram no sumário — só em `atividades/index.md`.
 - Atualize `mkdocs.yml`: adicione a entrada da aula no `nav`, na seção de bloco correta
   (o nav não descobre arquivos novos sozinho — esse passo é obrigatório).
 
@@ -180,8 +190,8 @@ Antes de considerar a aula pronta:
    - toda imagem referenciada com `../imgs/arquivo.png` existe de fato em `docs/imgs/`.
 3. Se possível, abra `mkdocs serve` e navegue até a página da aula para conferir
    visualmente o mapa mental, os flashcards (clique para expandir) e o quiz.
-4. Só então faça commit. Mensagem de commit deve indicar a aula (ex.: `Adiciona Aula 07
-   — SQL DDL, com mapa mental, flashcards e quiz`). Não dê push automaticamente sem
+4. Só então faça commit. Mensagem de commit deve indicar o tópico (ex.: `Adiciona Tópico 06
+   — SQL DML, com mapa mental, flashcards e quiz`). Não dê push automaticamente sem
    avisar o professor — ele decide quando publicar.
 
 ---
@@ -198,11 +208,11 @@ Antes de considerar a aula pronta:
   `docs/aulas/*.md`). Ao mover ou renomear arquivos, esses caminhos quebram
   silenciosamente — sempre rode `mkdocs build` depois.
 - **`docs/atividades/index.md` é a tabela-índice de atividades** (nome, descrição,
-  link) — mesma lógica do Sumário de Aulas em `docs/index.md`. Toda atividade nova em
+  link) — mesma lógica do Sumário de Tópicos em `docs/index.md`. Toda atividade nova em
   `docs/atividades/` precisa de uma linha nessa tabela e de uma entrada no `nav`, senão
   fica órfã (existe como página mas não aparece linkada em lugar nenhum).
 - **Nunca use `mindmap` do Mermaid para o "Mapa Mental da Aula".** Já causou linhas de
-  conexão cruzando por cima dos rótulos, ilegível (visto ao vivo na Aula 01). O layout
+  conexão cruzando por cima dos rótulos, ilegível (visto ao vivo no Tópico 01). O layout
   desse tipo de diagrama é orgânico/de força, sem controle de colisão entre aresta e
   texto, e a versão do Mermaid empacotada pelo Material não inclui o layout `tidy-tree`
   nem plugins de layout tipo ELK que resolveriam isso. Use `flowchart LR` com
@@ -211,7 +221,7 @@ Antes de considerar a aula pronta:
 - **No mapa mental, use `flowchart LR` (esquerda→direita), nunca `TD`/`TB`.** Com 4-6
   subgraphs irmãos, `TD` os espalha lado a lado — o diagrama fica mais largo que a
   coluna de conteúdo do site, o Material encolhe o SVG inteiro para caber e o texto
-  vira ilegível (visto ao vivo na Aula 01). Em `LR` os mesmos subgraphs empilham na
+  vira ilegível (visto ao vivo no Tópico 01). Em `LR` os mesmos subgraphs empilham na
   vertical (a página rola, isso não é problema); a largura fica controlada porque só
   cresce com a profundidade da árvore, não com o número de ramos. Já é o padrão nos
   arquivos deste projeto — ao criar um mapa mental do zero, comece direto com `LR`.

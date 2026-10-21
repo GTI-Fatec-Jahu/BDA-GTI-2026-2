@@ -9,13 +9,7 @@
 </div>
 
 !!! info "Conteúdo em construção progressiva"
-    As aulas deste semestre são publicadas semanalmente. A tabela abaixo mostra o planejamento completo — os itens marcados com 🔒 ainda não foram liberados.
-
-!!! tip "📝 Atividades e Avaliações"
-    Exercícios práticos, provas e trabalhos da disciplina ficam reunidos numa página
-    própria, sempre atualizada conforme novas atividades são liberadas.
-
-    [:material-format-list-checks: Ver todas as Atividades e Avaliações](atividades/index.md){ .md-button .md-button--primary }
+    Os tópicos deste semestre são publicados progressivamente, no ritmo da turma. O sumário abaixo mostra o planejamento completo — os itens marcados com 🔒 ainda não foram liberados.
 
 ---
 
@@ -51,56 +45,53 @@ Entender fundamentos e arquitetura de sistemas de bancos de dados, bem como téc
 
 A nota final é calculada pela fórmula:
 
-> **Nota Final = (P1 + P2 + P3 + M) × 1 + S**
+> **Nota Final = (P1 + P2 + T1 + M) × 1 + S**
 
 | Avaliação | Descrição | Peso |
 |---|---|---|
 | **P1** | Avaliação de Modelagem conceitual e lógica completa |3|
 | **P2** | Avaliação Prática: Criação e CRUD, com consultas básicas |3|
-| **P3** | Atividade Prática: SQL com Joins, Filtros e Agregações |3|
+| **T1** | Atividade Prática: SQL com Joins, Filtros e Agregações |3|
 | **M** | Maratona de CiberEducação — Curso de 6h |1|
 | **S** | Avaliação Substitutiva — recuperação de nota ou conteúdo não fixado |3|
 
 ---
 
-## 📑 Sumário de Aulas
+## 📝 Atividades e Avaliações
+
+Exercícios práticos, provas e trabalhos da disciplina ficam reunidos numa página
+própria, sempre atualizada conforme novas atividades são liberadas.
+
+[:material-format-list-checks: Ver todas as Atividades e Avaliações](atividades/index.md){ .md-button .md-button--primary }
+
+---
+
+## 📑 Sumário de Tópicos
 
 ### 🔵 Bloco 1 — Modelagem e DDL
 
-| # | Aula | Conteúdo Principal | Status |
+| # | Tópico | Conteúdo Principal | Status |
 |---|---|---|---|
 | 01 | [Introdução a Banco de Dados](aulas/Aula_01_Introducao_BD.md) | Sistemas de Arquivos vs. SGBD; Dados, Informação e Conhecimento; Arquitetura de SGBD | ✅ Disponível |
 | 02 | [Modelagem Conceitual: Entidades](aulas/Aula_02_Modelagem_Entidades.md) | Modelo Entidade-Relacionamento (MER), Entidades e Atributos | ✅ Disponível |
 | 03 | [Relacionamentos e Cardinalidade](aulas/Aula_03_Relacionamentos_Cardinalidade.md) | Cardinalidade, Modelo Lógico Relacional completo — Chaves Primárias (PK), Estrangeiras (FK) e mapeamento de generalização/especialização | ✅ Disponível |
 | 04 | [Normalização de Dados](aulas/Aula_04_Normalizacao.md) | Formas Normais (1FN, 2FN e 3FN) | ✅ Disponível |
-| 05 | ✏️ Atividade Avaliativa: Modelagem | Oficina prática de modelagem completa | 🔒 Em breve |
-| 06 | [SQL: Linguagem de Definição (DDL)](aulas/Aula_06_SQL_DDL.md) | Comandos DDL (CREATE) e Tipos de Dados | ✅ Disponível |
-| 07 | Restrições de Integridade | Constraints (PK, FK, UNIQUE, NOT NULL) | 🔒 Em breve |
-| 08 | 📝 Avaliação P1 | Todo o conteúdo de Modelagem e DDL | 🔒 Em breve |
+| 05 | [SQL: Linguagem de Definição (DDL)](aulas/Aula_06_SQL_DDL.md) | Comandos DDL (CREATE) e Tipos de Dados | ✅ Disponível |
 
 ### 🟢 Bloco 2 — Manipulação e Consultas
 
-| # | Aula | Conteúdo Principal | Status |
+| # | Tópico | Conteúdo Principal | Status |
 |---|---|---|---|
-| 09 | SQL: Manipulação de Dados (DML) | Comandos INSERT, UPDATE, DELETE | 🔒 Em breve |
-| 10 | Consultas Básicas (DQL) | Comando SELECT e projeção de colunas | 🔒 Em breve |
-| 11 | Filtragem Avançada | Cláusula WHERE, Operadores e ORDER BY | 🔒 Em breve |
-| 12 | Agregação de Dados | Funções COUNT, SUM, AVG e GROUP BY | 🔒 Em breve |
-| 13 | Junção de Tabelas — Inner Join | INNER JOIN | 🔒 Em breve |
-| 14 | Junções Externas — Outer Join | LEFT JOIN e RIGHT JOIN | 🔒 Em breve |
-| 15 | Introdução ao PL/SQL | Visão geral de procedimentos armazenados | 🔒 Em breve |
-| 16 | ✏️ Atividade Prática: SQL | Resolução de problemas complexos de consulta | 🔒 Em breve |
-| 17 | 📝 Avaliação P2 | DML, DQL e Junções | 🔒 Em breve |
-| 18 | 🔄 Avaliação Substitutiva | Todo o conteúdo semestral | 🔒 Em breve |
-| 19 | 🎓 Encerramento do Semestre | Feedback e Novas Tecnologias (NoSQL/Cloud) | 🔒 Em breve |
+| 06 | [SQL: Manipulação de Dados (DML)](aulas/Topico_06_SQL_DML.md) | Comandos INSERT, UPDATE, DELETE; exclusão lógica | ✅ Disponível |
+| 07 | [Consultas Básicas (DQL)](aulas/Topico_07_SQL_DQL.md) | Comando SELECT e projeção de colunas | ✅ Disponível |
+| 08 | Filtragem Avançada | Cláusula WHERE, Operadores e ORDER BY | 🔒 Em breve |
+| 09 | Agregação de Dados | Funções COUNT, SUM, AVG e GROUP BY | 🔒 Em breve |
+| 10 | Junção de Tabelas — Inner Join | INNER JOIN | 🔒 Em breve |
+| 11 | Junções Externas — Outer Join | LEFT JOIN e RIGHT JOIN | 🔒 Em breve |
+| 12 | Introdução ao PL/SQL | Visão geral de procedimentos armazenados | 🔒 Em breve |
+| 13 | 🎓 Encerramento do Semestre | Feedback e Novas Tecnologias (NoSQL/Cloud) | 🔒 Em breve |
 
-> Planejamento provisório espelhando a estrutura do 1º semestre/2026 — sujeito a ajustes do professor conforme as aulas forem entregues.
-
----
-
-## 📝 Atividades e Avaliações
-
-[:material-format-list-checks: Ver todas as Atividades e Avaliações](atividades/index.md){ .md-button .md-button--primary }
+> Planejamento provisório espelhando a estrutura do 1º semestre/2026 — sujeito a ajustes do professor conforme os tópicos forem entregues.
 
 ---
 

@@ -1,4 +1,4 @@
-# Aula 04 — Normalização de Dados
+# Tópico 04 — Normalização de Dados
 
 **Disciplina:** Banco de Dados e Aplicações (IBD951)  
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  
@@ -178,7 +178,7 @@ Tabela `telefones`:
 | 5 | 3 | (14) 99555-0005 |
 | 6 | 3 | (14) 99666-0006 |
 
-Agora cada célula tem exatamente um valor. Carla pode ter quantos telefones quiser sem precisar alterar a estrutura da tabela. Repare que `cliente_id` segue a Regra 6 de nomenclatura (Aula 03): tabela referenciada no singular + `_id`.
+Agora cada célula tem exatamente um valor. Carla pode ter quantos telefones quiser sem precisar alterar a estrutura da tabela. Repare que `cliente_id` segue a Regra 6 de nomenclatura (Tópico 03): tabela referenciada no singular + `_id`.
 
 ### Exemplo 2 — Colunas repetitivas (grupos de colunas para a mesma informação)
 
@@ -210,7 +210,7 @@ Tabela `itens_pedido`:
 | 2 | 104 | 3 |
 | 2 | 105 | 2 |
 
-Agora qualquer pedido pode ter quantos itens forem necessários — sem precisar mudar a estrutura do banco. `pedido_id` e `produto_id` formam a chave primária composta de `itens_pedido` — o mesmo padrão que você já viu em `matriculas` (Aula 03, Seção 5.3).
+Agora qualquer pedido pode ter quantos itens forem necessários — sem precisar mudar a estrutura do banco. `pedido_id` e `produto_id` formam a chave primária composta de `itens_pedido` — o mesmo padrão que você já viu em `matriculas` (Tópico 03, Seção 5.3).
 
 ### Exemplo 3 — Endereço misturado numa única coluna
 
@@ -259,9 +259,9 @@ flowchart LR
     `telefones` (guarda `"99111-2233, 99222-3344"` quando o cliente tem mais de um
     número) e `itens` (guarda `"P13, P45"` quando o pedido tem mais de um botijão).
     (a) Liste as violações de 1FN nessa tabela. (b) Proponha as tabelas corrigidas,
-    já nomeando PK e FK conforme as 9 regras de nomenclatura da Aula 03.
+    já nomeando PK e FK conforme as 9 regras de nomenclatura do Tópico 03.
 
-    🔑 Resolução no [Gabarito da Aula 04](Aula_04_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 04](Aula_04_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
 
 ---
 
@@ -413,7 +413,7 @@ flowchart TD
     (b) Corrija para 2FN, propondo as tabelas resultantes com PK e FK nomeadas
     corretamente.
 
-    🔑 Resolução no [Gabarito da Aula 04](Aula_04_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 04](Aula_04_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
 ---
 
@@ -549,7 +549,7 @@ flowchart LR
     dependência transitiva nessa tabela. (b) Corrija para 3FN, propondo as tabelas
     resultantes com PK e FK nomeadas corretamente.
 
-    🔑 Resolução no [Gabarito da Aula 04](Aula_04_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 04](Aula_04_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
 
 ---
 
@@ -686,7 +686,7 @@ erDiagram
     TURMAS ||--o{ ALUNOS : "contém"
 ```
 
-> 📐 **Nota sobre a FK de `alunos`:** a PK de `alunos` é `matricula` — uma chave natural, como o `codigo_barras` da Aula 03. Mesmo assim, as FKs que apontam para `alunos` (em `notas` e `telefones_alunos`) se chamam `aluno_id`, seguindo a Regra 6 normalmente — o nome da FK segue o padrão da tabela referenciada, não o nome literal da coluna referenciada.
+> 📐 **Nota sobre a FK de `alunos`:** a PK de `alunos` é `matricula` — uma chave natural, como o `codigo_barras` do Tópico 03. Mesmo assim, as FKs que apontam para `alunos` (em `notas` e `telefones_alunos`) se chamam `aluno_id`, seguindo a Regra 6 normalmente — o nome da FK segue o padrão da tabela referenciada, não o nome literal da coluna referenciada.
 
 De uma bagunça com 10 colunas e múltiplos problemas, chegamos a 5 tabelas limpas, sem redundância e sem anomalias.
 
@@ -694,7 +694,7 @@ De uma bagunça com 10 colunas e múltiplos problemas, chegamos a 5 tabelas limp
 
 ## ✏️ Exercícios de Fixação Práticos
 
-Para cada exercício, aplique o fluxo da Seção 6 (1FN → 2FN → 3FN), mostre as tabelas resultantes e nomeie PK e FK seguindo as convenções da Aula 03.
+Para cada exercício, aplique o fluxo da Seção 6 (1FN → 2FN → 3FN), mostre as tabelas resultantes e nomeie PK e FK seguindo as convenções do Tópico 03.
 
 **Exercício 1 — Locadora de Filmes**
 
@@ -822,7 +822,7 @@ A normalização existe para eliminar as três anomalias — de inserção, de a
 
 ## 🔗 Navegação
 
-⬅️ [Aula 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md) · ➡️ 🔒 Aula 05 — Atividade Avaliativa: Modelagem — em breve.
+⬅️ [Tópico 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md) · ➡️ [Tópico 05 — SQL: Linguagem de Definição de Dados (DDL)](Aula_06_SQL_DDL.md)
 
 ---
 

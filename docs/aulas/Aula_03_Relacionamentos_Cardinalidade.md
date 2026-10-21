@@ -1,4 +1,4 @@
-# Aula 03 — Relacionamentos e Cardinalidade
+# Tópico 03 — Relacionamentos e Cardinalidade
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -15,11 +15,11 @@ Ao final desta aula você deverá ser capaz de:
 - Identificar relacionamentos entre entidades no modelo conceitual e aplicar o método das perguntas-chave para determinar a cardinalidade
 - Ler e escrever cardinalidade nas notações Min-Max e Crow's Foot, evitando a confusão mais comum da disciplina (a posição dos símbolos)
 - Explicar, na prática, onde cada tipo de cardinalidade posiciona a PK e a FK já conhecidas — inclusive em situações do dia a dia, como a leitura de um produto no caixa de um supermercado
-- Mapear uma hierarquia de generalização/especialização (Aula 02) para tabelas de verdade, escolhendo entre as estratégias possíveis e justificando a recomendada pela disciplina
+- Mapear uma hierarquia de generalização/especialização (Tópico 02) para tabelas de verdade, escolhendo entre as estratégias possíveis e justificando a recomendada pela disciplina
 - Reconhecer relacionamentos ternários e auto-relacionamentos
 - Visualizar e explorar diagramas também no dbdiagram.io, entendendo o básico da linguagem DBML
 
-> 💡 **Sobre SQL:** esta aula **não** vai te ensinar a escrever `CREATE TABLE`. Você vai sair daqui sabendo exatamente quais tabelas, colunas, PKs e FKs o seu modelo precisa — o **Modelo Lógico Relacional** completo —, mas ainda em notação textual e DBML, não em SQL de verdade. As convenções de nomenclatura que você vai aprender aqui já preparam o terreno para quando chegarmos lá (Aula 06 — SQL DDL). Colocar isso em SQL de verdade é outro passo, deliberadamente adiado.
+> 💡 **Sobre SQL:** esta aula **não** vai te ensinar a escrever `CREATE TABLE`. Você vai sair daqui sabendo exatamente quais tabelas, colunas, PKs e FKs o seu modelo precisa — o **Modelo Lógico Relacional** completo —, mas ainda em notação textual e DBML, não em SQL de verdade. As convenções de nomenclatura que você vai aprender aqui já preparam o terreno para quando chegarmos lá (Tópico 05 — SQL DDL). Colocar isso em SQL de verdade é outro passo, deliberadamente adiado.
 
 ---
 
@@ -140,11 +140,11 @@ Table produtos {
     duas palavras, por isso leva aspas. Todo exemplo desta disciplina já segue essa
     regra — preste atenção nela quando for escrever seu próprio diagrama do zero.
 
-> 💡 **Adiantando:** em SQL de verdade (Aula 06 — SQL DDL), a mesma ideia se escreve `id_produto BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT`. A sintaxe muda, o conceito é idêntico — você já sai desta aula sabendo o que essa linha de SQL vai significar.
+> 💡 **Adiantando:** em SQL de verdade (Tópico 05 — SQL DDL), a mesma ideia se escreve `id_produto BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT`. A sintaxe muda, o conceito é idêntico — você já sai desta aula sabendo o que essa linha de SQL vai significar.
 
 ### 1.2 O tipo de uma PK
 
-**Convenção desta disciplina: toda PK substituta usa o tipo `BIGINT UNSIGNED` com `INCREMENT`.** É o padrão que você vai ver em toda tabela, em todo exemplo, a partir de agora — não porque `BIGINT` seja "o tipo certo" universalmente (dimensionar tipo por tipo é assunto da Aula 06), mas porque adotar um único padrão para toda PK evita ter que decidir, tabela por tabela, "será que `INT` é grande o suficiente?". `BIGINT UNSIGNED` comporta até ~18,4 quintilhões de linhas — nunca vai faltar.
+**Convenção desta disciplina: toda PK substituta usa o tipo `BIGINT UNSIGNED` com `INCREMENT`.** É o padrão que você vai ver em toda tabela, em todo exemplo, a partir de agora — não porque `BIGINT` seja "o tipo certo" universalmente (dimensionar tipo por tipo é assunto do Tópico 05), mas porque adotar um único padrão para toda PK evita ter que decidir, tabela por tabela, "será que `INT` é grande o suficiente?". `BIGINT UNSIGNED` comporta até ~18,4 quintilhões de linhas — nunca vai faltar.
 
 Existe uma exceção deliberada: quando a entidade já tem um identificador único **do mundo real** (uma **chave natural**, como o código de barras de um produto), ele pode ser usado como PK diretamente, com o tipo que fizer sentido para ele (`VARCHAR`, por exemplo) — você vai ver esse caso na Seção 9 (o produto na leitora do caixa).
 
@@ -211,11 +211,11 @@ Antes de ver o primeiro relacionamento, conheça de uma vez as **9 regras oficia
 | **6 — FK: tabela no singular + `_id`** | A ordem inverte em relação à PK — repare bem nisso | `departamento_id`, `categoria_id`, `produto_id` |
 | **7 — FK pelo papel semântico** | Quando a FK referencia uma tabela cuja entidade pode ter papéis diferentes, o nome usa o papel, não a tabela | `supervisor_id`, não `funcionario_id` |
 | **8 — Tipo e tamanho adequados ao dado** | Escolher o tipo pelo domínio real do dado, nunca "o que parece mais simples" | `DECIMAL` para dinheiro, nunca `FLOAT`/`DOUBLE` |
-| **9 — Toda tabela tem campos de log** | `criado_em`, `atualizado_em`, `deletado_em` em toda tabela, sem exceção — inclusive tabelas associativas e de subclasse | Detalhada por completo na Aula 07 |
+| **9 — Toda tabela tem campos de log** | `criado_em`, `atualizado_em`, `deletado_em` em toda tabela, sem exceção — inclusive tabelas associativas e de subclasse | Detalhada por completo no Tópico 05 |
 
 > 💡 **Por que isso importa de verdade:** convenção não é frescura estética. Quando **todo mundo** nomeia PK e FK do mesmo jeito, você para de gastar energia mental decidindo "como eu escrevi isso da última vez?" — e sobra atenção para o que realmente importa nesta fase da disciplina: **a modelagem em si**. Um diagrama de um colega, de uma aula passada, ou de você mesmo daqui a um ano, fica imediatamente legível, porque a nomenclatura não muda — só o domínio do problema muda.
 
-> 📏 **Sobre as Regras 3, 8 e 9:** elas aparecem aqui de forma introdutória porque dependem de sintaxe SQL que ainda vamos formalizar nas Aulas 06 (tipos, Regra 8) e 07 (constraints, Regra 9). Isso não as torna opcionais — só significa que você vai vê-las com mais profundidade mais adiante. **Todo exemplo desta aula já segue todas as 9**, mesmo as que ainda não foram detalhadas por completo.
+> 📏 **Sobre as Regras 3, 8 e 9:** elas aparecem aqui de forma introdutória porque dependem de sintaxe SQL que ainda vamos formalizar no Tópico 05 (tipos de dados, Regra 8, e campos de log, Regra 9). Isso não as torna opcionais — só significa que você vai vê-las com mais profundidade mais adiante. **Todo exemplo desta aula já segue todas as 9**, mesmo as que ainda não foram detalhadas por completo.
 
 ---
 
@@ -423,7 +423,7 @@ Mesma sintaxe de antes, só que com **dois** `Ref` — um para cada FK da tabela
     Para cada uma das três relações (a, b, c), aplique as perguntas-chave da Seção 5
     e identifique o tipo de cardinalidade (1:1, 1:N ou N:M), justificando.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
 
 ---
 
@@ -494,7 +494,7 @@ CLIENTES  ───────────────────────�
     cardinalidade na notação Min-Max, no formato `FILIAIS (min,max) ———— (min,max)
     VEICULOS`.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
 ---
 
@@ -541,13 +541,13 @@ Como vimos na Seção 5.1, a FK geralmente vai para o lado de participação **p
     `TECNICOS`, e explique por que nenhuma FK simples resolve essa relação — proponha
     o nome da tabela associativa e suas duas FKs.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
 
 ---
 
 ## 8. De Generalização/Especialização para Tabelas {: #generalizacao-especializacao-tabelas }
 
-Na [Aula 02, Seção 4](Aula_02_Modelagem_Entidades.md#4-generalizacao-e-especializacao), você aprendeu a modelar hierarquias como `VEICULOS` → `CARROS`/`MOTOS`/`CAMINHOES`: uma superclasse com os atributos comuns, e subclasses com os atributos exclusivos de cada tipo. Isso resolve o problema **no nível conceitual**. Mas, assim como toda entidade e todo relacionamento, essa hierarquia também precisa virar tabelas de verdade — e aqui, diferente do 1:N e do N:M, existe mais de uma forma de fazer isso, com tradeoffs bem diferentes.
+No [Tópico 02, Seção 4](Aula_02_Modelagem_Entidades.md#4-generalizacao-e-especializacao), você aprendeu a modelar hierarquias como `VEICULOS` → `CARROS`/`MOTOS`/`CAMINHOES`: uma superclasse com os atributos comuns, e subclasses com os atributos exclusivos de cada tipo. Isso resolve o problema **no nível conceitual**. Mas, assim como toda entidade e todo relacionamento, essa hierarquia também precisa virar tabelas de verdade — e aqui, diferente do 1:N e do N:M, existe mais de uma forma de fazer isso, com tradeoffs bem diferentes.
 
 ### 8.1 Três Estratégias Possíveis
 
@@ -600,7 +600,7 @@ erDiagram
 
 Nenhuma coluna fica órfã: `carros` só existe para veículos que são carros, e só tem colunas que fazem sentido para carro. Consultar "todos os veículos", independente do tipo, é uma query simples em `veiculos`. Consultar os detalhes de um carro específico é um JOIN entre `veiculos` e `carros` pela PK/FK compartilhada.
 
-**Estratégia 3 — Tabelas totalmente separadas, sem tabela para a superclasse:** `carros`, `motos` e `caminhoes` cada uma com **todos** os seus atributos, inclusive os que seriam comuns (`placa`, `ano_fabricacao`, `cor`, `preco` repetidos nas três). Problema: duplica atributos comuns em várias tabelas (o mesmo risco de inconsistência que a Aula 02, Seção 4.1, já rejeitou no nível conceitual) e torna impossível consultar "todos os veículos" sem um `UNION` manual das três tabelas.
+**Estratégia 3 — Tabelas totalmente separadas, sem tabela para a superclasse:** `carros`, `motos` e `caminhoes` cada uma com **todos** os seus atributos, inclusive os que seriam comuns (`placa`, `ano_fabricacao`, `cor`, `preco` repetidos nas três). Problema: duplica atributos comuns em várias tabelas (o mesmo risco de inconsistência que o Tópico 02, Seção 4.1, já rejeitou no nível conceitual) e torna impossível consultar "todos os veículos" sem um `UNION` manual das três tabelas.
 
 ### 8.2 Por que a Estratégia 2 é a recomendada
 
@@ -643,19 +643,19 @@ Ref: motos.id_veiculo > veiculos.id_veiculo
 
 ### 8.3 E quando a especialização é com sobreposição?
 
-Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**, uma instância pode pertencer a mais de uma subclasse ao mesmo tempo — como um médico que também é funcionário (`MEDICOS`/`FUNCIONARIOS`). Na Estratégia 2, isso não muda a estrutura das tabelas: `pessoas` continua sendo a superclasse, e simplesmente **existe uma linha com o mesmo `id_pessoa` tanto em `medicos` quanto em `funcionarios`**. Nenhuma tabela nova é necessária só por causa da sobreposição — o que muda é apenas que, para essa pessoa específica, duas FKs diferentes (em tabelas diferentes) apontam de volta para a mesma linha de `pessoas`.
+Relembrando o Tópico 02, Seção 4.3: numa especialização **com sobreposição**, uma instância pode pertencer a mais de uma subclasse ao mesmo tempo — como um médico que também é funcionário (`MEDICOS`/`FUNCIONARIOS`). Na Estratégia 2, isso não muda a estrutura das tabelas: `pessoas` continua sendo a superclasse, e simplesmente **existe uma linha com o mesmo `id_pessoa` tanto em `medicos` quanto em `funcionarios`**. Nenhuma tabela nova é necessária só por causa da sobreposição — o que muda é apenas que, para essa pessoa específica, duas FKs diferentes (em tabelas diferentes) apontam de volta para a mesma linha de `pessoas`.
 
 !!! example "🔍 Checkpoint 4 — De Herança a Tabelas: sistema de conteúdo de uma escola online"
     Uma escola online tem `CONTEUDOS` como superclasse, especializada em `VIDEO_AULAS`
     (com `duracao_minutos` e `url_video`) e `MATERIAL_PDFS` (com `numero_paginas` e
     `url_arquivo`) — todo conteúdo obrigatoriamente é um dos dois tipos, nunca os
-    dois ao mesmo tempo (especialização total e disjunta, Aula 02 Seção 4.3). Os
+    dois ao mesmo tempo (especialização total e disjunta, Tópico 02 Seção 4.3). Os
     atributos comuns a qualquer conteúdo são `titulo` e `data_publicacao`.
     (a) Desenhe as tabelas seguindo a Estratégia 2, com PK e FK nomeadas
     corretamente. (b) Explique, em uma frase, por que a Estratégia 1 (tabela única
     com coluna discriminadora) seria uma escolha pior aqui.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
 
 ---
 
@@ -663,7 +663,7 @@ Relembrando a Aula 02, Seção 4.3: numa especialização **com sobreposição**
 
 Vamos aplicar tudo o que vimos até aqui num evento que você já viveu centenas de vezes: passar um produto na leitora do caixa de um supermercado.
 
-Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá na [Aula 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPONS_FISCAIS`, `PRODUTOS` e `ITENS_CUPOM`. Agora, com cardinalidade, PK/FK e mapeamento de herança, dá pra fechar esse modelo por completo.
+Você já modelou esse cenário antes — sem saber ainda de cardinalidade nem de FK. Lá no [Tópico 02, Seção 7](Aula_02_Modelagem_Entidades.md#7-passo-a-passo-do-cupom-fiscal-as-entidades), você decompôs um cupom fiscal em três entidades: `CUPONS_FISCAIS`, `PRODUTOS` e `ITENS_CUPOM`. Agora, com cardinalidade, PK/FK e mapeamento de herança, dá pra fechar esse modelo por completo.
 
 **O que acontece, passo a passo, quando o produto passa na leitora:**
 
@@ -750,7 +750,7 @@ Para fixar: pense nas consequências práticas. Se tentarmos inserir um pedido s
     participação como **total** ou **parcial**, justificando com base no mínimo de
     cada uma.
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-5) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-5) — tente resolver antes de conferir.
 
 ---
 
@@ -796,7 +796,7 @@ erDiagram
     identifique se é um caso de **auto-relacionamento** ou de **relacionamento
     ternário**, e desenhe o `erDiagram` correspondente (inclua a FK, se for o caso).
 
-    🔑 Resolução no [Gabarito da Aula 03](Aula_03_Gabarito.md#checkpoint-6) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 03](Aula_03_Gabarito.md#checkpoint-6) — tente resolver antes de conferir.
 
 ---
 
@@ -1075,7 +1075,7 @@ Siga o mesmo raciocínio da Seção 9 (cupom fiscal): identifique as entidades, 
 
 ## 📝 Resumo
 
-Começamos esta aula pelos alicerces: o que é uma chave primária (PK), como declará-la em DBML e por que seu tipo padrão é `BIGINT UNSIGNED`; o que é uma chave estrangeira (FK), como declará-la, por que seu tipo precisa casar com o da PK referenciada, e suas duas restrições (integridade referencial e nulabilidade conforme a participação). Em seguida, fechamos as 9 regras oficiais de nomenclatura da disciplina de uma vez, antes de qualquer exemplo — todo exemplo, checkpoint e exercício desta aula segue todas elas. Só então entramos em relacionamentos: eles descrevem as interações entre entidades e podem ter atributos próprios. A cardinalidade (1:1, 1:N, N:M) — determinada com o método das três perguntas-chave — é uma das informações mais críticas do modelo conceitual, porque impacta diretamente a estrutura das tabelas: vimos exatamente onde a cardinalidade posiciona a PK e a FK já conhecidas, inclusive num evento do dia a dia como a leitura de um produto no caixa de um supermercado. Vimos também como mapear as hierarquias de generalização/especialização da Aula 02 para tabelas de verdade, usando a Estratégia 2 (superclasse + uma tabela por subclasse, com PK compartilhada). Aprendemos a distinguir participação total de parcial, conhecemos casos especiais como o auto-relacionamento e o relacionamento ternário, e vimos as duas notações mais usadas (Min-Max e Crow's Foot) — com atenção especial ao "segredo da posição" que mais confunde estudantes. Com isso, você sai desta aula sabendo transformar qualquer modelo conceitual completo (entidades, relacionamentos e hierarquias) no Modelo Lógico Relacional correspondente.
+Começamos esta aula pelos alicerces: o que é uma chave primária (PK), como declará-la em DBML e por que seu tipo padrão é `BIGINT UNSIGNED`; o que é uma chave estrangeira (FK), como declará-la, por que seu tipo precisa casar com o da PK referenciada, e suas duas restrições (integridade referencial e nulabilidade conforme a participação). Em seguida, fechamos as 9 regras oficiais de nomenclatura da disciplina de uma vez, antes de qualquer exemplo — todo exemplo, checkpoint e exercício desta aula segue todas elas. Só então entramos em relacionamentos: eles descrevem as interações entre entidades e podem ter atributos próprios. A cardinalidade (1:1, 1:N, N:M) — determinada com o método das três perguntas-chave — é uma das informações mais críticas do modelo conceitual, porque impacta diretamente a estrutura das tabelas: vimos exatamente onde a cardinalidade posiciona a PK e a FK já conhecidas, inclusive num evento do dia a dia como a leitura de um produto no caixa de um supermercado. Vimos também como mapear as hierarquias de generalização/especialização do Tópico 02 para tabelas de verdade, usando a Estratégia 2 (superclasse + uma tabela por subclasse, com PK compartilhada). Aprendemos a distinguir participação total de parcial, conhecemos casos especiais como o auto-relacionamento e o relacionamento ternário, e vimos as duas notações mais usadas (Min-Max e Crow's Foot) — com atenção especial ao "segredo da posição" que mais confunde estudantes. Com isso, você sai desta aula sabendo transformar qualquer modelo conceitual completo (entidades, relacionamentos e hierarquias) no Modelo Lógico Relacional correspondente.
 
 Para praticar tudo isso de uma vez, com um cenário maior e a ferramenta [dbdiagram.io](https://dbdiagram.io), veja a [Prática — Modelagem com dbdiagram.io](../atividades/Pratica_Modelagem_dbdiagram.md) na página de Atividades.
 
@@ -1090,7 +1090,7 @@ Para praticar tudo isso de uma vez, com um cenário maior e a ferramenta [dbdiag
 
 ## 🔗 Navegação
 
-⬅️ [Aula 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ [Aula 04 — Normalização de Dados](Aula_04_Normalizacao.md)
+⬅️ [Tópico 02 — Modelagem Conceitual: Entidades](Aula_02_Modelagem_Entidades.md) · ➡️ [Tópico 04 — Normalização de Dados](Aula_04_Normalizacao.md)
 
 ---
 

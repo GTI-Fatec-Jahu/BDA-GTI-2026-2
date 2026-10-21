@@ -1,4 +1,4 @@
-# Aula 02 — Modelagem Conceitual: Entidades e Atributos
+# Tópico 02 — Modelagem Conceitual: Entidades e Atributos
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -129,11 +129,11 @@ No diagrama acima, `FUNCIONARIOS` é uma entidade forte e `DEPENDENTES` é uma e
     dessas três entidades, classifique-a como **forte** ou **fraca**, justificando
     em uma frase.
 
-    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 02](Aula_02_Gabarito.md#checkpoint-1) — tente resolver antes de conferir.
 
-> 🧭 **Sobre os rótulos `int`, `string`, `date` no diagrama:** você deve ter notado que cada atributo, além do nome, tem uma palavra ao lado (`int`, `string`, `date`...). Esses são **tipos de dados genéricos** — só indicam, de forma informal, se o atributo guarda um número, um texto ou uma data, para deixar o diagrama mais completo e legível. Neste momento **não precisamos escolher o tipo de dado exato** que o banco vai usar (isso é assunto da Aula 06 — SQL DDL, quando decidiremos entre `INT`, `VARCHAR(100)`, `DECIMAL(10,2)` etc., já na sintaxe que o SQL entende). Por enquanto, o que importa é identificar **o que é um atributo** — a formalização de "como escrever isso no banco de dados" vem depois.
+> 🧭 **Sobre os rótulos `int`, `string`, `date` no diagrama:** você deve ter notado que cada atributo, além do nome, tem uma palavra ao lado (`int`, `string`, `date`...). Esses são **tipos de dados genéricos** — só indicam, de forma informal, se o atributo guarda um número, um texto ou uma data, para deixar o diagrama mais completo e legível. Neste momento **não precisamos escolher o tipo de dado exato** que o banco vai usar (isso é assunto do Tópico 05 — SQL DDL, quando decidiremos entre `INT`, `VARCHAR(100)`, `DECIMAL(10,2)` etc., já na sintaxe que o SQL entende). Por enquanto, o que importa é identificar **o que é um atributo** — a formalização de "como escrever isso no banco de dados" vem depois.
 
-> 📐 **Convenções de nomenclatura desta disciplina — Regras 1 e 2:** a partir daqui você vai ver os primeiros atributos nomeados de verdade (`cpf`, `data_nascimento`, `logradouro`...), e eles já seguem duas convenções que valem para toda a disciplina, desde já. **Regra 1 — snake_case:** quando um nome de atributo tem mais de uma palavra, elas são separadas por underline, nunca por espaço, hífen ou `camelCase` — `data_nascimento`, não `DataNascimento` nem `data-nascimento`. **Regra 2 — sempre minúsculas para nomes criados por você:** atributos, entidades (quando viram tabelas) e demais nomes do seu modelo usam apenas letras minúsculas. Note que isso é diferente do nome da **entidade** no diagrama conceitual (`CLIENTES`, em maiúsculas e já no plural) — essa é a notação clássica do MER para entidades, não uma coluna; quando a entidade virar tabela de verdade (Aula 03 em diante), ela passa a ser escrita em minúsculas, mantendo o plural (Regra 4, formalizada na Aula 03). Convenção não é frescura estética: é o que torna um modelo — seu, de um colega, ou seu mesmo daqui a alguns meses — imediatamente legível, sem precisar adivinhar como cada nome foi escrito da última vez. Mais regras de nomenclatura chegam progressivamente nas próximas aulas — chave primária e estrangeira já na Aula 03, tipos e tamanhos culminando na Aula 06 — SQL DDL.
+> 📐 **Convenções de nomenclatura desta disciplina — Regras 1 e 2:** a partir daqui você vai ver os primeiros atributos nomeados de verdade (`cpf`, `data_nascimento`, `logradouro`...), e eles já seguem duas convenções que valem para toda a disciplina, desde já. **Regra 1 — snake_case:** quando um nome de atributo tem mais de uma palavra, elas são separadas por underline, nunca por espaço, hífen ou `camelCase` — `data_nascimento`, não `DataNascimento` nem `data-nascimento`. **Regra 2 — sempre minúsculas para nomes criados por você:** atributos, entidades (quando viram tabelas) e demais nomes do seu modelo usam apenas letras minúsculas. Note que isso é diferente do nome da **entidade** no diagrama conceitual (`CLIENTES`, em maiúsculas e já no plural) — essa é a notação clássica do MER para entidades, não uma coluna; quando a entidade virar tabela de verdade (Tópico 03 em diante), ela passa a ser escrita em minúsculas, mantendo o plural (Regra 4, formalizada no Tópico 03). Convenção não é frescura estética: é o que torna um modelo — seu, de um colega, ou seu mesmo daqui a alguns meses — imediatamente legível, sem precisar adivinhar como cada nome foi escrito da última vez. Mais regras de nomenclatura chegam progressivamente nas próximas aulas — chave primária e estrangeira já no Tópico 03, tipos e tamanhos culminando no Tópico 05 — SQL DDL.
 
 ---
 
@@ -157,7 +157,7 @@ Entender os tipos de atributos é fundamental para fazer uma modelagem precisa. 
 
 **Atributo Chave (ou Identificador):** é o atributo cujo valor identifica unicamente cada instância da entidade. Exemplo: `cpf` para `PESSOAS`, `matricula` para `ALUNOS`. Na notação do MER, é sublinhado. É fundamental que o atributo chave seja **único** (não pode se repetir entre instâncias) e **não nulo** (toda instância precisa ter um valor para ele).
 
-> 🔑 **Nível conceitual vs. chave real de banco de dados:** aqui, no MER, identificar `cpf` ou `matricula` como atributo chave é só reconhecer o que identifica cada instância no mundo real — é assim que a literatura acadêmica costuma nomear. Quando esse modelo virar tabela de verdade (Aula 03 em diante), a chave primária efetivamente usada **não** vai ser o `cpf` nem a `matricula`, e sim um identificador substituto `id_` criado pelo banco — você vai entender exatamente o porquê na Aula 03.
+> 🔑 **Nível conceitual vs. chave real de banco de dados:** aqui, no MER, identificar `cpf` ou `matricula` como atributo chave é só reconhecer o que identifica cada instância no mundo real — é assim que a literatura acadêmica costuma nomear. Quando esse modelo virar tabela de verdade (Tópico 03 em diante), a chave primária efetivamente usada **não** vai ser o `cpf` nem a `matricula`, e sim um identificador substituto `id_` criado pelo banco — você vai entender exatamente o porquê no Tópico 03.
 
 ```mermaid
 erDiagram
@@ -181,7 +181,7 @@ erDiagram
     Classifique cada um desses seis atributos quanto ao tipo — simples, composto,
     multivalorado, derivado ou chave — justificando cada classificação.
 
-    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 02](Aula_02_Gabarito.md#checkpoint-2) — tente resolver antes de conferir.
 
 ---
 
@@ -409,7 +409,7 @@ Use quando você encontrar uma ou mais das seguintes situações no levantamento
     a superclasse, as subclasses, e se a especialização é total ou parcial, disjunta
     ou com sobreposição — justificando com base no enunciado.
 
-    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 02](Aula_02_Gabarito.md#checkpoint-3) — tente resolver antes de conferir.
 
 ---
 
@@ -525,7 +525,7 @@ Nem toda diferença entre instâncias de uma entidade justifica criar subclasses
     comum (entre os listados nesta seção) foi cometido? Explique por que, e proponha
     a correção.
 
-    🔑 Resolução no [Gabarito da Aula 02](Aula_02_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
+    🔑 Resolução no [Gabarito do Tópico 02](Aula_02_Gabarito.md#checkpoint-4) — tente resolver antes de conferir.
 
 ---
 
@@ -610,7 +610,7 @@ erDiagram
     PRODUTOS ||--o{ ITENS_CUPOM : "aparece em"
 ```
 
-> 📐 Os nomes `cupom_id` e `produto_id` já seguem a convenção oficial de nomenclatura de chaves estrangeiras da disciplina — formalizada com o nome de "Regra 6" na Aula 03.
+> 📐 Os nomes `cupom_id` e `produto_id` já seguem a convenção oficial de nomenclatura de chaves estrangeiras da disciplina — formalizada com o nome de "Regra 6" no Tópico 03.
 
 Note que resistimos à tentação de transformar `OPERADORES` automaticamente em entidade só porque ele tem um rótulo próprio no documento — é exatamente o Erro Comum 6.1 que vimos acima. A decisão de promovê-lo a entidade fica reservada para quando o negócio realmente precisar (por exemplo, um relatório de vendas por operador).
 
@@ -783,7 +783,7 @@ erDiagram
 
 ## 🔗 Navegação
 
-⬅️ [Aula 01 — Introdução a BD](Aula_01_Introducao_BD.md) · ➡️ [Aula 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md)
+⬅️ [Tópico 01 — Introdução a BD](Aula_01_Introducao_BD.md) · ➡️ [Tópico 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md)
 
 ---
 

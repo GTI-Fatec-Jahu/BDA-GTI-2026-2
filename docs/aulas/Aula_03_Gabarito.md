@@ -3,7 +3,7 @@ GABARITO — não faz parte do fluxo principal da aula e fica fora do `nav` do
 mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relacionamentos_Cardinalidade.md.
 -->
 
-# Gabarito — Aula 03 — Relacionamentos e Cardinalidade
+# Gabarito — Tópico 03 — Relacionamentos e Cardinalidade
 
 **Disciplina:** Banco de Dados e Aplicações <br>
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br  <br>
@@ -12,7 +12,7 @@ mkdocs.yml de propósito. É acessível só pelos links dentro de Aula_03_Relaci
 ---
 
 !!! warning "Antes de conferir"
-    Assim como no gabarito da Aula 02: este documento mostra **uma** solução correta possível para cada Checkpoint e Exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Aula 03, Seção 5) e a regra de onde entra a FK (Aula 03, Seção 7). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
+    Assim como no gabarito do Tópico 02: este documento mostra **uma** solução correta possível para cada Checkpoint e Exercício. O que importa é o raciocínio — sobretudo o método das perguntas-chave (Tópico 03, Seção 5) e a regra de onde entra a FK (Tópico 03, Seção 7). Se sua resposta divergir na cardinalidade, refaça as perguntas antes de assumir que está errada.
 
 ---
 
@@ -252,7 +252,7 @@ Note que `aluno_id` (a FK em `ACESSOS`) segue a Regra 6 normalmente — mesmo a 
 
 ## 🔗 Voltar
 
-⬅️ [Aula 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md)
+⬅️ [Tópico 03 — Relacionamentos e Cardinalidade](Aula_03_Relacionamentos_Cardinalidade.md)
 
 ---
 

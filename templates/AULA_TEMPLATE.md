@@ -7,7 +7,7 @@ que são só atividade/prova pulam mapa mental e flashcards) — use bom senso e
 na dúvida, pergunte ao professor em vez de forçar uma seção vazia.
 -->
 
-# Aula NN — [Título da Aula]
+# Tópico NN — [Título da Aula]
 
 **Disciplina:** Banco de Dados e Aplicações (IBD951)
 **Professor:** Ronan Adriel Zenatti · ronan.zenatti@cps.sp.gov.br
@@ -119,14 +119,14 @@ consigo, não uma repetição do conteúdo.]
 ## 🏆 Conquista da Aula
 
 !!! success "Selo desbloqueado: [Nome temático do selo, ex. \"Normalizador Iniciante\"]"
-    Você completou a Aula NN. [Uma frase curta conectando esta aula à próxima —
+    Você completou o Tópico NN. [Uma frase curta conectando esta aula à próxima —
     reforço de progresso, não apenas decoração.]
 
 ---
 
 ## 🔗 Navegação
 
-⬅️ [Aula NN-1 — Título anterior](Aula_NN-1_Titulo.md) · ➡️ [Aula NN+1 — Título seguinte](Aula_NN+1_Titulo.md)
+⬅️ [Tópico NN-1 — Título anterior](Aula_NN-1_Titulo.md) · ➡️ [Tópico NN+1 — Título seguinte](Aula_NN+1_Titulo.md)
 
 ---
 

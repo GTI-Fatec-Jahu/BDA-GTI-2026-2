@@ -80,6 +80,9 @@ nav:
       - aulas/Aula_03_Relacionamentos_Cardinalidade.md
       - aulas/Aula_04_Normalizacao.md
       - aulas/Aula_06_SQL_DDL.md
+  - Bloco 2 — Manipulação e Consultas:
+      - aulas/Topico_06_SQL_DML.md
+      - aulas/Topico_07_SQL_DQL.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md

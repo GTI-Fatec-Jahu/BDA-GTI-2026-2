@@ -1,4 +1,4 @@
-# Avaliação — DBML: Biblioteca ou Clínica Veterinária (Aulas 01 a 03)
+# Avaliação — DBML: Biblioteca ou Clínica Veterinária (Tópicos 01 a 03)
 
 **Instituição:** Fatec Jahu — Centro Paula Souza
 **Curso:** Tecnologia em Gestão da Tecnologia da Informação
@@ -29,7 +29,7 @@
 
   É como a fila do posto de saúde que chama por senha par e ímpar: o número decide
   o guichê, e não adianta tentar trocar.
-- **Conteúdo cobrado:** Aulas 01, 02 e 03 (introdução a bancos de dados, modelagem de
+- **Conteúdo cobrado:** Tópicos 01, 02 e 03 (introdução a bancos de dados, modelagem de
   entidades e relacionamentos/cardinalidade).
 
 ---
