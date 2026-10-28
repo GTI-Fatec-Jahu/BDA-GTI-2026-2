@@ -8,8 +8,8 @@
 
 </div>
 
-!!! info "Conteúdo em construção progressiva"
-    Os tópicos deste semestre são publicados progressivamente, no ritmo da turma. O sumário abaixo mostra o planejamento completo — os itens marcados com 🔒 ainda não foram liberados.
+!!! info "Todos os tópicos do semestre estão disponíveis"
+    Os 13 tópicos deste semestre já foram publicados. Cada turma avança no próprio ritmo: use o sumário abaixo para acompanhar a trilha, do Tópico 01 ao encerramento.
 
 ---
 
@@ -84,14 +84,12 @@ própria, sempre atualizada conforme novas atividades são liberadas.
 |---|---|---|---|
 | 06 | [SQL: Manipulação de Dados (DML)](aulas/Topico_06_SQL_DML.md) | Comandos INSERT, UPDATE, DELETE; exclusão lógica | ✅ Disponível |
 | 07 | [Consultas Básicas (DQL)](aulas/Topico_07_SQL_DQL.md) | Comando SELECT e projeção de colunas | ✅ Disponível |
-| 08 | Filtragem Avançada | Cláusula WHERE, Operadores e ORDER BY | 🔒 Em breve |
-| 09 | Agregação de Dados | Funções COUNT, SUM, AVG e GROUP BY | 🔒 Em breve |
-| 10 | Junção de Tabelas — Inner Join | INNER JOIN | 🔒 Em breve |
-| 11 | Junções Externas — Outer Join | LEFT JOIN e RIGHT JOIN | 🔒 Em breve |
-| 12 | Introdução ao PL/SQL | Visão geral de procedimentos armazenados | 🔒 Em breve |
-| 13 | 🎓 Encerramento do Semestre | Feedback e Novas Tecnologias (NoSQL/Cloud) | 🔒 Em breve |
-
-> Planejamento provisório espelhando a estrutura do 1º semestre/2026 — sujeito a ajustes do professor conforme os tópicos forem entregues.
+| 08 | [Filtragem Avançada](aulas/Topico_08_Filtragem_Avancada.md) | Cláusula WHERE, operadores lógicos, BETWEEN/IN/LIKE/IS NULL, funções de data, ORDER BY e LIMIT | ✅ Disponível |
+| 09 | [Agregação de Dados](aulas/Topico_09_Agregacao_Dados.md) | Funções COUNT, SUM, AVG, MIN e MAX; GROUP BY e HAVING | ✅ Disponível |
+| 10 | [Junção de Tabelas — Inner Join](aulas/Topico_10_Inner_Join.md) | INNER JOIN, múltiplas tabelas, aliases e JOIN com agregação | ✅ Disponível |
+| 11 | [Junções Externas — Outer Join](aulas/Topico_11_Outer_Join.md) | LEFT JOIN e RIGHT JOIN; registros sem correspondência | ✅ Disponível |
+| 12 | [Introdução ao PL/SQL](aulas/Topico_12_Introducao_PLSQL.md) | Visão geral de procedimentos armazenados: stored procedures, functions e triggers | ✅ Disponível |
+| 13 | 🎓 [Encerramento do Semestre](aulas/Topico_13_Encerramento.md) | Feedback e Novas Tecnologias (NoSQL/Cloud) | ✅ Disponível |
 
 ---
 

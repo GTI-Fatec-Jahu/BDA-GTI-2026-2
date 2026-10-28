@@ -879,7 +879,7 @@ Neste tópico você aprendeu a **fazer perguntas** ao banco com a **DQL**, cujo 
 
 ## 🔗 Navegação
 
-⬅️ [Tópico 06 — SQL: Linguagem de Manipulação de Dados (DML)](Topico_06_SQL_DML.md) · ➡️ 🔒 Tópico 08 — Filtragem Avançada — em breve.
+⬅️ [Tópico 06 — SQL: Linguagem de Manipulação de Dados (DML)](Topico_06_SQL_DML.md) · ➡️ [Tópico 08 — Filtragem Avançada](Topico_08_Filtragem_Avancada.md)
 
 ---
 

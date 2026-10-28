@@ -83,6 +83,12 @@ nav:
   - Bloco 2 — Manipulação e Consultas:
       - aulas/Topico_06_SQL_DML.md
       - aulas/Topico_07_SQL_DQL.md
+      - aulas/Topico_08_Filtragem_Avancada.md
+      - aulas/Topico_09_Agregacao_Dados.md
+      - aulas/Topico_10_Inner_Join.md
+      - aulas/Topico_11_Outer_Join.md
+      - aulas/Topico_12_Introducao_PLSQL.md
+      - aulas/Topico_13_Encerramento.md
   - Atividades e Avaliações:
       - atividades/index.md
       - atividades/Avaliacao_Proficiencia.md
