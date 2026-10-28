@@ -73,6 +73,22 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Modelo Lógico da Loja
+
+Ao longo desta aula (e dos próximos tópicos) vamos construir o banco `loja_virtual`. Para você não ter que adivinhar quais tabelas e campos ele tem, baixe a "planta" dele: o **modelo lógico** — a lista de tabelas, com os campos de cada uma e como elas se ligam por **chave primária (PK)** e **chave estrangeira (FK)**.
+
+> 💡 **Do dia a dia:** é como a planta que o pedreiro recebe antes de começar a obra. A planta diz onde ficam as paredes e as portas, mas não levanta nenhum tijolo — quem constrói é você, escrevendo a DDL.
+
+[:material-download: Baixar bd_loja.sql](../atividades/bd_loja.sql){ .md-button .md-button--primary download="bd_loja.sql" }
+
+!!! warning "Leia antes de usar o arquivo"
+    - O `bd_loja.sql` **não é um script pronto para executar**: todas as linhas são comentários (`--`), então rodá-lo no MariaDB **não cria nada**. Ele é um **guia** para você montar o seu próprio SQL.
+    - Ele traz as tabelas, os campos, as PKs, as FKs e as regras de negócio, mas **não traz os tipos de dados nem as constraints prontas** — escolhê-los (Seções 5 a 7) é justamente o exercício.
+    - **Tente montar o `CREATE DATABASE` e os cinco `CREATE TABLE` sozinho(a) antes de olhar a Seção 11**, que traz o script completo. Copiar a resposta pronta não ensina; errar, corrigir e comparar ensina.
+    - Siga as convenções de nomenclatura da Seção 2 e crie as tabelas **na ordem** em que aparecem no arquivo (quem é "pai" nasce antes de quem é "filho").
+
+---
+
 ## 1. A Linguagem SQL e suas Subcategorias
 
 A **SQL (Structured Query Language)** é a linguagem padrão para interação com bancos de dados relacionais. Ela não é apenas uma linguagem de consulta — é um conjunto de sublinguagens, cada uma com um propósito bem definido.
