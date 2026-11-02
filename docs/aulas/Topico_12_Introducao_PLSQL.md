@@ -76,6 +76,22 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` (carga ampliada)
+
+Os procedimentos, funções e gatilhos desta aula **leem e alteram as tabelas** do banco `loja_virtual` (consultam produtos, listam pedidos de um cliente, registram um pedido novo). Sem as tabelas, o `CREATE PROCEDURE` até pode ser aceito, mas a primeira chamada com `CALL` falha com `ERROR 1146: Table '...' doesn't exist`; com outra carga, os resultados dos exemplos não batem com os da página (e o pedido criado em um dos exemplos não recebe o número 14 esperado). Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** a receita da casa só vale se a cozinha tiver os ingredientes. Você pode escrever a receita no caderno (o procedimento) com a despensa vazia, mas na hora de cozinhar (`CALL`) não sai prato nenhum. Este script abastece a despensa.
+
+[:material-download: Baixar loja_virtual_03_dados_topicos_09_a_12.sql](../atividades/sql/loja_virtual_03_dados_topicos_09_a_12.sql){ .md-button .md-button--primary download="loja_virtual_03_dados_topicos_09_a_12.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 13 pedidos e 24 itens de pedido** — o mesmo estado dos Tópicos 09, 10 e 11 (o arquivo é o mesmo). Equivale aos três passos da Seção 2 desta aula.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco, **inclusive os procedimentos, funções e gatilhos** que você já tenha criado nele (eles pertencem ao banco). Use-o também para "zerar" tudo depois de testar os exemplos desta aula.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_03_dados_topicos_09_a_12.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+
+---
+
 ## 1. Além do SQL declarativo
 
 Todo o SQL que você aprendeu até aqui é **declarativo**: você diz **o que** quer, e o banco decide **como** fazer. Em `SELECT nome FROM produtos WHERE estoque = 0`, você não explica ao banco como percorrer a tabela, em que ordem, se usa atalho ou não — só descreve o resultado desejado.

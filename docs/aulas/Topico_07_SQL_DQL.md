@@ -72,6 +72,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` com dados
+
+Os exemplos desta aula consultam o banco `loja_virtual` **já com dados cadastrados** — e os resultados mostrados na página só batem com os do seu terminal se o seu banco tiver exatamente os mesmos dados. Sem o banco e as tabelas, todo `SELECT` falha com `ERROR 1049: Unknown database` ou `ERROR 1146: Table '...' doesn't exist`; com tabelas vazias, o `SELECT` roda, mas devolve zero linhas. Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** consultar um banco sem dados é pedir o extrato no caixa eletrônico de uma conta que nunca recebeu um centavo — a tela abre, mas não há nada para mostrar. Este script abre a padaria **já com a vitrine cheia**: as tabelas e a mercadoria nas prateleiras.
+
+[:material-download: Baixar loja_virtual_02_dados_topicos_07_08.sql](../atividades/sql/loja_virtual_02_dados_topicos_07_08.sql){ .md-button .md-button--primary download="loja_virtual_02_dados_topicos_07_08.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 5 pedidos e 8 itens de pedido**. Equivale aos dois passos da Seção 2 desta aula (script da Seção 11 do [Tópico 05](Aula_06_SQL_DDL.md) + script de carga), tudo num arquivo só. O mesmo arquivo serve para o [Tópico 08](Topico_08_Filtragem_Avancada.md).
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco, inclusive os dados que você cadastrou no Tópico 06.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_02_dados_topicos_07_08.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+    - Depois de executar, selecione o banco com `USE loja_virtual;` e use `SHOW TABLES;` para conferir se as cinco tabelas existem.
+
+---
+
 ## 1. DQL: fazer perguntas ao banco
 
 No Tópico 06 você **colocou dados** na `loja_virtual` (`INSERT`), **corrigiu** (`UPDATE`) e **apagou** (`DELETE`). Agora vem a parte que, na prática, você mais vai usar no dia a dia de trabalho com bancos de dados: **consultar**.

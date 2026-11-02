@@ -72,6 +72,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` (carga ampliada)
+
+O `LEFT JOIN` e o `RIGHT JOIN` servem justamente para mostrar o que **não tem correspondência** — e isso só aparece se o banco tiver os dados certos: Elisa e Fábio sem nenhum pedido, Tomate, Presunto e Queijo sem nenhuma venda, a categoria Frios sem faturamento e 8 dos 13 pedidos sem atendente. Sem o script, os comandos falham com `ERROR 1049: Unknown database` ou `ERROR 1146: Table '...' doesn't exist`; com outra carga, os `NULL` aparecem em outros lugares (ou não aparecem). Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** para descobrir quem faltou à aula, você precisa da **lista de chamada completa**, com todos os matriculados. Se faltarem fichas na pasta, você não descobre o ausente — porque ele nem consta na lista. Este script entrega a lista completa, com os ausentes incluídos.
+
+[:material-download: Baixar loja_virtual_03_dados_topicos_09_a_12.sql](../atividades/sql/loja_virtual_03_dados_topicos_09_a_12.sql){ .md-button .md-button--primary download="loja_virtual_03_dados_topicos_09_a_12.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 13 pedidos e 24 itens de pedido** — o mesmo estado dos Tópicos 09 e 10 (o arquivo é o mesmo). Equivale aos três passos da Seção 2 desta aula.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco e volta ao estado inicial.
+    - Se o seu banco já está como no fim do Tópico 10 e você não alterou nenhum dado, **não precisa executar de novo**.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_03_dados_topicos_09_a_12.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+
+---
+
 ## 1. O problema do INNER JOIN
 
 No Tópico 10 você viu que o `INNER JOIN` é **excludente**: só devolve linhas com correspondência nos dois lados. Isso trouxe duas surpresas, que passaram quase despercebidas:

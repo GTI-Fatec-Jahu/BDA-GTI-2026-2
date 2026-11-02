@@ -70,6 +70,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` (carga ampliada)
+
+Um `JOIN` junta tabelas — então **todas as cinco tabelas precisam existir e estar preenchidas** para os exemplos funcionarem. Esta aula usa a mesma carga ampliada do Tópico 09 (13 pedidos e 24 itens), e vários exemplos dependem de detalhes dela: Elisa e Fábio nunca fizeram pedido, e Tomate, Presunto e Queijo nunca foram vendidos. Sem o script, os comandos falham com `ERROR 1049: Unknown database` ou `ERROR 1146: Table '...' doesn't exist`; com outra carga, os resultados não batem com os da página. Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** juntar a ficha do cliente com a nota fiscal só funciona se a gaveta das fichas **e** a gaveta das notas estiverem no armário. Este script garante as duas gavetas, cheias, no lugar certo.
+
+[:material-download: Baixar loja_virtual_03_dados_topicos_09_a_12.sql](../atividades/sql/loja_virtual_03_dados_topicos_09_a_12.sql){ .md-button .md-button--primary download="loja_virtual_03_dados_topicos_09_a_12.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 13 pedidos e 24 itens de pedido** — o mesmo estado do [Tópico 09](Topico_09_Agregacao_Dados.md) (o arquivo é o mesmo). Equivale aos três passos da Seção 2 desta aula.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco e volta ao estado inicial.
+    - Se o seu banco já está como no fim do Tópico 09 e você não alterou nenhum dado, **não precisa executar de novo**.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_03_dados_topicos_09_a_12.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+
+---
+
 ## 1. Por que usar JOINs?
 
 No Tópico 04 (Normalização) você aprendeu que um banco bem projetado **divide os dados em várias tabelas** para não repetir informação: o nome do cliente fica só na tabela `clientes`, e a tabela `pedidos` guarda apenas o **número** do cliente (a chave estrangeira). Isso evita desperdício e erros, mas cria um problema de leitura. Olhe a tabela `pedidos`:

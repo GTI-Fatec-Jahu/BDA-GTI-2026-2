@@ -69,6 +69,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` (carga ampliada)
+
+Esta aula soma, conta e agrupa — e para os totais da página baterem com os do seu terminal, o banco `loja_virtual` precisa ter **as mesmas tabelas e a mesma quantidade de dados**. Aqui são necessários mais dados do que nos tópicos anteriores: **13 pedidos** (de agosto a outubro de 2026), em vez dos 5 do Tópico 07. Sem o script, os comandos falham com `ERROR 1049: Unknown database` ou `ERROR 1146: Table '...' doesn't exist`; e com a carga antiga, todo `COUNT`, `SUM` e `AVG` dá um número diferente do mostrado. Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** somar o faturamento do mês exige que as notas fiscais do mês estejam todas na pasta. Com só uma semana de notas, a conta do caixa até fecha — mas fecha no valor errado. Este script traz as **notas dos três meses** para a pasta.
+
+[:material-download: Baixar loja_virtual_03_dados_topicos_09_a_12.sql](../atividades/sql/loja_virtual_03_dados_topicos_09_a_12.sql){ .md-button .md-button--primary download="loja_virtual_03_dados_topicos_09_a_12.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 13 pedidos e 24 itens de pedido**. Equivale aos três passos da Seção 2 desta aula (Seção 11 do [Tópico 05](Aula_06_SQL_DDL.md) + carga do [Tópico 07](Topico_07_SQL_DQL.md) + carga complementar), tudo num arquivo só. O mesmo arquivo serve para os Tópicos 10, 11 e 12.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco e volta ao estado inicial.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_03_dados_topicos_09_a_12.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+    - Depois de executar, confira com `SELECT COUNT(*) FROM pedidos;` — o resultado esperado é **13**.
+
+---
+
 ## 1. De muitas linhas para um número
 
 Até aqui, toda consulta que você escreveu devolveu **linhas da tabela**: uma linha de resultado para cada linha encontrada. Mas, no trabalho, as perguntas importantes costumam ser outras:

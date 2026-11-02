@@ -65,6 +65,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual`
+
+Todos os exemplos desta aula mexem em tabelas do banco `loja_virtual`. **Sem as tabelas, nenhum `INSERT`, `UPDATE` ou `DELETE` funciona**: o MariaDB responde `ERROR 1049: Unknown database 'loja_virtual'` (o banco não existe) ou `ERROR 1146: Table '...' doesn't exist` (a tabela não existe). Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** tentar dar um `INSERT` sem ter as tabelas é como chegar na padaria para repor os pães e descobrir que as prateleiras ainda não foram instaladas — não há onde colocar a mercadoria. Este script é a **reforma pronta**: ele monta as prateleiras (as 5 tabelas) para você só se preocupar em repor os pães (os dados).
+
+[:material-download: Baixar loja_virtual_01_estrutura_topico_06.sql](../atividades/sql/loja_virtual_01_estrutura_topico_06.sql){ .md-button .md-button--primary download="loja_virtual_01_estrutura_topico_06.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir) e o recria com as **cinco tabelas, todas vazias** — `clientes`, `categorias`, `produtos`, `pedidos` e `itens_pedidos`. É exatamente o script da Seção 11 do [Tópico 05](Aula_06_SQL_DDL.md), já pronto para baixar. Os dados você mesmo cadastra ao longo da aula.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco. Se você tem dados que quer manter, não o execute.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_01_estrutura_topico_06.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+    - Se você já criou suas próprias tabelas no Tópico 05 seguindo o script da Seção 11, **não precisa baixar de novo** — só use o arquivo para "zerar" o banco quando quiser recomeçar.
+
+---
+
 ## 1. DML: do prédio pronto para a mercadoria na prateleira
 
 No Tópico 05 você construiu a **estrutura** do banco com a **DDL** — `CREATE`, `ALTER` e `DROP`. As tabelas existem, mas estão **vazias**: nenhuma linha, nenhum cliente, nenhum produto. Agora vamos colocar dados lá dentro.

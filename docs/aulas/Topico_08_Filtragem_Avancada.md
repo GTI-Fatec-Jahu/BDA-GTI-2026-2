@@ -76,6 +76,23 @@ flowchart LR
 
 ---
 
+## 📥 Material de Apoio — Script do banco `loja_virtual` com dados
+
+Os filtros desta aula (`WHERE`, `BETWEEN`, `IN`, `LIKE`...) só mostram os resultados da página se o seu banco `loja_virtual` tiver **as mesmas tabelas e os mesmos dados**. Sem eles, os comandos falham com `ERROR 1049: Unknown database` ou `ERROR 1146: Table '...' doesn't exist`; e se você alterou dados nos exercícios anteriores, o filtro devolve linhas diferentes das mostradas aqui. Baixe o script abaixo e execute-o **antes** de começar a aula.
+
+> 💡 **Do dia a dia:** filtrar é o porteiro conferindo a lista de convidados — mas se a lista de ontem foi rabiscada, o porteiro de hoje deixa entrar gente diferente da que o professor mostrou no quadro. Este script devolve a lista **limpinha**, igual à da aula.
+
+[:material-download: Baixar loja_virtual_02_dados_topicos_07_08.sql](../atividades/sql/loja_virtual_02_dados_topicos_07_08.sql){ .md-button .md-button--primary download="loja_virtual_02_dados_topicos_07_08.sql" }
+
+**O que ele faz:** apaga o banco `loja_virtual` (se já existir), recria as cinco tabelas e cadastra **6 categorias, 6 clientes, 11 produtos, 5 pedidos e 8 itens de pedido** — a mesma carga do [Tópico 07](Topico_07_SQL_DQL.md) (o arquivo é o mesmo). Equivale ao que a Seção 2 desta aula pede para refazer.
+
+!!! warning "Antes de executar"
+    - O script começa com `DROP DATABASE IF EXISTS loja_virtual;` — ele **apaga tudo** que já existir nesse banco e volta ao estado inicial.
+    - Se o seu banco ficou como no fim do Tópico 07 e você não alterou nenhum dado, **não precisa executar de novo**.
+    - **Como executar:** conecte-se ao MariaDB (veja a Seção 3 do [Tópico 05](Aula_06_SQL_DDL.md)) e rode `SOURCE C:/caminho/da/pasta/loja_virtual_02_dados_topicos_07_08.sql;` — o comando `SOURCE` lê o arquivo e executa tudo o que há nele. Use barras normais (`/`) no caminho, mesmo no Windows.
+
+---
+
 ## 1. A cláusula WHERE: escolhendo as linhas
 
 No Tópico 07 você aprendeu a escolher **colunas** (projeção). Mas toda consulta devolveu **todas as linhas** da tabela. Na vida real, ninguém quer a lista inteira: quer *"os produtos que acabaram"*, *"os pedidos de outubro"*, *"os clientes sem telefone"*.
