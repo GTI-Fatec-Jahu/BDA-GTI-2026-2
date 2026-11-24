@@ -24,7 +24,7 @@ As aulas são adicionadas **progressivamente**, uma por semana, em `docs/aulas/`
 ## 🛠️ Rodando o site localmente
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
+# Sem venv: os pacotes ficam instalados globalmente. NÃO crie nem ative venv.
 pip install -r requirements.txt
 mkdocs serve
 ```

@@ -3,8 +3,7 @@
     "allow": [
       "Bash(python -m mkdocs --version)",
       "Bash(python3 -m mkdocs --version)",
-      "Bash(\"/c/Program Files/Python314/python\" -m venv .venv)",
-      "Bash(./.venv/Scripts/python -m pip install --quiet -r requirements.txt)"
+      "Bash(python -m pip install --quiet -r requirements.txt)"
     ]
   }
 }
